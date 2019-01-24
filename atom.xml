@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>FS&#39;Blog</title>
+  
+  <subtitle>��¼�ɳ��뷳��</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-01-24T03:26:38.090Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>purui</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2018总结-2019前行</title>
+    <link href="http://yoursite.com/2019/01/24/themes-life/"/>
+    <id>http://yoursite.com/2019/01/24/themes-life/</id>
+    <published>2019-01-24T03:14:34.000Z</published>
+    <updated>2019-01-24T03:26:38.090Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1548309588940&amp;di=de8098ce88227e3d2c143144d1214cfb&amp;imgtype=0&amp;src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F21ac150387f8d2ffad4a0e1a39c28f888d3a1a9d.jpg" title="镇楼" target="_blank" rel="noopener"><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1548309588940&amp;di=de8098ce88227e3d2c143144d1214cfb&amp;imgtype=0&amp;src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F21ac150387f8d2ffad4a0e1a39c28f888d3a1a9d.jpg" alt="镇楼" title="镇楼"></a></p><h1 id="2018总结"><a href="#2018总结" class="headerlink" title="2018总结"></a>2018总结</h1><blockquote><p>一年时间匆匆而过,又到了一年该总结的时候，2018年期间断断续续写过一些博客,但是始终没能坚持下来，一方面因为工作忙(作为一个从业不到两年的开发，已经完成了从开发到管理的蜕变)，并在工作之余加入了一个博士团队 开发自己的产品，也算是自己在工作之外的小尝试吧，也是希望自己多扩展扩展自己的交际圈。</p></blockquote><blockquote><p>2018年也完成了人生中的一件大事，靠自己的努力，在老家买上了第一套房(嘿嘿,可能还有第二套)，当然这个也感谢父母的支持和女朋友的支持，非常感谢</p></blockquote><h5 id="技术方面总结"><a href="#技术方面总结" class="headerlink" title="技术方面总结"></a>技术方面总结</h5><blockquote><p>因为之前都是在国企做开发，一直没有机会接触到服务器相关的操作，2018鼓足了一口劲跳了出来 到一家小公司担任技术负责人(能够接触到整个开发流程的方方面面)，期间 一个学长 曾经邀请我 去深圳 做区块链的开发，但是经过长时间思考 没有选择去，原因嘛(在这边的环境 各方面的人脉资源 都比较足，还是比较有机会的，慎重考虑后才决定好)， 很多事的耽误，导致今年没有太大的进步，只是把已有的技术做了巩固，学了python相关技术。哎 时间就像海绵里的水 只要愿意挤总还是有的，真想 打醒自己。 人不能给自己太多借口。</p></blockquote><p>#2019期望<br>写一个自己的开源项目[<a href="https://gitee.com/zprsss/ixx.git" title="ixx" target="_blank" rel="noopener">ixx</a>]<br><a href="https://images.gitee.com/uploads/images/2019/0123/143841_26e304d5_1289853.png" title="登录" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0123/143841_26e304d5_1289853.png" alt="登录" title="登录"></a><br><a href="https://images.gitee.com/uploads/images/2019/0123/143852_34f8513c_1289853.png" title="多数据源" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0123/143852_34f8513c_1289853.png" alt="多数据源" title="多数据源"></a><br><a href="https://images.gitee.com/uploads/images/2019/0123/143913_643c778a_1289853.png" title="案例" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0123/143913_643c778a_1289853.png" alt="案例" title="案例"></a><br><a href="https://images.gitee.com/uploads/images/2019/0123/143913_643c778a_1289853.png" title="权限控制" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0123/143913_643c778a_1289853.png" alt="权限控制" title="权限控制"></a><br>已经完成了基础部分，后面陆续会加入新的功能<br>也会坚持更新博客，再此也立一个Flag</p><h6 id="2019技术学习清单"><a href="#2019技术学习清单" class="headerlink" title="2019技术学习清单"></a>2019技术学习清单</h6><ol><li>网关：Nginx、Kong、Zuul</li><li>缓存：Redis、MemCached、OsCache、EhCache</li><li>搜索：ElasticSearch、Solr</li><li>注册中心：Eureka、Zookeeper、Redis、Etcd、Consul</li><li>消费队列：RabbitMQ、ZeroMQ、Redis、ActiveMQ、Kafka</li><li>压测：LoadRunner、JMeter、AB、webbench</li><li>python爬虫，Django开发，人工智能入门</li><li>小程序开发</li><li>Java原理深究</li><li>再开发一个开源项目</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1548309588940&amp;amp;di=de8098ce88227e3d2c143144d12
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
