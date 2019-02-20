@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-14T07:37:30.842Z</updated>
+  <updated>2019-02-20T07:43:31.172Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>三分钟搭建SpringBoot工程</title>
+    <link href="http://yoursite.com/2019/02/20/themes-life/"/>
+    <id>http://yoursite.com/2019/02/20/themes-life/</id>
+    <published>2019-02-20T07:14:34.000Z</published>
+    <updated>2019-02-20T07:43:31.172Z</updated>
+    
+    <content type="html"><![CDATA[<p>[<img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1550658616372&amp;di=70b7eeb06ed1c994e99b97ef5b7a2b82&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F010018554b6ef4000001bf72617201.jpg" alt=""></p><p>#####什么是SpringBoot?<br>    Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。</p><ol><li>创建独立的Spring应用程序</li><li>嵌入的Tomcat，无需部署WAR文件</li><li>简化Maven配置</li><li>自动配置Spring</li><li>提供生产就绪型功能，如指标，健康检查和外部配置</li><li>绝对没有代码生成并且对XML也没有配置要求</li></ol><blockquote><p>SpringBoot 有句名言叫做 “约定大于配置” 是什么意思呢？ 我们直接搭建一个SpringBoot的工程来体会下，用起来是什么感觉呢?   <a href="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4207918509,3343669022&amp;fm=27&amp;gp=0.jpg" target="_blank" rel="noopener"><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4207918509,3343669022&amp;fm=27&amp;gp=0.jpg" alt=""></a></p></blockquote><p>说下开发环境 :</p><ul><li>jdk1.8</li><li>开发工具 IDEA</li><li>maven</li></ul><p>新建一个 spring initializr<br><a href="https://images.gitee.com/uploads/images/2019/0220/153038_1085b1f1_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153038_1085b1f1_1289853.png" alt=""></a></p><p>配置报名包名相关信息<br><a href="https://images.gitee.com/uploads/images/2019/0220/153117_351ffdaa_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153117_351ffdaa_1289853.png" alt=""></a><br>这个选择 用到的相关 依赖 它会自动帮我们集成到maven中去<br><a href="https://images.gitee.com/uploads/images/2019/0220/153150_05754e48_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153150_05754e48_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0220/153313_bd92824b_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153313_bd92824b_1289853.png" alt=""></a><br>点击完成<br><a href="https://images.gitee.com/uploads/images/2019/0220/153328_97ea850e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153328_97ea850e_1289853.png" alt=""></a><br>项目正在构建中<br><a href="https://images.gitee.com/uploads/images/2019/0220/153406_3b70b2b9_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153406_3b70b2b9_1289853.png" alt=""></a><br>以下是整个项目的整体结构<br><a href="https://images.gitee.com/uploads/images/2019/0220/153442_501b3652_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153442_501b3652_1289853.png" alt=""></a></p><p>写了一个测试接口<br><a href="https://images.gitee.com/uploads/images/2019/0220/153718_c2b556ad_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153718_c2b556ad_1289853.png" alt=""></a><br>默认启动端口是 8080 :tw-1f1e8-1f1f3: :tw-1f1e8-1f1f3:<br><a href="https://images.gitee.com/uploads/images/2019/0220/153810_1ec858fe_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153810_1ec858fe_1289853.png" alt=""></a><br>测试成功,一个简单的 SpringBoot 项目搭建完毕<br><a href="https://images.gitee.com/uploads/images/2019/0220/153914_0ae02d7e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153914_0ae02d7e_1289853.png" alt=""></a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;[&lt;img src=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1550658616372&amp;amp;di=70b7eeb06ed1c994e99b97ef5
+      
+    
+    </summary>
+    
+      <category term="SpringBoot" scheme="http://yoursite.com/categories/SpringBoot/"/>
+    
+    
+      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker使用Nexus搭建Maven私服 发布插件</title>
@@ -73,11 +98,11 @@
       <category term="系统运维" scheme="http://yoursite.com/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/"/>
     
     
+      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
+    
       <category term="Docker" scheme="http://yoursite.com/tags/Docker/"/>
     
       <category term="CI自动化部署" scheme="http://yoursite.com/tags/CI%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
     
   </entry>
   

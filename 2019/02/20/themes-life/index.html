@@ -20,7 +20,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <meta name="renderer" content="webkit">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" ,="" user-scalable="no"">
-  <title>实战Docker搭建自动化部署环境，远程自动部署SpringBootFS'Blog</title>
+  <title>三分钟搭建SpringBoot工程FS'Blog</title>
   <link rel="shortcut icon" href="/images/favicon.ico">
   
     
@@ -107,13 +107,13 @@
             </header>
                 
 <header class="blog-post-page-title">
-    <h4>实战Docker搭建自动化部署环境，远程自动部署SpringBoot</h4>
-    <time datetime="2019-02-13T09:14:34.000Z"><i class="fa fa-clock-o"></i>2019-02-13</time>
+    <h4>三分钟搭建SpringBoot工程</h4>
+    <time datetime="2019-02-20T07:14:34.000Z"><i class="fa fa-clock-o"></i>2019-02-20</time>
     
     
     <span>
         <i class="fa fa-eye"></i>
-        <span id="/2019/02/13/themes-life/" class="views views-post" title="实战Docker搭建自动化部署环境，远程自动部署SpringBoot"></span>
+        <span id="/2019/02/20/themes-life/" class="views views-post" title="三分钟搭建SpringBoot工程"></span>
     </span>
     
     
@@ -121,7 +121,7 @@
 	
         <span><i class="fa fa-folder-o"></i>
     		
-    	       <a href="/categories/系统运维/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">系统运维</a>
+    	       <a href="/categories/SpringBoot/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">SpringBoot</a>
     		
         </span>
 	
@@ -131,99 +131,28 @@
     <article class="blog-post-block blog-post-page-content">
         <section>
             
-                <p>####起因</p>
-<blockquote>
-<p>项目上线运行后,几乎每天都需要更新代码，虽说很简单 ，本地编译，上传，运行，但是每天重复也是一个十分蛋痛的工作，作为一个工程师 一定要杜绝重复劳动。</p>
-</blockquote>
-<p>####<a href="http://www.docker.org.cn" title="Docker" target="_blank" rel="noopener">Docker</a></p>
-<blockquote>
-<p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</p>
-</blockquote>
-<p>####<a href="https://gitee.com" title="Gitee" target="_blank" rel="noopener">Gitee</a></p>
-<blockquote>
-<p>云端软件开发协作平台</p>
-</blockquote>
-<p>此时 我的测试服务器 已经安装好了 docker 如果你还没有安装 请先安装<br>输入 docker -v  可以查看版本<br><a href="https://images.gitee.com/uploads/images/2019/0125/110740_e2709d98_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/110740_e2709d98_1289853.png" alt=""></a></p>
-<p>####推荐此版本的容器</p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0125/144903_7c99ee1c_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/144903_7c99ee1c_1289853.png" alt=""></a></p>
+                <p>[<img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1550658616372&amp;di=70b7eeb06ed1c994e99b97ef5b7a2b82&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F010018554b6ef4000001bf72617201.jpg" alt=""></p>
+<p>#####什么是SpringBoot?<br>    Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。</p>
 <ol>
-<li><p>第一步</p>
-<blockquote>
-<p><code>docker pull jenkins/jenkins 下载jenkins</code></p>
-</blockquote>
-</li>
-<li><p>第二步</p>
-<blockquote>
-<p><code>docker images 查看本地镜像</code><br><a href="https://img-blog.csdn.net/20180708141046832?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" target="_blank" rel="noopener"><img src="https://img-blog.csdn.net/20180708141046832?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=""></a><br><a href="https://img-blog.csdn.net/2018070814120663?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" target="_blank" rel="noopener"><img src="https://img-blog.csdn.net/2018070814120663?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=""></a></p>
-</blockquote>
-</li>
-<li>第三步<br>新建一个jenkins 目录</li>
+<li>创建独立的Spring应用程序</li>
+<li>嵌入的Tomcat，无需部署WAR文件</li>
+<li>简化Maven配置</li>
+<li>自动配置Spring</li>
+<li>提供生产就绪型功能，如指标，健康检查和外部配置</li>
+<li>绝对没有代码生成并且对XML也没有配置要求</li>
 </ol>
 <blockquote>
-<p><code>cd /home</code></p>
+<p>SpringBoot 有句名言叫做 “约定大于配置” 是什么意思呢？ 我们直接搭建一个SpringBoot的工程来体会下，用起来是什么感觉呢?   <a href="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4207918509,3343669022&amp;fm=27&amp;gp=0.jpg" target="_blank" rel="noopener"><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4207918509,3343669022&amp;fm=27&amp;gp=0.jpg" alt=""></a></p>
 </blockquote>
-<blockquote>
-<p><code>mkdir jenkins</code></p>
-</blockquote>
-<blockquote>
-<p>最后运行 <code>docker run -d --name myjenkins -p 49001:8080 -v /home/jenkins_home:/home/jenkins -v /var/maven/apache-maven-3.6.0:/usr/maven/apache-maven-3.6.0 -v /var/java/jdk1.8.0_191:/usr/java/java1.8.0_191 jenkins(这个是镜像名称)</code>， -v 指定目录映射（把宿主机的 java 和 maven环境映射过去,后续需要进入容器 配置jenkins的 java 和maven 环境）</p>
-</blockquote>
-<blockquote>
-<p>ps:其中49001：8080，表示docker内部使用8080端口，服务器使用49001端口，然后将二者映射起来，之后在浏览器访问的时候实际上还是访问服务器的49001端口,注意关闭防火墙 或是 开通端口号</p>
-</blockquote>
-<blockquote>
-<p>此处需要输入 jenkins自动生成的密码</p>
-</blockquote>
-<blockquote>
-<p>输入 <code>docker exec -it myjenkins bash</code> 进入 myjenkins 容器里面</p>
-</blockquote>
-<blockquote>
-<p>输入 find -name initialAdminPassword<br><a href="https://images.gitee.com/uploads/images/2019/0125/120327_5f98240a_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/120327_5f98240a_1289853.png" alt=""></a><br>然后 输入cat 命令打印 initialAdminPassword 的内容 复制到页面中</p>
-</blockquote>
-<p>安装成功<br><a href="https://images.gitee.com/uploads/images/2019/0125/120526_b047c962_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/120526_b047c962_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0125/145037_37387e8d_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/145037_37387e8d_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0125/120609_40a5db22_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/120609_40a5db22_1289853.png" alt=""></a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0125/120633_18d43fc3_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/120633_18d43fc3_1289853.png" alt=""></a></p>
-<blockquote>
-<p>在全局工具配置中  配置Java环境 和 maven 环境<br><a href="https://images.gitee.com/uploads/images/2019/0125/122401_f7ae7cca_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/122401_f7ae7cca_1289853.png" alt=""></a></p>
-</blockquote>
-<hr>
-<blockquote>
-<p>ps: 安装Jenkins后首次访问时由于其他原因【具体未知】会产生离线问题。网上找了个遍还是不能解决，所以只能跳过常用插件安装这步。进入Jenkins后再安装这些插件（我这遇到了，我选择换了一个版本就没事了）</p>
-</blockquote>
-<p>####添加常用的插件<br><a href="https://img-blog.csdn.net/20180708141046832?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" target="_blank" rel="noopener"><img src="https://img-blog.csdn.net/20180708141046832?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=""></a><br><a href="https://img-blog.csdn.net/20180708141138548?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" target="_blank" rel="noopener"><img src="https://img-blog.csdn.net/20180708141138548?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=""></a><br><a href="https://img-blog.csdn.net/2018070814120663?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" target="_blank" rel="noopener"><img src="https://img-blog.csdn.net/2018070814120663?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=""></a><br><a href="https://img-blog.csdn.net/20180708141251349?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" target="_blank" rel="noopener"><img src="https://img-blog.csdn.net/20180708141251349?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21pbmcxOTk1MTIyNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=""></a></p>
-<h2 id="接下来开始配置-java-及-Maven环境"><a href="#接下来开始配置-java-及-Maven环境" class="headerlink" title="接下来开始配置 java 及 Maven环境"></a>接下来开始配置 java 及 Maven环境</h2><p>JAVA_HOME填写 docker启动命令中 从宿主机映射过来的路径<br>MAVEN也填写 docker启动命令中 从宿主机映射过来的路径<br><a href="https://images.gitee.com/uploads/images/2019/0125/145322_6f6731e1_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0125/145322_6f6731e1_1289853.png" alt=""></a></p>
-<p>##新建项目</p>
-<p>如果没有maven项目可选，那么请先安装 Maven Integration plugin 插件<br><a href="https://images.gitee.com/uploads/images/2019/0213/165139_96fbeba6_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0213/165139_96fbeba6_1289853.png" alt=""></a></p>
-<p>我这里使用的是 git<br><a href="https://images.gitee.com/uploads/images/2019/0213/165520_f22e9112_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0213/165520_f22e9112_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0213/165653_4e6bcb81_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0213/165653_4e6bcb81_1289853.png" alt=""></a></p>
-<p>此处 V2是重点-》需要现在 系统管理的系统设置 中配置<br>Source files：需要上传到服务器的jar包<br>Remove prefix： 需要移除的后缀<br>Remote directory： 远程目录(此处会和 下面配置的 Remote Directory 做拼接)<br>Exec command：文件上传后 执行的命令</p>
-<p>start.sh:</p>
-<pre><code>#!/bin/bash
-export JAVA_HOME=/usr/local/java/jdk1.8.0_191
-echo ${JAVA_HOME}
-echo &quot;授权当前用户&quot;
-chmod 777 /opt/project/ixx-web.jar
- echo &quot;执行....&quot;
-cd /opt/project/ 
-nohup ${JAVA_HOME}/bin/java -jar ixx-web.jar &gt; aa.out &amp;
-echo &quot;启动成功&quot;
-</code></pre><p>stop.sh:</p>
-<pre><code>#!/bin/bash
-echo &quot;stop SpringBoot BAppApiServerApplication&quot;
-pid=`ps -ef | grep ixx-web.jar | grep -v grep | awk &apos;{print $2}&apos;`
-echo “旧应用进程id：$pid”
-if [ -n &quot;$pid&quot; ]
-then
-kill -9 $pid
-fi
-</code></pre><p><a href="https://images.gitee.com/uploads/images/2019/0213/165751_9f59f39e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0213/165751_9f59f39e_1289853.png" alt=""></a></p>
-<pre><code>Passphrase ： 服务器登录密码
-Hostname： 服务器地址
-Username： 用户名
-Remote Directory：文件上传的远程目录
-</code></pre><p><a href="https://images.gitee.com/uploads/images/2019/0213/170118_5e517695_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0213/170118_5e517695_1289853.png" alt=""></a></p>
-<p>然后保存，立即构建<br><a href="https://images.gitee.com/uploads/images/2019/0213/170442_5767b20f_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0213/170442_5767b20f_1289853.png" alt=""></a></p>
-<p>系统会开始构建<br><a href="https://images.gitee.com/uploads/images/2019/0213/170958_8c64d259_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0213/170958_8c64d259_1289853.png" alt=""></a></p>
-<p>构建成功，此时 jenkins 已经把 master 分支上的代码 编译-&gt;打包-&gt;上传-&gt;运行成功</p>
-<p>以上是这次给大家分享的 jenkins搭建 及 springBoot 远程自动部署，谢谢大家阅读</p>
+<p>说下开发环境 :</p>
+<ul>
+<li>jdk1.8</li>
+<li>开发工具 IDEA</li>
+<li>maven</li>
+</ul>
+<p>新建一个 spring initializr<br><a href="https://images.gitee.com/uploads/images/2019/0220/153038_1085b1f1_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153038_1085b1f1_1289853.png" alt=""></a></p>
+<p>配置报名包名相关信息<br><a href="https://images.gitee.com/uploads/images/2019/0220/153117_351ffdaa_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153117_351ffdaa_1289853.png" alt=""></a><br>这个选择 用到的相关 依赖 它会自动帮我们集成到maven中去<br><a href="https://images.gitee.com/uploads/images/2019/0220/153150_05754e48_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153150_05754e48_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0220/153313_bd92824b_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153313_bd92824b_1289853.png" alt=""></a><br>点击完成<br><a href="https://images.gitee.com/uploads/images/2019/0220/153328_97ea850e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153328_97ea850e_1289853.png" alt=""></a><br>项目正在构建中<br><a href="https://images.gitee.com/uploads/images/2019/0220/153406_3b70b2b9_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153406_3b70b2b9_1289853.png" alt=""></a><br>以下是整个项目的整体结构<br><a href="https://images.gitee.com/uploads/images/2019/0220/153442_501b3652_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153442_501b3652_1289853.png" alt=""></a></p>
+<p>写了一个测试接口<br><a href="https://images.gitee.com/uploads/images/2019/0220/153718_c2b556ad_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153718_c2b556ad_1289853.png" alt=""></a><br>默认启动端口是 8080 :tw-1f1e8-1f1f3: :tw-1f1e8-1f1f3:<br><a href="https://images.gitee.com/uploads/images/2019/0220/153810_1ec858fe_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153810_1ec858fe_1289853.png" alt=""></a><br>测试成功,一个简单的 SpringBoot 项目搭建完毕<br><a href="https://images.gitee.com/uploads/images/2019/0220/153914_0ae02d7e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153914_0ae02d7e_1289853.png" alt=""></a></p>
 
             
         </section>
@@ -233,10 +162,6 @@ Remote Directory：文件上传的远程目录
 				
 			<a href="/tags/SpringBoot/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">SpringBoot</a>
 				
-			<a href="/tags/Docker/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Docker</a>
-				
-			<a href="/tags/CI自动化部署/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">CI自动化部署</a>
-				
 			
 		
         </footer>
@@ -245,12 +170,10 @@ Remote Directory：文件上传的远程目录
     	
     	
 		
-			<a href="/2019/02/14/themes-life/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="Docker使用Nexus搭建Maven私服 发布插件">上一篇</a>
-		
 
 		
 		
-			<a href="/2019/01/24/themes-life/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="2018总结-2019前行">下一篇</a>
+			<a href="/2019/02/14/themes-life/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="Docker使用Nexus搭建Maven私服 发布插件">下一篇</a>
 		
 
         <div style="clear: both;"></div>
@@ -353,7 +276,7 @@ Remote Directory：文件上传的远程目录
                 return out;
             }
             // 生成
-            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://yoursite.com/2019/02/13/themes-life/")}).hide();
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://yoursite.com/2019/02/20/themes-life/")}).hide();
             var canvas=qrcode.find('canvas').get(0);
             $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
         </script>
