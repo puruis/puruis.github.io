@@ -20,7 +20,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <meta name="renderer" content="webkit">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" ,="" user-scalable="no"">
-  <title>SpringBoot 整合 thymeleafFS'Blog</title>
+  <title>三分钟搭建SpringBoot工程FS'Blog</title>
   <link rel="shortcut icon" href="/images/favicon.ico">
   
     
@@ -107,13 +107,13 @@
             </header>
                 
 <header class="blog-post-page-title">
-    <h4>SpringBoot 整合 thymeleaf</h4>
+    <h4>三分钟搭建SpringBoot工程</h4>
     <time datetime="2019-02-20T07:14:34.000Z"><i class="fa fa-clock-o"></i>2019-02-20</time>
     
     
     <span>
         <i class="fa fa-eye"></i>
-        <span id="/2019/02/20/themes-life/" class="views views-post" title="SpringBoot 整合 thymeleaf"></span>
+        <span id="/2019/02/20/themes-life/" class="views views-post" title="三分钟搭建SpringBoot工程"></span>
     </span>
     
     
@@ -131,24 +131,29 @@
     <article class="blog-post-block blog-post-page-content">
         <section>
             
-                <p>[<img src="https://dpic.tiankong.com/kl/i7/QJ6674590289.jpg?x-oss-process=style/670ws" alt=""></p>
-<h3 id="SpringBoot-整合-thymeleaf"><a href="#SpringBoot-整合-thymeleaf" class="headerlink" title="SpringBoot 整合 thymeleaf"></a>SpringBoot 整合 thymeleaf</h3><p>（一）Thymeleaf 是个什么？</p>
-<pre><code> 简单说， Thymeleaf 是一个跟 Velocity、FreeMarker 类似的模板引擎，它可以完全替代 JSP 。相较与其他的模板引擎，它有如下三个极吸引人的特点：
-
-1.Thymeleaf 在有网络和无网络的环境下皆可运行，即它可以让美工在浏览器查看页面的静态效果，也可以让程序员在服务器查看带数据的动态页面效果。这是由于它支持 html 原型，然后在 html 标签里增加额外的属性来达到模板+数据的展示方式。浏览器解释 html 时会忽略未定义的标签属性，所以 thymeleaf 的模板可以静态地运行；当有数据返回到页面时，Thymeleaf 标签会动态地替换掉静态内容，使页面动态显示。
-
-2.Thymeleaf 开箱即用的特性。它提供标准和spring标准两种方言，可以直接套用模板实现JSTL、 OGNL表达式效果，避免每天套模板、该jstl、改标签的困扰。同时开发人员也可以扩展和创建自定义的方言。
-</code></pre><hr>
-<p>话不多说，新建一个项目<br><a href="http://img5.imgtn.bdimg.com/it/u=1264549799,3309474862&amp;fm=26&amp;gp=0.jpg" target="_blank" rel="noopener"><img src="http://img5.imgtn.bdimg.com/it/u=1264549799,3309474862&amp;fm=26&amp;gp=0.jpg" alt=""></a><br>选择相关依赖<br><a href="https://images.gitee.com/uploads/images/2019/0220/164808_46a82da9_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164808_46a82da9_1289853.png" alt=""></a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0220/164827_73ad3926_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164827_73ad3926_1289853.png" alt=""></a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0220/164837_36c12938_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164837_36c12938_1289853.png" alt=""></a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0220/164925_91de8446_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164925_91de8446_1289853.png" alt=""></a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0220/164946_e23f893e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164946_e23f893e_1289853.png" alt=""></a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0220/165002_ae08f148_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165002_ae08f148_1289853.png" alt=""></a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0220/165115_39e42859_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165115_39e42859_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0220/165019_b899cdbe_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165019_b899cdbe_1289853.png" alt=""></a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0220/165213_d32876f6_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165213_d32876f6_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0220/165224_e187fe28_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165224_e187fe28_1289853.png" alt=""></a><br>js测试代码<br><a href="https://images.gitee.com/uploads/images/2019/0220/165258_90a5efc8_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165258_90a5efc8_1289853.png" alt=""></a><br>样式<br><a href="https://images.gitee.com/uploads/images/2019/0220/165310_d20fbadb_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165310_d20fbadb_1289853.png" alt=""></a></p>
-<p>简单完事 收工</p>
-<p>download : <a href="https://github.com/puruis/spring_boot_freemarker" target="_blank" rel="noopener">https://github.com/puruis/spring_boot_freemarker</a></p>
+                <p>[<img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1550658616372&amp;di=70b7eeb06ed1c994e99b97ef5b7a2b82&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F010018554b6ef4000001bf72617201.jpg" alt=""></p>
+<p>#####什么是SpringBoot?<br>    Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。</p>
+<ol>
+<li>创建独立的Spring应用程序</li>
+<li>嵌入的Tomcat，无需部署WAR文件</li>
+<li>简化Maven配置</li>
+<li>自动配置Spring</li>
+<li>提供生产就绪型功能，如指标，健康检查和外部配置</li>
+<li>绝对没有代码生成并且对XML也没有配置要求</li>
+</ol>
+<blockquote>
+<p>SpringBoot 有句名言叫做 “约定大于配置” 是什么意思呢？ 我们直接搭建一个SpringBoot的工程来体会下，用起来是什么感觉呢?   <a href="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4207918509,3343669022&amp;fm=27&amp;gp=0.jpg" target="_blank" rel="noopener"><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4207918509,3343669022&amp;fm=27&amp;gp=0.jpg" alt=""></a></p>
+</blockquote>
+<p>说下开发环境 :</p>
+<ul>
+<li>jdk1.8</li>
+<li>开发工具 IDEA</li>
+<li>maven</li>
+</ul>
+<p>新建一个 spring initializr<br><a href="https://images.gitee.com/uploads/images/2019/0220/153038_1085b1f1_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153038_1085b1f1_1289853.png" alt=""></a></p>
+<p>配置报名包名相关信息<br><a href="https://images.gitee.com/uploads/images/2019/0220/153117_351ffdaa_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153117_351ffdaa_1289853.png" alt=""></a><br>这个选择 用到的相关 依赖 它会自动帮我们集成到maven中去<br><a href="https://images.gitee.com/uploads/images/2019/0220/153150_05754e48_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153150_05754e48_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0220/153313_bd92824b_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153313_bd92824b_1289853.png" alt=""></a><br>点击完成<br><a href="https://images.gitee.com/uploads/images/2019/0220/153328_97ea850e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153328_97ea850e_1289853.png" alt=""></a><br>项目正在构建中<br><a href="https://images.gitee.com/uploads/images/2019/0220/153406_3b70b2b9_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153406_3b70b2b9_1289853.png" alt=""></a><br>以下是整个项目的整体结构<br><a href="https://images.gitee.com/uploads/images/2019/0220/153442_501b3652_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153442_501b3652_1289853.png" alt=""></a></p>
+<p>写了一个测试接口<br><a href="https://images.gitee.com/uploads/images/2019/0220/153718_c2b556ad_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153718_c2b556ad_1289853.png" alt=""></a><br>默认启动端口是 8080 :tw-1f1e8-1f1f3: :tw-1f1e8-1f1f3:<br><a href="https://images.gitee.com/uploads/images/2019/0220/153810_1ec858fe_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153810_1ec858fe_1289853.png" alt=""></a><br>测试成功,一个简单的 SpringBoot 项目搭建完毕<br><a href="https://images.gitee.com/uploads/images/2019/0220/153914_0ae02d7e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/153914_0ae02d7e_1289853.png" alt=""></a></p>
+<p>download : <a href="https://github.com/puruis/SpringBoot-Collection.git" target="_blank" rel="noopener">https://github.com/puruis/SpringBoot-Collection.git</a></p>
 
             
         </section>
@@ -158,8 +163,6 @@
 				
 			<a href="/tags/SpringBoot/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">SpringBoot</a>
 				
-			<a href="/tags/thymeleaf/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">thymeleaf</a>
-				
 			
 		
         </footer>
@@ -168,7 +171,7 @@
     	
     	
 		
-			<a href="/2019/02/20/themes-life/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="三分钟搭建SpringBoot工程">上一篇</a>
+			<a href="/2019/02/20/themes-life/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="SpringBoot 整合 thymeleaf">上一篇</a>
 		
 
 		
@@ -344,8 +347,8 @@
                   
                     
                       <li class="list-group-item justify-content-between">
-                          <a href="/categories/SpringBoot/">SpringBoot</a>
-                          <span class="badge badge-default badge-pill">3</span>
+                          <a href="/categories/计划总结/">计划总结</a>
+                          <span class="badge badge-default badge-pill">1</span>
                       </li>
                     
                       <li class="list-group-item justify-content-between">
@@ -354,8 +357,8 @@
                       </li>
                     
                       <li class="list-group-item justify-content-between">
-                          <a href="/categories/计划总结/">计划总结</a>
-                          <span class="badge badge-default badge-pill">1</span>
+                          <a href="/categories/SpringBoot/">SpringBoot</a>
+                          <span class="badge badge-default badge-pill">3</span>
                       </li>
                     
                   
@@ -366,9 +369,9 @@
                 <ul class="blog-sidebar-tags-ul blog-sidebar-padding">
                   
                     
-                      <li><a href="/tags/SpringBoot/" class="tag-could" data-toggle="tooltip" data-placement="top" title="SpringBoot">SpringBoot</a></li>
+                      <li><a href="/tags/计划/" class="tag-could" data-toggle="tooltip" data-placement="top" title="计划">计划</a></li>
                     
-                      <li><a href="/tags/Aop/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Aop">Aop</a></li>
+                      <li><a href="/tags/总结/" class="tag-could" data-toggle="tooltip" data-placement="top" title="总结">总结</a></li>
                     
                       <li><a href="/tags/Docker/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Docker">Docker</a></li>
                     
@@ -378,9 +381,9 @@
                     
                       <li><a href="/tags/Nexus/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Nexus">Nexus</a></li>
                     
-                      <li><a href="/tags/计划/" class="tag-could" data-toggle="tooltip" data-placement="top" title="计划">计划</a></li>
+                      <li><a href="/tags/SpringBoot/" class="tag-could" data-toggle="tooltip" data-placement="top" title="SpringBoot">SpringBoot</a></li>
                     
-                      <li><a href="/tags/总结/" class="tag-could" data-toggle="tooltip" data-placement="top" title="总结">总结</a></li>
+                      <li><a href="/tags/Aop/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Aop">Aop</a></li>
                     
                       <li><a href="/tags/thymeleaf/" class="tag-could" data-toggle="tooltip" data-placement="top" title="thymeleaf">thymeleaf</a></li>
                     
