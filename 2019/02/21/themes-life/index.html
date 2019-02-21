@@ -20,7 +20,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <meta name="renderer" content="webkit">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" ,="" user-scalable="no"">
-  <title>Docker使用Nexus搭建Maven私服 发布插件FS'Blog</title>
+  <title>SpringBoot Aop使用FS'Blog</title>
   <link rel="shortcut icon" href="/images/favicon.ico">
   
     
@@ -107,13 +107,13 @@
             </header>
                 
 <header class="blog-post-page-title">
-    <h4>Docker使用Nexus搭建Maven私服 发布插件</h4>
-    <time datetime="2019-02-14T07:36:53.742Z"><i class="fa fa-clock-o"></i>2019-02-14</time>
+    <h4>SpringBoot Aop使用</h4>
+    <time datetime="2019-02-21T07:44:34.000Z"><i class="fa fa-clock-o"></i>2019-02-21</time>
     
     
     <span>
         <i class="fa fa-eye"></i>
-        <span id="/2019/02/14/themes-life/" class="views views-post" title="Docker使用Nexus搭建Maven私服 发布插件"></span>
+        <span id="/2019/02/21/themes-life/" class="views views-post" title="SpringBoot Aop使用"></span>
     </span>
     
     
@@ -121,7 +121,7 @@
 	
         <span><i class="fa fa-folder-o"></i>
     		
-    	       <a href="/categories/系统运维/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">系统运维</a>
+    	       <a href="/categories/SpringBoot/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">SpringBoot</a>
     		
         </span>
 	
@@ -131,221 +131,13 @@
     <article class="blog-post-block blog-post-page-content">
         <section>
             
-                <p>###起因</p>
-<p>上一篇文章中用到了 Jenkins 自动部署SpringBoot, 但是因为项目中 依赖了 自己写的一些jar包，平常本地编译 都是 本地依赖没有什么问题，Jenkins 上编译项目就会找不到jar包， 基于这个问题，为大家带来了 Maven 私服 搭建，</p>
-<p>#####其他因素</p>
-<p>1.团队开发，有可能会遇到不能连外网的情况，使我们无法下载Maven构件<br>2.一些第三方构件数量多，各项目使用比较杂，无法通过中央仓库下载，直接复制JAR包到项目上不好管理，还容易占用带宽。</p>
-<ol>
-<li>docker pull sonatype/nexus3  下载一个nexus3的镜像</li>
-<li>docker images 可以查看</li>
-<li><p>在远程linux服务器上<br> cd /<br> cd home<br> mkdir nexus-data</p>
-<p> docker run -d -p 8081:8081 –name nexus -v /home/nexus-data:/var/nexus-data –restart=always sonatype/nexus3</p>
-</li>
-</ol>
-<p>默认访问 <a href="http://www.ip:8081" target="_blank" rel="noopener">http://www.ip:8081</a> 即可访问<br>默认登录账号/码 : admin/admin123<br><a href="https://images.gitee.com/uploads/images/2019/0214/104326_d2dc3edd_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/104326_d2dc3edd_1289853.png" alt=""></a></p>
-<p>点击 Repositories 看到右边分别有几种仓库类型<br>分别是：<br>proxy 远程代理的库，先在本地找 找不到就向远程服务器请求<br>group 仓库组的概念，整合多个仓库资源<br>hosted 宿主机库，可以存放用户自己的一些jar包</p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0214/104537_5999decf_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/104537_5999decf_1289853.png" alt=""></a></p>
-<p>可以看到 它代理的远程服务器地址是 <a href="https://repo1.maven.org/maven2/" target="_blank" rel="noopener">https://repo1.maven.org/maven2/</a></p>
-<p><a href="https://images.gitee.com/uploads/images/2019/0214/110306_1cfe712c_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/110306_1cfe712c_1289853.png" alt=""></a></p>
-<p>可以看到 这个 group 类型的仓库 整合了 以下三个仓库资源<br><a href="https://images.gitee.com/uploads/images/2019/0214/110426_9aa3f0be_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/110426_9aa3f0be_1289853.png" alt=""></a></p>
-<p>新建一个仓库 存放我们要上传的jar<br>在version policy中选择这个仓库的类型，这里选择release<br>在Deployment policy中选择Allow redeploy（这个很重要）</p>
-<p>然后点击创建 完成仓库的创建<br><a href="https://images.gitee.com/uploads/images/2019/0214/110734_74026194_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/110734_74026194_1289853.png" alt=""></a></p>
-<p>新建一个用户<br><a href="https://images.gitee.com/uploads/images/2019/0214/111025_69b25bd2_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/111025_69b25bd2_1289853.png" alt=""></a></p>
-<h3 id="发布代码到Nexus"><a href="#发布代码到Nexus" class="headerlink" title="发布代码到Nexus"></a>发布代码到Nexus</h3><p>修改本地.m2目录下的settings.xml</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;settings xmlns=&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;
-          xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-          xsi:schemaLocation=&quot;http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;&gt;
-    &lt;servers&gt;
-      &lt;server&gt;
-        &lt;id&gt;test&lt;/id&gt;
-        &lt;username&gt;新建的账号&lt;/username&gt;
-        &lt;password&gt;新建的密码&lt;/password&gt;
-      &lt;/server&gt;
-    &lt;/servers&gt;
-&lt;/settings&gt;
-</code></pre><p>修改项目的pom文件</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-
-  &lt;groupId&gt;com.sf&lt;/groupId&gt;
-  &lt;artifactId&gt;spring-boot-starter-message&lt;/artifactId&gt;
-  &lt;version&gt;1.0-RELEASE&lt;/version&gt;
-
-  &lt;name&gt;spring-boot-starter-message&lt;/name&gt;
-  &lt;!-- FIXME change it to the project&apos;s website --&gt;
-  &lt;url&gt;http://www.example.com&lt;/url&gt;
-
-  &lt;properties&gt;
-    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
-    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
-  &lt;/properties&gt;
-
-  &lt;dependencies&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-boot-autoconfigure&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-      &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-      &lt;version&gt;1.18.0&lt;/version&gt;
-      &lt;scope&gt;provided&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;!-- GuavaCache 缓存 --&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
-      &lt;artifactId&gt;guava&lt;/artifactId&gt;
-      &lt;version&gt;19.0&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;!--&lt;dependency&gt;--&gt;
-      &lt;!--&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;--&gt;
-      &lt;!--&lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;--&gt;
-    &lt;!--&lt;/dependency&gt;--&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;com.aliyun&lt;/groupId&gt;
-      &lt;artifactId&gt;aliyun-java-sdk-core&lt;/artifactId&gt;
-      &lt;version&gt;3.2.8&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;com.aliyun&lt;/groupId&gt;
-      &lt;artifactId&gt;aliyun-java-sdk-dysmsapi&lt;/artifactId&gt;
-      &lt;version&gt;1.1.0&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;com.aliyun&lt;/groupId&gt;
-      &lt;artifactId&gt;aliyun-java-sdk-dm&lt;/artifactId&gt;
-      &lt;version&gt;3.1.0&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;cn.jpush.api&lt;/groupId&gt;
-      &lt;artifactId&gt;jpush-client&lt;/artifactId&gt;
-      &lt;version&gt;3.3.7&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;cn.jpush.api&lt;/groupId&gt;
-      &lt;artifactId&gt;jiguang-common&lt;/artifactId&gt;
-      &lt;version&gt;1.1.1&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;io.netty&lt;/groupId&gt;
-      &lt;artifactId&gt;netty-all&lt;/artifactId&gt;
-      &lt;version&gt;4.1.6.Final&lt;/version&gt;
-      &lt;scope&gt;compile&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
-      &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
-      &lt;version&gt;1.7.7&lt;/version&gt;
-    &lt;/dependency&gt;
-
-    &lt;dependency&gt;
-      &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;
-      &lt;artifactId&gt;gson&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-      &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
-      &lt;version&gt;1.2.46&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;!-- For log4j --&gt;
-    &lt;!--&lt;dependency&gt;--&gt;
-      &lt;!--&lt;groupId&gt;org.slf4j&lt;/groupId&gt;--&gt;
-      &lt;!--&lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;--&gt;
-      &lt;!--&lt;version&gt;1.7.7&lt;/version&gt;--&gt;
-    &lt;!--&lt;/dependency&gt;--&gt;
-    &lt;!--&lt;dependency&gt;--&gt;
-      &lt;!--&lt;groupId&gt;log4j&lt;/groupId&gt;--&gt;
-      &lt;!--&lt;artifactId&gt;log4j&lt;/artifactId&gt;--&gt;
-      &lt;!--&lt;version&gt;1.2.17&lt;/version&gt;--&gt;
-    &lt;!--&lt;/dependency&gt;--&gt;
-  &lt;/dependencies&gt;
-  &lt;dependencyManagement&gt;
-    &lt;dependencies&gt;
-      &lt;dependency&gt;
-        &lt;!-- Import dependency management from Spring Boot --&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;
-        &lt;!--注意限定版本一定为RELEASE,因为上传的对应仓库的存储类型为RELEASE--&gt;
-        &lt;version&gt;2.0.0.RELEASE&lt;/version&gt;
-        &lt;type&gt;pom&lt;/type&gt;
-        &lt;scope&gt;import&lt;/scope&gt;
-      &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-  &lt;/dependencyManagement&gt;
-  &lt;!--指定仓库地址--&gt;
-  &lt;distributionManagement&gt;
-    &lt;repository&gt;
-      &lt;!--此名称要和.m2/settings.xml中设置的ID一致--&gt;
-      &lt;id&gt;test&lt;/id&gt;
-      &lt;url&gt;http://192.168.1.16:8081/repository/invespec-release/&lt;/url&gt;
-    &lt;/repository&gt;
-  &lt;/distributionManagement&gt;
-
-  &lt;build&gt;
-    &lt;finalName&gt;spring-boot-starter-pay&lt;/finalName&gt;
-    &lt;pluginManagement&gt;&lt;!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) --&gt;
-      &lt;plugins&gt;
-        &lt;plugin&gt;
-          &lt;artifactId&gt;maven-clean-plugin&lt;/artifactId&gt;
-          &lt;version&gt;3.0.0&lt;/version&gt;
-        &lt;/plugin&gt;
-        &lt;!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging --&gt;
-        &lt;plugin&gt;
-          &lt;artifactId&gt;maven-resources-plugin&lt;/artifactId&gt;
-          &lt;version&gt;3.0.2&lt;/version&gt;
-        &lt;/plugin&gt;
-        &lt;plugin&gt;
-          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-          &lt;version&gt;3.7.0&lt;/version&gt;
-        &lt;/plugin&gt;
-        &lt;plugin&gt;
-          &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
-          &lt;version&gt;2.20.1&lt;/version&gt;
-        &lt;/plugin&gt;
-        &lt;plugin&gt;
-          &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
-          &lt;version&gt;3.2.0&lt;/version&gt;
-        &lt;/plugin&gt;
-        &lt;plugin&gt;
-          &lt;artifactId&gt;maven-install-plugin&lt;/artifactId&gt;
-          &lt;version&gt;2.5.2&lt;/version&gt;
-        &lt;/plugin&gt;
-        &lt;plugin&gt;
-          &lt;artifactId&gt;maven-deploy-plugin&lt;/artifactId&gt;
-          &lt;version&gt;2.8.2&lt;/version&gt;
-        &lt;/plugin&gt;
-        &lt;!--发布代码Jar插件--&gt;
-        &lt;plugin&gt;
-          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-          &lt;artifactId&gt;maven-deploy-plugin&lt;/artifactId&gt;
-          &lt;version&gt;2.7&lt;/version&gt;
-        &lt;/plugin&gt;
-        &lt;!--发布源码插件--&gt;
-        &lt;plugin&gt;
-          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-          &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;
-          &lt;version&gt;2.2.1&lt;/version&gt;
-          &lt;executions&gt;
-            &lt;execution&gt;
-              &lt;phase&gt;package&lt;/phase&gt;
-              &lt;goals&gt;
-                &lt;goal&gt;jar&lt;/goal&gt;
-              &lt;/goals&gt;
-            &lt;/execution&gt;
-          &lt;/executions&gt;
-        &lt;/plugin&gt;
-      &lt;/plugins&gt;
-    &lt;/pluginManagement&gt;
-  &lt;/build&gt;
-&lt;/project&gt;
-</code></pre><p>最后一键发布<br><a href="https://images.gitee.com/uploads/images/2019/0214/151217_2c6e6340_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/151217_2c6e6340_1289853.png" alt=""></a></p>
-<p>回到系统搜索<br><a href="https://images.gitee.com/uploads/images/2019/0214/151342_bdfc0546_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/151342_bdfc0546_1289853.png" alt=""></a></p>
-<p>以上我们完成了 Nexus 的搭建 及 项目的发布，谢谢大家阅读</p>
+                <p>###SpringBoot Aop使用<br><a href="https://images.gitee.com/uploads/images/2019/0221/153626_e90d6833_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0221/153626_e90d6833_1289853.png" alt=""></a></p>
+<p>看代码，注释很详细了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.aop.conf;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.JoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * User: purui_zhang</span></span><br><span class="line"><span class="comment"> * Date: 2019-02-20</span></span><br><span class="line"><span class="comment"> * Time: 17:55</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogAspect</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  切点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* com.aop.controller.*.*())"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">aspect</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">(JoinPoint joinPoint)</span></span>&#123;</span><br><span class="line">        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span><br><span class="line">        HttpServletRequest request = attributes.getRequest();</span><br><span class="line">        StringBuffer requestURL = request.getRequestURL();</span><br><span class="line">        String method = request.getMethod();</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>, <span class="string">"前置增强"</span>);</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>,requestURL.toString());</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>,method);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterReturning</span>(returning = <span class="string">"ret"</span>,pointcut=<span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAfterReturning</span><span class="params">(Object ret)</span></span>&#123;</span><br><span class="line">        <span class="comment">// ret 最终返回的结果</span></span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>, <span class="string">"doAfterReturning..."</span>+ret);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 后置异常增强</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> joinPoint</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AfterThrowing</span>(pointcut = <span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">throwsException</span><span class="params">(JoinPoint joinPoint)</span></span>&#123;</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>,<span class="string">"出现异常"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 环绕增强</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint pjp)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            log.info(<span class="string">"&#123;&#125;"</span>,<span class="string">"环绕增强-前"</span>);</span><br><span class="line">            <span class="comment">//当使用环绕通知时，这个方法必须调用，否则拦截到的方法就不会再执行了</span></span><br><span class="line">            Object proceed = pjp.proceed();</span><br><span class="line">            log.info(<span class="string">"&#123;&#125;"</span>,<span class="string">"环绕增强-后"</span>);</span><br><span class="line">            <span class="keyword">return</span> proceed;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable throwable) &#123;</span><br><span class="line">            throwable.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@After</span>(<span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">(JoinPoint joinPoint)</span></span>&#123;</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>,<span class="string">"后置增强"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.aop.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * User: purui_zhang</span></span><br><span class="line"><span class="comment"> * Date: 2019-02-20</span></span><br><span class="line"><span class="comment"> * Time: 17:53</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(value = <span class="string">"getUser"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getUser</span><span class="params">()</span></span>&#123;</span><br><span class="line">        HashMap&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"name"</span>,<span class="string">"王大锤"</span>);</span><br><span class="line">        map.put(<span class="string">"age"</span>,<span class="string">"22"</span>);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查看实验结果</p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0221/153950_e23058a5_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0221/153950_e23058a5_1289853.png" alt=""></a></p>
+<p>download :  <a href="https://github.com/puruis/spring_boot_aop" target="_blank" rel="noopener">https://github.com/puruis/spring_boot_aop</a></p>
 
             
         </section>
@@ -353,13 +145,9 @@
         
 			
 				
-			<a href="/tags/Docker/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Docker</a>
+			<a href="/tags/SpringBoot/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">SpringBoot</a>
 				
-			<a href="/tags/CI自动化部署/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">CI自动化部署</a>
-				
-			<a href="/tags/Maven私服/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Maven私服</a>
-				
-			<a href="/tags/Nexus/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Nexus</a>
+			<a href="/tags/Aop/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Aop</a>
 				
 			
 		
@@ -369,12 +157,10 @@
     	
     	
 		
-			<a href="/2019/02/20/themes-life/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="SpringBoot 整合 thymeleaf">上一篇</a>
-		
 
 		
 		
-			<a href="/2019/02/13/themes-life/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="实战Docker搭建自动化部署环境，远程自动部署SpringBoot">下一篇</a>
+			<a href="/2019/02/20/themes-life/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="三分钟搭建SpringBoot工程">下一篇</a>
 		
 
         <div style="clear: both;"></div>
@@ -477,7 +263,7 @@
                 return out;
             }
             // 生成
-            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://yoursite.com/2019/02/14/themes-life/")}).hide();
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://yoursite.com/2019/02/21/themes-life/")}).hide();
             var canvas=qrcode.find('canvas').get(0);
             $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
         </script>
