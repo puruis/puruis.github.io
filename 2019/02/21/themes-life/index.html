@@ -131,7 +131,7 @@
     <article class="blog-post-block blog-post-page-content">
         <section>
             
-                <p>###SpringBoot Aop使用<br><a href="https://images.gitee.com/uploads/images/2019/0221/153626_e90d6833_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0221/153626_e90d6833_1289853.png" alt=""></a></p>
+                <p><a href="https://images.gitee.com/uploads/images/2019/0221/153626_e90d6833_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0221/153626_e90d6833_1289853.png" alt=""></a></p>
 <p>看代码，注释很详细了</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.aop.conf;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.JoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * User: purui_zhang</span></span><br><span class="line"><span class="comment"> * Date: 2019-02-20</span></span><br><span class="line"><span class="comment"> * Time: 17:55</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogAspect</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  切点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* com.aop.controller.*.*())"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">aspect</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">(JoinPoint joinPoint)</span></span>&#123;</span><br><span class="line">        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span><br><span class="line">        HttpServletRequest request = attributes.getRequest();</span><br><span class="line">        StringBuffer requestURL = request.getRequestURL();</span><br><span class="line">        String method = request.getMethod();</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>, <span class="string">"前置增强"</span>);</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>,requestURL.toString());</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>,method);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterReturning</span>(returning = <span class="string">"ret"</span>,pointcut=<span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAfterReturning</span><span class="params">(Object ret)</span></span>&#123;</span><br><span class="line">        <span class="comment">// ret 最终返回的结果</span></span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>, <span class="string">"doAfterReturning..."</span>+ret);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 后置异常增强</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> joinPoint</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AfterThrowing</span>(pointcut = <span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">throwsException</span><span class="params">(JoinPoint joinPoint)</span></span>&#123;</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>,<span class="string">"出现异常"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 环绕增强</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint pjp)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            log.info(<span class="string">"&#123;&#125;"</span>,<span class="string">"环绕增强-前"</span>);</span><br><span class="line">            <span class="comment">//当使用环绕通知时，这个方法必须调用，否则拦截到的方法就不会再执行了</span></span><br><span class="line">            Object proceed = pjp.proceed();</span><br><span class="line">            log.info(<span class="string">"&#123;&#125;"</span>,<span class="string">"环绕增强-后"</span>);</span><br><span class="line">            <span class="keyword">return</span> proceed;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable throwable) &#123;</span><br><span class="line">            throwable.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@After</span>(<span class="string">"aspect()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">(JoinPoint joinPoint)</span></span>&#123;</span><br><span class="line">        log.info(<span class="string">"&#123;&#125;"</span>,<span class="string">"后置增强"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.aop.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Description:</span></span><br><span class="line"><span class="comment"> * User: purui_zhang</span></span><br><span class="line"><span class="comment"> * Date: 2019-02-20</span></span><br><span class="line"><span class="comment"> * Time: 17:53</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(value = <span class="string">"getUser"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getUser</span><span class="params">()</span></span>&#123;</span><br><span class="line">        HashMap&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"name"</span>,<span class="string">"王大锤"</span>);</span><br><span class="line">        map.put(<span class="string">"age"</span>,<span class="string">"22"</span>);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -157,10 +157,12 @@
     	
     	
 		
+			<a href="/2019/02/22/themes-life/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="SpringBoot 整合 Spring Data Jpa">上一篇</a>
+		
 
 		
 		
-			<a href="/2019/02/20/themes-life/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="SpringBoot 整合 thymeleaf">下一篇</a>
+			<a href="/2019/02/20/themes-life/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="三分钟搭建SpringBoot工程">下一篇</a>
 		
 
         <div style="clear: both;"></div>
@@ -306,11 +308,11 @@
             </div>
             <div class="blog-sidebar-count blog-sidebar-padding">
                 <div class="blog-sidebar-count-left">
-                    <p class="blog-sidebar-count-p">6</p>
+                    <p class="blog-sidebar-count-p">7</p>
                     <span class="blog-sidebar-count-span">文章</span>
                 </div>
                 <div class="blog-sidebar-count-right">
-                    <p class="blog-sidebar-count-p">9</p>
+                    <p class="blog-sidebar-count-p">10</p>
                     <span class="blog-sidebar-count-span">标签</span>
                 </div>
                 <div style="clear: both;"></div>
@@ -331,6 +333,11 @@
                   
                     
                       <li class="list-group-item justify-content-between">
+                          <a href="/categories/SpringBoot/">SpringBoot</a>
+                          <span class="badge badge-default badge-pill">4</span>
+                      </li>
+                    
+                      <li class="list-group-item justify-content-between">
                           <a href="/categories/计划总结/">计划总结</a>
                           <span class="badge badge-default badge-pill">1</span>
                       </li>
@@ -338,11 +345,6 @@
                       <li class="list-group-item justify-content-between">
                           <a href="/categories/系统运维/">系统运维</a>
                           <span class="badge badge-default badge-pill">2</span>
-                      </li>
-                    
-                      <li class="list-group-item justify-content-between">
-                          <a href="/categories/SpringBoot/">SpringBoot</a>
-                          <span class="badge badge-default badge-pill">3</span>
                       </li>
                     
                   
@@ -353,9 +355,17 @@
                 <ul class="blog-sidebar-tags-ul blog-sidebar-padding">
                   
                     
+                      <li><a href="/tags/SpringBoot/" class="tag-could" data-toggle="tooltip" data-placement="top" title="SpringBoot">SpringBoot</a></li>
+                    
+                      <li><a href="/tags/Aop/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Aop">Aop</a></li>
+                    
+                      <li><a href="/tags/Spring-Data-Jpa/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Spring Data Jpa">Spring Data Jpa</a></li>
+                    
                       <li><a href="/tags/计划/" class="tag-could" data-toggle="tooltip" data-placement="top" title="计划">计划</a></li>
                     
                       <li><a href="/tags/总结/" class="tag-could" data-toggle="tooltip" data-placement="top" title="总结">总结</a></li>
+                    
+                      <li><a href="/tags/thymeleaf/" class="tag-could" data-toggle="tooltip" data-placement="top" title="thymeleaf">thymeleaf</a></li>
                     
                       <li><a href="/tags/Docker/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Docker">Docker</a></li>
                     
@@ -364,12 +374,6 @@
                       <li><a href="/tags/Maven私服/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Maven私服">Maven私服</a></li>
                     
                       <li><a href="/tags/Nexus/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Nexus">Nexus</a></li>
-                    
-                      <li><a href="/tags/SpringBoot/" class="tag-could" data-toggle="tooltip" data-placement="top" title="SpringBoot">SpringBoot</a></li>
-                    
-                      <li><a href="/tags/Aop/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Aop">Aop</a></li>
-                    
-                      <li><a href="/tags/thymeleaf/" class="tag-could" data-toggle="tooltip" data-placement="top" title="thymeleaf">thymeleaf</a></li>
                     
                   
                 </ul>
