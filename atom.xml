@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-22T07:16:22.886Z</updated>
+  <updated>2019-02-22T07:19:03.471Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2019/02/22/themes-life/"/>
     <id>http://yoursite.com/2019/02/22/themes-life/</id>
     <published>2019-02-22T07:06:34.000Z</published>
-    <updated>2019-02-22T07:16:22.886Z</updated>
+    <updated>2019-02-22T07:19:03.471Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1550829338589&amp;di=49ddbdc264fe9758f298541d1d233870&amp;imgtype=0&amp;src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201603%2F27%2F20160327141837_AfHx5.jpeg" target="_blank" rel="noopener"><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1550829338589&amp;di=49ddbdc264fe9758f298541d1d233870&amp;imgtype=0&amp;src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201603%2F27%2F20160327141837_AfHx5.jpeg" alt=""></a></p><p>download :  <a href="https://github.com/puruis/SpringBoot-Collection.git" target="_blank" rel="noopener">https://github.com/puruis/SpringBoot-Collection.git</a></p>]]></content>
     
@@ -181,11 +181,11 @@
       <category term="系统运维" scheme="http://yoursite.com/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/"/>
     
     
+      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
+    
       <category term="Docker" scheme="http://yoursite.com/tags/Docker/"/>
     
       <category term="CI自动化部署" scheme="http://yoursite.com/tags/CI%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
     
   </entry>
   
