@@ -132,7 +132,6 @@
         <section>
             
                 <p><a href="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1550829338589&amp;di=49ddbdc264fe9758f298541d1d233870&amp;imgtype=0&amp;src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201603%2F27%2F20160327141837_AfHx5.jpeg" target="_blank" rel="noopener"><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1550829338589&amp;di=49ddbdc264fe9758f298541d1d233870&amp;imgtype=0&amp;src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201603%2F27%2F20160327141837_AfHx5.jpeg" alt=""></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">package com.jpa.controller;</span><br><span class="line"></span><br><span class="line">import com.jpa.entity.Student;</span><br><span class="line">import com.jpa.repository.StudentRepository;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Description:</span><br><span class="line"> * User: purui_zhang</span><br><span class="line"> * Date: 2019-02-21</span><br><span class="line"> * Time: 18:33</span><br><span class="line"> */</span><br><span class="line">@RestController</span><br><span class="line">public class StudentController &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private StudentRepository studentRepository;</span><br><span class="line"></span><br><span class="line">    @GetMapping(value = &quot;save&quot;)</span><br><span class="line">    public Object save()&#123;</span><br><span class="line">        Student student = new Student();</span><br><span class="line">        student.setAge(18);</span><br><span class="line">        student.setName(&quot;王大锤&quot;);</span><br><span class="line">        studentRepository.save(student);</span><br><span class="line">        return &quot;成功啦啦啦&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @GetMapping(value = &quot;findAll&quot;)</span><br><span class="line">    public Object findAll()&#123;</span><br><span class="line">        List&lt;Student&gt; all = studentRepository.findAll();</span><br><span class="line">        return all;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>download :  <a href="https://github.com/puruis/SpringBoot-Collection.git" target="_blank" rel="noopener">https://github.com/puruis/SpringBoot-Collection.git</a></p>
 
             
@@ -327,6 +326,11 @@
                   
                     
                       <li class="list-group-item justify-content-between">
+                          <a href="/categories/系统运维/">系统运维</a>
+                          <span class="badge badge-default badge-pill">2</span>
+                      </li>
+                    
+                      <li class="list-group-item justify-content-between">
                           <a href="/categories/SpringBoot/">SpringBoot</a>
                           <span class="badge badge-default badge-pill">4</span>
                       </li>
@@ -334,11 +338,6 @@
                       <li class="list-group-item justify-content-between">
                           <a href="/categories/计划总结/">计划总结</a>
                           <span class="badge badge-default badge-pill">1</span>
-                      </li>
-                    
-                      <li class="list-group-item justify-content-between">
-                          <a href="/categories/系统运维/">系统运维</a>
-                          <span class="badge badge-default badge-pill">2</span>
                       </li>
                     
                   
@@ -349,18 +348,6 @@
                 <ul class="blog-sidebar-tags-ul blog-sidebar-padding">
                   
                     
-                      <li><a href="/tags/SpringBoot/" class="tag-could" data-toggle="tooltip" data-placement="top" title="SpringBoot">SpringBoot</a></li>
-                    
-                      <li><a href="/tags/Aop/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Aop">Aop</a></li>
-                    
-                      <li><a href="/tags/Spring-Data-Jpa/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Spring Data Jpa">Spring Data Jpa</a></li>
-                    
-                      <li><a href="/tags/计划/" class="tag-could" data-toggle="tooltip" data-placement="top" title="计划">计划</a></li>
-                    
-                      <li><a href="/tags/总结/" class="tag-could" data-toggle="tooltip" data-placement="top" title="总结">总结</a></li>
-                    
-                      <li><a href="/tags/thymeleaf/" class="tag-could" data-toggle="tooltip" data-placement="top" title="thymeleaf">thymeleaf</a></li>
-                    
                       <li><a href="/tags/Docker/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Docker">Docker</a></li>
                     
                       <li><a href="/tags/CI自动化部署/" class="tag-could" data-toggle="tooltip" data-placement="top" title="CI自动化部署">CI自动化部署</a></li>
@@ -368,6 +355,18 @@
                       <li><a href="/tags/Maven私服/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Maven私服">Maven私服</a></li>
                     
                       <li><a href="/tags/Nexus/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Nexus">Nexus</a></li>
+                    
+                      <li><a href="/tags/SpringBoot/" class="tag-could" data-toggle="tooltip" data-placement="top" title="SpringBoot">SpringBoot</a></li>
+                    
+                      <li><a href="/tags/Spring-Data-Jpa/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Spring Data Jpa">Spring Data Jpa</a></li>
+                    
+                      <li><a href="/tags/计划/" class="tag-could" data-toggle="tooltip" data-placement="top" title="计划">计划</a></li>
+                    
+                      <li><a href="/tags/总结/" class="tag-could" data-toggle="tooltip" data-placement="top" title="总结">总结</a></li>
+                    
+                      <li><a href="/tags/Aop/" class="tag-could" data-toggle="tooltip" data-placement="top" title="Aop">Aop</a></li>
+                    
+                      <li><a href="/tags/thymeleaf/" class="tag-could" data-toggle="tooltip" data-placement="top" title="thymeleaf">thymeleaf</a></li>
                     
                   
                 </ul>
