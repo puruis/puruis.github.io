@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-22T07:19:03.471Z</updated>
+  <updated>2019-03-06T07:44:23.591Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Python分析股票市场风险</title>
+    <link href="http://yoursite.com/2019/03/06/themes-life/"/>
+    <id>http://yoursite.com/2019/03/06/themes-life/</id>
+    <published>2019-03-06T07:44:34.000Z</published>
+    <updated>2019-03-06T07:44:23.591Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>最近在学习python大数据相关的知识,学以致用,废话不多说，这次我们来实战 用python分析 股票市场风险，助你当上Ceo，迎娶白富美，走上人生巅峰。哈哈哈</code></pre><p><a href="https://images.gitee.com/uploads/images/2019/0306/154037_1e96ef5f_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0306/154037_1e96ef5f_1289853.png" alt=""></a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;最近在学习python大数据相关的知识,学以致用,废话不多说，这次我们来实战 用python分析 股票市场风险，助你当上Ceo，迎娶白富美，走上人生巅峰。哈哈哈
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&quot;https://images.gitee.co
+      
+    
+    </summary>
+    
+      <category term="大数据" scheme="http://yoursite.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="大数据" scheme="http://yoursite.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>SpringBoot 整合 Spring Data Jpa</title>
