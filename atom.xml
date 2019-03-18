@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://puruis.github.io/"/>
   <updated>2019-03-18T09:32:06.477Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://puruis.github.io/</id>
   
   <author>
     <name>purui</name>
@@ -18,36 +18,36 @@
   
   <entry>
     <title>Docker 简单入门-安装Docker</title>
-    <link href="http://yoursite.com/passages/themes-life/"/>
-    <id>http://yoursite.com/passages/themes-life/</id>
+    <link href="https://puruis.github.io/title/"/>
+    <id>https://puruis.github.io/title/</id>
     <published>2019-03-16T15:44:34.000Z</published>
     <updated>2019-03-18T09:32:06.477Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="/passages/themes-life/7D2913DC-BF91-41C5-8DBE-5DA4CDA001D8.png" alt="logo"></p><p> 最近在整理docker的相关知识体系，顺便做些笔记和大家分享下，如果对docker有过一些了解的人，都知道docker是一门容器技术，并且在国内有不在少数的公司在使用，其实就包括了BAT,所以想了解前沿技术的朋友们也可以看看，本篇笔记，这篇文章开始将带大家一起从如下几个方面来讲解Docker</p><ol><li>Docker各个平台的环境搭建</li><li>Docker架构和底层解析</li><li>Docker-machine的使用</li><li>Docker-Playground的介绍</li><li>Dockerfile的实战讲解</li><li>Docker的网络讲解</li><li>Docker持久化及数据共享</li><li>Docker Compose多容器部署</li><li>Docker 容器编排</li><li>容器的运维及监控</li></ol><p>首先我们先来了解下什么 是 docker </p><blockquote><p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口</p></blockquote><p>传统的VM 如左图 最底层 需要一台服务器，之上安装了OS，然后之上 使用 Hypervisor 虚拟技术 在虚拟层之上 虚拟出系统在安装部署我们的应用，每个Guest Os 虚拟分配物理主机的空间，它们共享着主机的硬件资源，需要非常大空间和资源，所以我们可以把它看作是一个 硬件级别的虚拟化。</p><p>右图是docker 的架构<br>Docker 的容器利用LXC（Linux Container容器是一种内核虚拟化技术，可以提供轻量级的虚拟化，以便隔离进程和资源。）<br>它是一个系统级别的虚拟化，而不是创建一个完成成熟的虚拟环境，所以它启动只需要几秒。</p><p>这里我们只是简单从一个方面来分析来 他们之间的差别，更多就不在这里详述了。<br><img src="/passages/themes-life/78A7A17E-858E-4C14-AA9B-D474681167FF.jpg" alt="logo"></p><p>首先我们来看看 Docker的安装<br>我们打开 <a href="https://docs.docker.com" target="_blank" rel="noopener">Docker文档中心</a></p><p><img src="/passages/themes-life/屏幕快照 2019-03-16 下午4.54.20.png" alt="logo"></p><p>然后我们可以看到左中的位置 有个 Get Docker 我们点开 选择Docker CE Docker的社区版 接下来 就是 选择我们 当前电脑的系统 这里<strong><u>注意 如果你的电脑是 windows 那么Docker 只支持Windows 10的版本</u></strong><br>win7 win8 等可以通过docker toolbox来安装 这里就不叙述了</p><p>然后我们看到右边出现下载链接 直接点击下载即可</p><p>操作步骤 一路next</p><p>我本地是 Mac系统 安装完成后 点击安装好的 软件 图标<br>稍等 ，右上角就会出现我们的 Docker 图标<br><img src="/passages/themes-life/屏幕快照 2019-03-16 下午4.57.57.png" alt="logo"></p><p>好了，接下来我们来验证下 我们是否已经安装成功了</p><p>在命令行界面 我们来验证下 是否安装成功，如果你能看到这个界面 证明你已经安装成功了。</p><p><img src="/passages/themes-life/屏幕快照 2019-03-16 下午5.01.22.png" alt="logo"></p><p>windows 的安装 同上 一路next 没有太大差别</p><p>主要我们说下 Linux的Docker安装， 这里我们通过 虚拟机来演示，我这里准备了一个 VirtualBox 然后 我们通过 vagrant 来安装 虚拟机，它可以帮助我们自动化安装一个虚拟机环境，并管理这个环境，我们先下载一个 <a href="https://www.vagrantup.com" target="_blank" rel="noopener">Vagrant</a> 也是一键安装，然后<br>输入 命令vagrant 验证vagrant -version 验证是否安装成功<br>如果你看到 如下界面 那就证明 你已经安装成功了<br><img src="/passages/themes-life/屏幕快照 2019-03-16 下午5.33.50.png" alt="logo"></p><p>接下来 我们建一个 centos7的 目录<br>然后 cd 切换到 centos7 下，运行 vagrant init centos/7 运行完 我们发现目录下 多了一个Vagrantfile 的文件<br><img src="/passages/themes-life/屏幕快照 2019-03-16 下午5.44.01.png" alt="logo"></p><p>然后 我们 运行 vagrant up 它就会自动去下载 centos7的 虚拟机镜像并安装 运行 这个过程可以会比较长<br>等安装完成后,我们可以看到 VirtualBox 中的虚拟机已经启动出来了<br><img src="/passages/themes-life/屏幕快照 2019-03-16 下午5.53.44.png" alt="logo"></p><p>查看 Docker 的 linux系统 的安装文档<br>1.先移除 之前安装的 docker<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br><span class="line">```                  </span><br><span class="line">                  </span><br><span class="line">2.安装需要的一些包</span><br></pre></td></tr></table></figure></p><p>$ sudo yum install -y yum-utils \<br>  device-mapper-persistent-data \<br>  lvm2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">3.设置 远程库</span><br></pre></td></tr></table></figure></p><p>$ sudo yum-config-manager \<br>    –add-repo \<br>    <a href="https://download.docker.com/linux/centos/docker-ce.repo" target="_blank" rel="noopener">https://download.docker.com/linux/centos/docker-ce.repo</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">    </span><br><span class="line">4.安装 docker</span><br></pre></td></tr></table></figure></p><p>$ sudo yum install docker-ce docker-ce-cli containerd.io<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">![logo](docker 简单入门（1）/屏幕快照 2019-03-16 下午6.01.53.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">安装完成后</span><br></pre></td></tr></table></figure></p><p>$ sudo systemctl start docker<br>设置开机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后我们拉去一个 容器 hello-world</span><br></pre></td></tr></table></figure></p><p>$ sudo docker run hello-world<br><code>`</code></p><p>看到下面的输出 就成功了 😯，以上我们 分别演示了 Mac系统和linux系统的 Docker安装 （windows同Mac），可能才接触Docker的朋友 到这里还是没有搞懂 Docker 到底是拿来干嘛的？<br>没关系，后续的文章会从浅入深来介绍Docker ，保管你会爱上它 😁<br><img src="/passages/themes-life/屏幕快照 2019-03-16 下午6.17.10.png" alt="logo"></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="/title/7D2913DC-BF91-41C5-8DBE-5DA4CDA001D8.png" alt="logo"></p><p> 最近在整理docker的相关知识体系，顺便做些笔记和大家分享下，如果对docker有过一些了解的人，都知道docker是一门容器技术，并且在国内有不在少数的公司在使用，其实就包括了BAT,所以想了解前沿技术的朋友们也可以看看，本篇笔记，这篇文章开始将带大家一起从如下几个方面来讲解Docker</p><ol><li>Docker各个平台的环境搭建</li><li>Docker架构和底层解析</li><li>Docker-machine的使用</li><li>Docker-Playground的介绍</li><li>Dockerfile的实战讲解</li><li>Docker的网络讲解</li><li>Docker持久化及数据共享</li><li>Docker Compose多容器部署</li><li>Docker 容器编排</li><li>容器的运维及监控</li></ol><p>首先我们先来了解下什么 是 docker </p><blockquote><p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口</p></blockquote><p>传统的VM 如左图 最底层 需要一台服务器，之上安装了OS，然后之上 使用 Hypervisor 虚拟技术 在虚拟层之上 虚拟出系统在安装部署我们的应用，每个Guest Os 虚拟分配物理主机的空间，它们共享着主机的硬件资源，需要非常大空间和资源，所以我们可以把它看作是一个 硬件级别的虚拟化。</p><p>右图是docker 的架构<br>Docker 的容器利用LXC（Linux Container容器是一种内核虚拟化技术，可以提供轻量级的虚拟化，以便隔离进程和资源。）<br>它是一个系统级别的虚拟化，而不是创建一个完成成熟的虚拟环境，所以它启动只需要几秒。</p><p>这里我们只是简单从一个方面来分析来 他们之间的差别，更多就不在这里详述了。<br><img src="/title/78A7A17E-858E-4C14-AA9B-D474681167FF.jpg" alt="logo"></p><p>首先我们来看看 Docker的安装<br>我们打开 <a href="https://docs.docker.com" target="_blank" rel="noopener">Docker文档中心</a></p><p><img src="/title/屏幕快照 2019-03-16 下午4.54.20.png" alt="logo"></p><p>然后我们可以看到左中的位置 有个 Get Docker 我们点开 选择Docker CE Docker的社区版 接下来 就是 选择我们 当前电脑的系统 这里<strong><u>注意 如果你的电脑是 windows 那么Docker 只支持Windows 10的版本</u></strong><br>win7 win8 等可以通过docker toolbox来安装 这里就不叙述了</p><p>然后我们看到右边出现下载链接 直接点击下载即可</p><p>操作步骤 一路next</p><p>我本地是 Mac系统 安装完成后 点击安装好的 软件 图标<br>稍等 ，右上角就会出现我们的 Docker 图标<br><img src="/title/屏幕快照 2019-03-16 下午4.57.57.png" alt="logo"></p><p>好了，接下来我们来验证下 我们是否已经安装成功了</p><p>在命令行界面 我们来验证下 是否安装成功，如果你能看到这个界面 证明你已经安装成功了。</p><p><img src="/title/屏幕快照 2019-03-16 下午5.01.22.png" alt="logo"></p><p>windows 的安装 同上 一路next 没有太大差别</p><p>主要我们说下 Linux的Docker安装， 这里我们通过 虚拟机来演示，我这里准备了一个 VirtualBox 然后 我们通过 vagrant 来安装 虚拟机，它可以帮助我们自动化安装一个虚拟机环境，并管理这个环境，我们先下载一个 <a href="https://www.vagrantup.com" target="_blank" rel="noopener">Vagrant</a> 也是一键安装，然后<br>输入 命令vagrant 验证vagrant -version 验证是否安装成功<br>如果你看到 如下界面 那就证明 你已经安装成功了<br><img src="/title/屏幕快照 2019-03-16 下午5.33.50.png" alt="logo"></p><p>接下来 我们建一个 centos7的 目录<br>然后 cd 切换到 centos7 下，运行 vagrant init centos/7 运行完 我们发现目录下 多了一个Vagrantfile 的文件<br><img src="/title/屏幕快照 2019-03-16 下午5.44.01.png" alt="logo"></p><p>然后 我们 运行 vagrant up 它就会自动去下载 centos7的 虚拟机镜像并安装 运行 这个过程可以会比较长<br>等安装完成后,我们可以看到 VirtualBox 中的虚拟机已经启动出来了<br><img src="/title/屏幕快照 2019-03-16 下午5.53.44.png" alt="logo"></p><p>查看 Docker 的 linux系统 的安装文档<br>1.先移除 之前安装的 docker<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br><span class="line">```                  </span><br><span class="line">                  </span><br><span class="line">2.安装需要的一些包</span><br></pre></td></tr></table></figure></p><p>$ sudo yum install -y yum-utils \<br>  device-mapper-persistent-data \<br>  lvm2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">3.设置 远程库</span><br></pre></td></tr></table></figure></p><p>$ sudo yum-config-manager \<br>    –add-repo \<br>    <a href="https://download.docker.com/linux/centos/docker-ce.repo" target="_blank" rel="noopener">https://download.docker.com/linux/centos/docker-ce.repo</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">    </span><br><span class="line">4.安装 docker</span><br></pre></td></tr></table></figure></p><p>$ sudo yum install docker-ce docker-ce-cli containerd.io<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">![logo](docker 简单入门（1）/屏幕快照 2019-03-16 下午6.01.53.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">安装完成后</span><br></pre></td></tr></table></figure></p><p>$ sudo systemctl start docker<br>设置开机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后我们拉去一个 容器 hello-world</span><br></pre></td></tr></table></figure></p><p>$ sudo docker run hello-world<br><code>`</code></p><p>看到下面的输出 就成功了 😯，以上我们 分别演示了 Mac系统和linux系统的 Docker安装 （windows同Mac），可能才接触Docker的朋友 到这里还是没有搞懂 Docker 到底是拿来干嘛的？<br>没关系，后续的文章会从浅入深来介绍Docker ，保管你会爱上它 😁<br><img src="/title/屏幕快照 2019-03-16 下午6.17.10.png" alt="logo"></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;img src=&quot;/passages/themes-life/7D2913DC-BF91-41C5-8DBE-5DA4CDA001D8.png&quot; alt=&quot;logo&quot;&gt;&lt;/p&gt;
-&lt;p&gt; 最近在整理docker的相关知识体系，顺便做些笔记和大家分享下，如果对docker有过
+        &lt;p&gt;&lt;img src=&quot;/title/7D2913DC-BF91-41C5-8DBE-5DA4CDA001D8.png&quot; alt=&quot;logo&quot;&gt;&lt;/p&gt;
+&lt;p&gt; 最近在整理docker的相关知识体系，顺便做些笔记和大家分享下，如果对docker有过一些了解的人，都知道docke
       
     
     </summary>
     
-      <category term="Docker" scheme="http://yoursite.com/categories/Docker/"/>
+      <category term="Docker" scheme="https://puruis.github.io/categories/Docker/"/>
     
     
-      <category term="Docker" scheme="http://yoursite.com/tags/Docker/"/>
+      <category term="Docker" scheme="https://puruis.github.io/tags/Docker/"/>
     
-      <category term="入门" scheme="http://yoursite.com/tags/%E5%85%A5%E9%97%A8/"/>
+      <category term="入门" scheme="https://puruis.github.io/tags/%E5%85%A5%E9%97%A8/"/>
     
   </entry>
   
   <entry>
     <title>SpringBoot 整合 Spring Data Jpa</title>
-    <link href="http://yoursite.com/passages/themes-life/"/>
-    <id>http://yoursite.com/passages/themes-life/</id>
+    <link href="https://puruis.github.io/title/"/>
+    <id>https://puruis.github.io/title/</id>
     <published>2019-02-22T07:06:34.000Z</published>
     <updated>2019-03-18T09:32:33.310Z</updated>
     
@@ -62,19 +62,19 @@
     
     </summary>
     
-      <category term="SpringBoot" scheme="http://yoursite.com/categories/SpringBoot/"/>
+      <category term="SpringBoot" scheme="https://puruis.github.io/categories/SpringBoot/"/>
     
     
-      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
+      <category term="SpringBoot" scheme="https://puruis.github.io/tags/SpringBoot/"/>
     
-      <category term="Spring Data Jpa" scheme="http://yoursite.com/tags/Spring-Data-Jpa/"/>
+      <category term="Spring Data Jpa" scheme="https://puruis.github.io/tags/Spring-Data-Jpa/"/>
     
   </entry>
   
   <entry>
     <title>三分钟搭建SpringBoot工程</title>
-    <link href="http://yoursite.com/passages/themes-life/"/>
-    <id>http://yoursite.com/passages/themes-life/</id>
+    <link href="https://puruis.github.io/title/"/>
+    <id>https://puruis.github.io/title/</id>
     <published>2019-02-20T07:14:34.000Z</published>
     <updated>2019-03-18T05:11:10.052Z</updated>
     
@@ -89,10 +89,10 @@
     
     </summary>
     
-      <category term="SpringBoot" scheme="http://yoursite.com/categories/SpringBoot/"/>
+      <category term="SpringBoot" scheme="https://puruis.github.io/categories/SpringBoot/"/>
     
     
-      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
+      <category term="SpringBoot" scheme="https://puruis.github.io/tags/SpringBoot/"/>
     
   </entry>
   
