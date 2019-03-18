@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>分类: 系统运维 | FS&#39;Blog</title>
+  <title>SpringBoot 整合 thymeleaf | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, Theme-AD">
+    <meta name="keywords" content="SpringBoot,SpringBoot,thymeleaf,">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2018-12-01",
     passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -156,25 +156,95 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">系列: 系统运维</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-02-20
+    </span>
+    
+      <span>
+        | <a href="/categories/SpringBoot/"><i class="fa fa-bookmark"></i>SpringBoot</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    SpringBoot 整合 thymeleaf
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2019</h3>
-    
-    <div class="timeline-item">
-      <time>2019-02-14</time>
-      <a target="_self" href="/2019-02-14-Docker使用Nexus搭建Maven私服 发布插件/">Docker使用Nexus搭建Maven私服 发布插件</a>
+    <div class="passage-cover">
+      <figure style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550663160113&di=3fd4d2207b47002f7ca6185bad0da045&imgtype=0&src=http%3A%2F%2Fpic37.photophoto.cn%2F20151112%2F0020033045198747_b.jpg);"></figure>
     </div>
   
+  <article class="passage-article">
+    <p>[<img src="https://dpic.tiankong.com/kl/i7/QJ6674590289.jpg?x-oss-process=style/670ws" alt=""></p>
+<p>（一）Thymeleaf 是个什么？</p>
+<pre><code> 简单说， Thymeleaf 是一个跟 Velocity、FreeMarker 类似的模板引擎，它可以完全替代 JSP 。相较与其他的模板引擎，它有如下三个极吸引人的特点：
+
+1.Thymeleaf 在有网络和无网络的环境下皆可运行，即它可以让美工在浏览器查看页面的静态效果，也可以让程序员在服务器查看带数据的动态页面效果。这是由于它支持 html 原型，然后在 html 标签里增加额外的属性来达到模板+数据的展示方式。浏览器解释 html 时会忽略未定义的标签属性，所以 thymeleaf 的模板可以静态地运行；当有数据返回到页面时，Thymeleaf 标签会动态地替换掉静态内容，使页面动态显示。
+
+2.Thymeleaf 开箱即用的特性。它提供标准和spring标准两种方言，可以直接套用模板实现JSTL、 OGNL表达式效果，避免每天套模板、该jstl、改标签的困扰。同时开发人员也可以扩展和创建自定义的方言。
+</code></pre><hr>
+<p>话不多说，新建一个项目<br><a href="http://img5.imgtn.bdimg.com/it/u=1264549799,3309474862&amp;fm=26&amp;gp=0.jpg" target="_blank" rel="noopener"><img src="http://img5.imgtn.bdimg.com/it/u=1264549799,3309474862&amp;fm=26&amp;gp=0.jpg" alt=""></a><br>选择相关依赖<br><a href="https://images.gitee.com/uploads/images/2019/0220/164808_46a82da9_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164808_46a82da9_1289853.png" alt=""></a></p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0220/164827_73ad3926_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164827_73ad3926_1289853.png" alt=""></a></p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0220/164837_36c12938_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164837_36c12938_1289853.png" alt=""></a></p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0220/164925_91de8446_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164925_91de8446_1289853.png" alt=""></a></p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0220/164946_e23f893e_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/164946_e23f893e_1289853.png" alt=""></a></p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0220/165002_ae08f148_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165002_ae08f148_1289853.png" alt=""></a></p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0220/165115_39e42859_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165115_39e42859_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0220/165019_b899cdbe_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165019_b899cdbe_1289853.png" alt=""></a></p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0220/165213_d32876f6_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165213_d32876f6_1289853.png" alt=""></a><br><a href="https://images.gitee.com/uploads/images/2019/0220/165224_e187fe28_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165224_e187fe28_1289853.png" alt=""></a><br>js测试代码<br><a href="https://images.gitee.com/uploads/images/2019/0220/165258_90a5efc8_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165258_90a5efc8_1289853.png" alt=""></a><br>样式<br><a href="https://images.gitee.com/uploads/images/2019/0220/165310_d20fbadb_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0220/165310_d20fbadb_1289853.png" alt=""></a></p>
+<p>简单完事 收工</p>
+<p>download : <a href="https://github.com/puruis/SpringBoot-Collection.git" target="_blank" rel="noopener">https://github.com/puruis/SpringBoot-Collection.git</a></p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
     
-    <div class="timeline-item">
-      <time>2019-02-13</time>
-      <a target="_self" href="/2019-02-13-实战Docker搭建自动化部署环境，远程自动部署SpringBoot/">实战Docker搭建自动化部署环境，远程自动部署SpringBoot</a>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: 埔枘</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/2019-02-20-SpringBoot 整合 thymeleaf/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/SpringBoot/"><i class="fa fa-tags"></i>SpringBoot</a>
+     
+      <a href="/tags/thymeleaf/"><i class="fa fa-tags"></i>thymeleaf</a>
+    
     </div>
   
 </div>
+
     </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -262,19 +332,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/themes-life/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/2019-02-14-Docker使用Nexus搭建Maven私服 发布插件/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     

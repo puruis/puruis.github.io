@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Dong Yuanxin">
+  
+  
+  <title>Docker使用Nexus搭建Maven私服 发布插件 | FS&#39;Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="系统运维,Docker,CI自动化部署,Maven私服,Nexus,">
+  
+
+  
+  <meta name="description" content="埔枘的个人博客">
+
+  
+
+  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"tWCfJzSH6LBChsputCN8gvNh-gzGzoHsz","appkey":"01RHAtqQIvBDflNXxcY6x2Ja","comment":true,"count":true},
+    welcome: {"enable":true,"interval":30},
+    start_time: "2018-12-01",
+    passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
+    is_post: true,
+    lock: false,
+    author: "Dong Yuanxin",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">QUIET</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 安静地敲代码</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/puruis" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-02-14
+    </span>
+    
+      <span>
+        | <a href="/categories/系统运维/"><i class="fa fa-bookmark"></i>系统运维</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Docker使用Nexus搭建Maven私服 发布插件
+  </h1>
+  
+    <div class="passage-cover">
+      <figure style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550139862123&di=735511c676bcde198eba009ace26a35b&imgtype=0&src=http%3A%2F%2Fi-7.vcimg.com%2Ftrim%2Ffdc5db1266ccd10b734bcd06aa06f09b148775%2Ftrim.jpg);"></figure>
+    </div>
+  
+  <article class="passage-article">
+    <p>###起因</p>
+<p>上一篇文章中用到了 Jenkins 自动部署SpringBoot, 但是因为项目中 依赖了 自己写的一些jar包，平常本地编译 都是 本地依赖没有什么问题，Jenkins 上编译项目就会找不到jar包， 基于这个问题，为大家带来了 Maven 私服 搭建，</p>
+<p>#####其他因素</p>
+<p>1.团队开发，有可能会遇到不能连外网的情况，使我们无法下载Maven构件<br>2.一些第三方构件数量多，各项目使用比较杂，无法通过中央仓库下载，直接复制JAR包到项目上不好管理，还容易占用带宽。</p>
+<ol>
+<li>docker pull sonatype/nexus3  下载一个nexus3的镜像</li>
+<li>docker images 可以查看</li>
+<li><p>在远程linux服务器上<br> cd /<br> cd home<br> mkdir nexus-data</p>
+<p> docker run -d -p 8081:8081 –name nexus -v /home/nexus-data:/var/nexus-data –restart=always sonatype/nexus3</p>
+</li>
+</ol>
+<p>默认访问 <a href="http://www.ip:8081" target="_blank" rel="noopener">http://www.ip:8081</a> 即可访问<br>默认登录账号/码 : admin/admin123<br><a href="https://images.gitee.com/uploads/images/2019/0214/104326_d2dc3edd_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/104326_d2dc3edd_1289853.png" alt=""></a></p>
+<p>点击 Repositories 看到右边分别有几种仓库类型<br>分别是：<br>proxy 远程代理的库，先在本地找 找不到就向远程服务器请求<br>group 仓库组的概念，整合多个仓库资源<br>hosted 宿主机库，可以存放用户自己的一些jar包</p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0214/104537_5999decf_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/104537_5999decf_1289853.png" alt=""></a></p>
+<p>可以看到 它代理的远程服务器地址是 <a href="https://repo1.maven.org/maven2/" target="_blank" rel="noopener">https://repo1.maven.org/maven2/</a></p>
+<p><a href="https://images.gitee.com/uploads/images/2019/0214/110306_1cfe712c_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/110306_1cfe712c_1289853.png" alt=""></a></p>
+<p>可以看到 这个 group 类型的仓库 整合了 以下三个仓库资源<br><a href="https://images.gitee.com/uploads/images/2019/0214/110426_9aa3f0be_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/110426_9aa3f0be_1289853.png" alt=""></a></p>
+<p>新建一个仓库 存放我们要上传的jar<br>在version policy中选择这个仓库的类型，这里选择release<br>在Deployment policy中选择Allow redeploy（这个很重要）</p>
+<p>然后点击创建 完成仓库的创建<br><a href="https://images.gitee.com/uploads/images/2019/0214/110734_74026194_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/110734_74026194_1289853.png" alt=""></a></p>
+<p>新建一个用户<br><a href="https://images.gitee.com/uploads/images/2019/0214/111025_69b25bd2_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/111025_69b25bd2_1289853.png" alt=""></a></p>
+<h3 id="发布代码到Nexus"><a href="#发布代码到Nexus" class="headerlink" title="发布代码到Nexus"></a>发布代码到Nexus</h3><p>修改本地.m2目录下的settings.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;settings xmlns=&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;
+          xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+          xsi:schemaLocation=&quot;http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;&gt;
+    &lt;servers&gt;
+      &lt;server&gt;
+        &lt;id&gt;test&lt;/id&gt;
+        &lt;username&gt;新建的账号&lt;/username&gt;
+        &lt;password&gt;新建的密码&lt;/password&gt;
+      &lt;/server&gt;
+    &lt;/servers&gt;
+&lt;/settings&gt;
+</code></pre><p>修改项目的pom文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+  &lt;groupId&gt;com.sf&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-message&lt;/artifactId&gt;
+  &lt;version&gt;1.0-RELEASE&lt;/version&gt;
+
+  &lt;name&gt;spring-boot-starter-message&lt;/name&gt;
+  &lt;!-- FIXME change it to the project&apos;s website --&gt;
+  &lt;url&gt;http://www.example.com&lt;/url&gt;
+
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+  &lt;/properties&gt;
+
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-boot-autoconfigure&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+      &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+      &lt;version&gt;1.18.0&lt;/version&gt;
+      &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;!-- GuavaCache 缓存 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
+      &lt;artifactId&gt;guava&lt;/artifactId&gt;
+      &lt;version&gt;19.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!--&lt;dependency&gt;--&gt;
+      &lt;!--&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;--&gt;
+      &lt;!--&lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;--&gt;
+    &lt;!--&lt;/dependency&gt;--&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.aliyun&lt;/groupId&gt;
+      &lt;artifactId&gt;aliyun-java-sdk-core&lt;/artifactId&gt;
+      &lt;version&gt;3.2.8&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.aliyun&lt;/groupId&gt;
+      &lt;artifactId&gt;aliyun-java-sdk-dysmsapi&lt;/artifactId&gt;
+      &lt;version&gt;1.1.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.aliyun&lt;/groupId&gt;
+      &lt;artifactId&gt;aliyun-java-sdk-dm&lt;/artifactId&gt;
+      &lt;version&gt;3.1.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;cn.jpush.api&lt;/groupId&gt;
+      &lt;artifactId&gt;jpush-client&lt;/artifactId&gt;
+      &lt;version&gt;3.3.7&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;cn.jpush.api&lt;/groupId&gt;
+      &lt;artifactId&gt;jiguang-common&lt;/artifactId&gt;
+      &lt;version&gt;1.1.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;io.netty&lt;/groupId&gt;
+      &lt;artifactId&gt;netty-all&lt;/artifactId&gt;
+      &lt;version&gt;4.1.6.Final&lt;/version&gt;
+      &lt;scope&gt;compile&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+      &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+      &lt;version&gt;1.7.7&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;
+      &lt;artifactId&gt;gson&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+      &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+      &lt;version&gt;1.2.46&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- For log4j --&gt;
+    &lt;!--&lt;dependency&gt;--&gt;
+      &lt;!--&lt;groupId&gt;org.slf4j&lt;/groupId&gt;--&gt;
+      &lt;!--&lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;--&gt;
+      &lt;!--&lt;version&gt;1.7.7&lt;/version&gt;--&gt;
+    &lt;!--&lt;/dependency&gt;--&gt;
+    &lt;!--&lt;dependency&gt;--&gt;
+      &lt;!--&lt;groupId&gt;log4j&lt;/groupId&gt;--&gt;
+      &lt;!--&lt;artifactId&gt;log4j&lt;/artifactId&gt;--&gt;
+      &lt;!--&lt;version&gt;1.2.17&lt;/version&gt;--&gt;
+    &lt;!--&lt;/dependency&gt;--&gt;
+  &lt;/dependencies&gt;
+  &lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+      &lt;dependency&gt;
+        &lt;!-- Import dependency management from Spring Boot --&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;
+        &lt;!--注意限定版本一定为RELEASE,因为上传的对应仓库的存储类型为RELEASE--&gt;
+        &lt;version&gt;2.0.0.RELEASE&lt;/version&gt;
+        &lt;type&gt;pom&lt;/type&gt;
+        &lt;scope&gt;import&lt;/scope&gt;
+      &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+  &lt;/dependencyManagement&gt;
+  &lt;!--指定仓库地址--&gt;
+  &lt;distributionManagement&gt;
+    &lt;repository&gt;
+      &lt;!--此名称要和.m2/settings.xml中设置的ID一致--&gt;
+      &lt;id&gt;test&lt;/id&gt;
+      &lt;url&gt;http://192.168.1.16:8081/repository/invespec-release/&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/distributionManagement&gt;
+
+  &lt;build&gt;
+    &lt;finalName&gt;spring-boot-starter-pay&lt;/finalName&gt;
+    &lt;pluginManagement&gt;&lt;!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) --&gt;
+      &lt;plugins&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-clean-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.0.0&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging --&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-resources-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.0.2&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.7.0&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.20.1&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.2.0&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-install-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.5.2&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-deploy-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.8.2&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;!--发布代码Jar插件--&gt;
+        &lt;plugin&gt;
+          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+          &lt;artifactId&gt;maven-deploy-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.7&lt;/version&gt;
+        &lt;/plugin&gt;
+        &lt;!--发布源码插件--&gt;
+        &lt;plugin&gt;
+          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+          &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.2.1&lt;/version&gt;
+          &lt;executions&gt;
+            &lt;execution&gt;
+              &lt;phase&gt;package&lt;/phase&gt;
+              &lt;goals&gt;
+                &lt;goal&gt;jar&lt;/goal&gt;
+              &lt;/goals&gt;
+            &lt;/execution&gt;
+          &lt;/executions&gt;
+        &lt;/plugin&gt;
+      &lt;/plugins&gt;
+    &lt;/pluginManagement&gt;
+  &lt;/build&gt;
+&lt;/project&gt;
+</code></pre><p>最后一键发布<br><a href="https://images.gitee.com/uploads/images/2019/0214/151217_2c6e6340_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/151217_2c6e6340_1289853.png" alt=""></a></p>
+<p>回到系统搜索<br><a href="https://images.gitee.com/uploads/images/2019/0214/151342_bdfc0546_1289853.png" target="_blank" rel="noopener"><img src="https://images.gitee.com/uploads/images/2019/0214/151342_bdfc0546_1289853.png" alt=""></a></p>
+<p>以上我们完成了 Nexus 的搭建 及 项目的发布，谢谢大家阅读</p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#发布代码到Nexus"><span class="toc-text">发布代码到Nexus</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: 埔枘</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/2019-02-14-Docker使用Nexus搭建Maven私服 发布插件/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/Docker/"><i class="fa fa-tags"></i>Docker</a>
+     
+      <a href="/tags/CI自动化部署/"><i class="fa fa-tags"></i>CI自动化部署</a>
+     
+      <a href="/tags/Maven私服/"><i class="fa fa-tags"></i>Maven私服</a>
+     
+      <a href="/tags/Nexus/"><i class="fa fa-tags"></i>Nexus</a>
+    
+    </div>
+  
+</div>
+
+    </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">博客推荐</h5>
+        
+          <span class="site-footer-item">
+            <a href="https://godbmw.com/" target="_blank">GodBMW</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href="http://ruanyifeng.com/" target="_blank">阮一峰的个人网站</a>
+          </span>
+        
+      </div>
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">抓到我</h5>
+        
+          <span class="site-footer-item">
+            <a href="https://juejin.im" target="_blank">掘金</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href="https://segmentfault.com/" target="_blank">思否</a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: 854554762@qq.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="/2019-02-20-SpringBoot 整合 thymeleaf/" data-enable="true">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/2019-02-13-实战Docker搭建自动化部署环境，远程自动部署SpringBoot/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '');
+  </script>
+
+
+
+  <script async>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+  <script async>
+    (function(){
+    var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?":"https://jspassport.ssl.qhimg.com/11.0.1.js?";
+    document.write('<script src="' + src + '" id="sozz"><\/script>');
+    })();
+  </script>
+
+
+    
+  </body>
+</html>
