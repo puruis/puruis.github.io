@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://puruis.github.io/"/>
-  <updated>2019-03-19T03:07:00.416Z</updated>
+  <updated>2019-03-19T03:17:12.129Z</updated>
   <id>https://puruis.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://puruis.github.io/docker%20%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%EF%BC%882%EF%BC%89-Docker%20Machine/"/>
     <id>https://puruis.github.io/docker 简单入门（2）-Docker Machine/</id>
     <published>2019-03-18T16:00:00.000Z</published>
-    <updated>2019-03-19T03:07:00.416Z</updated>
+    <updated>2019-03-19T03:17:12.129Z</updated>
     
     <content type="html"><![CDATA[<p>首先我们可以先从 docker的文档来了解下什么是 Docker-machine，<br>大概意思如下</p><p>您可以使用Docker Machine：</p><pre><code>1.在Mac或Windows上安装并运行Docker2.配置和管理多个远程Docker主机3.提供Swarm集群</code></pre><blockquote><p>Docker Machine是一个工具，可让您在虚拟主机上安装Docker Engine，并使用docker-machine命令管理主机。您可以使用Machine在本地Mac或Windows机器上，公司网络上，数据中心或Azure，AWS或Digital Ocean等云提供商上创建Docker主机。</p></blockquote><p><img src="/docker 简单入门（2）-Docker Machine/屏幕快照 2019-03-18 下午6.33.46.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><p>我们安装了 Docker 后 它默认 也安装了 Docker-machine</p><p><img src="/docker 简单入门（2）-Docker Machine/屏幕快照 2019-03-18 下午6.42.58.png" alt="a940583012c16853a2f82e16fb875b84"></p><p>来试下 用Docker-machine 在虚拟机上安装Docker</p><p>在Docker 启动的情况下 执行 docker-machine create –driver virtualbox default<br>它会自动开始下载 一个轻量级Linux发行版本（boot2docker）<br>成功之后 我们会在 VirtualBox 中发现有一个新的虚拟机正在运行中<br><img src="/docker 简单入门（2）-Docker Machine/屏幕快照 2019-03-18 下午8.40.06.png" alt="612cab248d48e3726d067d44799e8f2b"></p><p>然后执行 docker-machine ls<br>可以看到正在运行的实例，那么进入到 容器内部呢？<br>和vagrant差不多 docker-machine ssh default（容器名）<br><img src="/docker 简单入门（2）-Docker Machine/屏幕快照 2019-03-19 上午10.48.14.png" alt="1267c4daaf1c01ec60fcb916b1b89033"></p><p>运行。docker version 就会发现 这里已经装好了 docker<br><img src="/docker 简单入门（2）-Docker Machine/屏幕快照 2019-03-19 上午10.49.55.png" alt="cbe9ad15aed232ae447c60992072fae9"></p><p>其实 docker-machine 也可以用来创建云主机，有兴趣的朋友的自己尝试一下，可以参考下面的文档<br><img src="/docker 简单入门（2）-Docker Machine/屏幕快照 2019-03-19 上午10.51.44.png" alt="ee095e7a4802aea49262f9986a177942"></p>]]></content>
     
