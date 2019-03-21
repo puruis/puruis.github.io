@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Dong Yuanxin">
+  
+  
+  <title>Zookeeper入门(三) | FS&#39;Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Zookeeper,分布式,高可用,">
+  
+
+  
+  <meta name="description" content="1.集群环境搭建 - 启动    修改zooo.cfg 配置文件 如下">
+
+  
+
+  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"tWCfJzSH6LBChsputCN8gvNh-gzGzoHsz","appkey":"01RHAtqQIvBDflNXxcY6x2Ja","comment":true,"count":true},
+    welcome: {"enable":true,"interval":30},
+    start_time: "2018-12-01",
+    passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
+    is_post: true,
+    lock: false,
+    author: "Dong Yuanxin",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">QUIET</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 安静地敲代码</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/puruis" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2018-08-07
+    </span>
+    
+      <span>
+        | <a href="/categories/Zookeeper/"><i class="fa fa-bookmark"></i>Zookeeper</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Zookeeper入门(三)
+  </h1>
+  
+  <article class="passage-article">
+    <p>为了方便，我这搭建的只是一个伪集群环境</p>
+<p>2888 表示 心跳检测端口</p>
+<p>3888 表示 领导选举，用于投票的端口</p>
+<p>2.使用命令行客户端连接Zookeeper</p>
+<p>$ bin/zkCli.sh 会出现以下信息<br><img src="https://static.oschina.net/uploads/space/2017/0819/221238_r6YL_3394890.png" alt="image"></p>
+<p>表示成功连接， 若是想连接别的服务器上的zookeeper 则 使用如下命令:</p>
+<p>$ bin/zkCli.sh -server <ip>:<port></port></ip></p>
+<p>好了，我们来通过命令行来操作zookeeper吧。</p>
+<p>我不知道命令啊？？？？   没关系，  叫help（帮助）</p>
+<p><img src="https://static.oschina.net/uploads/space/2017/0819/221534_98B5_3394890.png" alt="image"></p>
+<p>以上命令大多数是针对ZNode节点进行操作</p>
+<p>1.列出子节点<br>命令格式: ls path [watch]</p>
+<p>那么我们先列出根节点的所有子节点:<br><img src="https://static.oschina.net/uploads/space/2017/0819/221858_H8s6_3394890.png" alt="image"></p>
+<p>默认根节点下有一个 zookeeper的子节点，它作为Zookeeper的保留节点，我们一般不使用它</p>
+<p>另外我们还可以使用 ls2</p>
+<p>来看看<br><img src="https://static.oschina.net/uploads/space/2017/0819/222103_1TTK_3394890.png" alt="image"></p>
+<p>cZxid : 表示节点创建时的事务ID （每个客户点的请求都会形成一个事务）</p>
+<p>ctime : 表示节点创建的时间</p>
+<p>mZxid : 表示最后一次修改节点的事务ID</p>
+<p>mtime : 最后一次修改节点的时间</p>
+<p>pZxid ： 表示最后一次修改父节点的事务ID</p>
+<p>cversion : 表示子节点的版本号</p>
+<p>dataVersion : 表示节点所包含数据的版本号(每个数据都有自己的版本，它与节点的版本不一样)</p>
+<p>aclVersion : 表示节点的ACL 权限版本号(权限也有自己的版本)</p>
+<p>ephemeralOwner : 表示临时会话的ID</p>
+<p>dataLength : 表示节点所包含的数据内容长度</p>
+<p>numChildren : 表示当前节点的子节点数</p>
+<p>以上信息都称为 Stat(统计)</p>
+<p>2.判断子节点是否存在<br>判断foo 节点是否存在</p>
+<pre><code>stat /foo
+</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0819/222938_pVXg_3394890.png" alt="image"></p>
+<p>可以看出 该节点不存在</p>
+<p>3.创建节点<br>create [-s] [-e] path data acl</p>
+<p>-s 用于指定该节点是否为顺序节点</p>
+<p>-c 用于指定该节点是否为临时节点</p>
+<p>最后一个acl 用于权限控制  zookeeper 内部提供了一个Access Contronl List(访问权限控制列表，简称ACL)，默认情况下不做任何权限控制.</p>
+<p>我们来创建一个 hello的节点 数据内容为 hello world<br><img src="https://static.oschina.net/uploads/space/2017/0819/223415_Ky0f_3394890.png" alt="image"></p>
+<p>创建成功!</p>
+<p>4.获取节点<br>get path [watch]<br><img src="https://static.oschina.net/uploads/space/2017/0819/223521_cUFY_3394890.png" alt="image"></p>
+<p>即可获得 该节点的 Stat信息</p>
+<p>5.更新节点信息<br>set path data [version]<br><img src="https://static.oschina.net/uploads/space/2017/0819/223646_4ULW_3394890.png" alt="image"></p>
+<p>大家可以看到Stat信息产生了变化 版本从0变成了1 其它数据也产生了变化</p>
+<p>6.删除节点<br>delete path [version]<br><img src="https://static.oschina.net/uploads/space/2017/0819/223847_hUPT_3394890.png" alt="image"></p>
+<p>该命令执行后不会有任何提示，注意只有该节点没有子节点时才能删除成功，否则将给出”Node not empty”</p>
+<p>但是我们可以通过 rmr path  一次性删除该节点及下面的所有子节点</p>
+<p>下次继续分享  通过java 来操作Zookeeper!</p>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: 埔枘</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/Zookeeper(三)/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/分布式/"><i class="fa fa-tags"></i>分布式</a>
+     
+      <a href="/tags/高可用/"><i class="fa fa-tags"></i>高可用</a>
+    
+    </div>
+  
+</div>
+
+    </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">博客推荐</h5>
+        
+          <span class="site-footer-item">
+            <a href="https://godbmw.com/" target="_blank">GodBMW</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href="http://ruanyifeng.com/" target="_blank">阮一峰的个人网站</a>
+          </span>
+        
+      </div>
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">抓到我</h5>
+        
+          <span class="site-footer-item">
+            <a href="https://juejin.im" target="_blank">掘金</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href="https://segmentfault.com/" target="_blank">思否</a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: 854554762@qq.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="/Zookeeper(四)-实战/" data-enable="true">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/Zookeeper入门(二)/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '');
+  </script>
+
+
+
+  <script async>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+  <script async>
+    (function(){
+    var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?":"https://jspassport.ssl.qhimg.com/11.0.1.js?";
+    document.write('<script src="' + src + '" id="sozz"><\/script>');
+    })();
+  </script>
+
+
+    
+  </body>
+</html>

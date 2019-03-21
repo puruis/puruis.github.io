@@ -76,4 +76,497 @@
     
   </entry>
   
+  <entry>
+    <title>Lombok：让Java代码更优雅</title>
+    <link href="https://puruis.github.io/Lombok%EF%BC%9A%E8%AE%A9Java%E4%BB%A3%E7%A0%81%E6%9B%B4%E4%BC%98%E9%9B%85/"/>
+    <id>https://puruis.github.io/Lombok：让Java代码更优雅/</id>
+    <published>2018-11-01T16:00:00.000Z</published>
+    <updated>2019-03-21T04:38:34.133Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>下面是类级别注解@NoArgsConstructor //相当于定义1个无参构造函数@Data //相当于定义了类里所有属性的get set eqauls hashCode toString@RequiredArgsConstructor //一般和@NonNull注解配合使用，表示定义1个包含类里所有声明@NonNull注解的构造函数@Accessors(fluent = true) //表示实体类可以用fluent风格去调用，例如:new Result().success(true).data(123); 这句话里success函数data 函数都是声明注解以后自动生成的，并且都返回当前类自身。@FieldDefaults(level = AccessLevel.PRIVATE) //所有属性默认访问级别都是private ,省的挨个属性去写了，如果有10个属性，9个都是private ，1个是public ,可以单独覆盖.如果单独那个是包级别访问权限的，可以通过加上@PackagePrivate注解去覆盖@UtilityClass //声明这个注解，会自动为该类生成1个私有无参构造函数，构造函数内部会直接抛异常，表示这个类是1个工具类，无法实例化@Log4j2 //声明log4j2注解，会自动为该类创建1个 log属性，避免手动创建，lombok还支持slf4j,log4j1.x commons log ，jdk原生的log,都会有相应的注解支持 .</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;下面是类级别注解
+@NoArgsConstructor //相当于定义1个无参构造函数
+@Data //相当于定义了类里所有属性的get set eqauls hashCode toString
+@RequiredArgsConstructor //一般和@
+      
+    
+    </summary>
+    
+      <category term="Lombok" scheme="https://puruis.github.io/categories/Lombok/"/>
+    
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+      <category term="Lombok" scheme="https://puruis.github.io/tags/Lombok/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Got error 28 from storage engine 解决记录</title>
+    <link href="https://puruis.github.io/Got%20error%2028%20from%20storage%20engine%20%E8%A7%A3%E5%86%B3%E8%AE%B0%E5%BD%95/"/>
+    <id>https://puruis.github.io/Got error 28 from storage engine 解决记录/</id>
+    <published>2018-08-26T16:00:00.000Z</published>
+    <updated>2019-03-21T04:39:30.703Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>周一早上来上班，刚打开电脑，同事就接到的 客户的投诉，数据提交不了。<br>同事问我，是不是服务挂了，  我赶忙连接上服务器，发现服务并没有挂，查询数据时就卡住了，第一个反应，<br>？？？？ 是不是 数据 锁住了，打开Navicat 查询 爆出 下面这件 橙装，<br>没遇到过，只能百度，</p></blockquote><p>原因：存储引擎不够，无法执行此SQL语句。(大致理解是磁盘空间不足)</p><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1535364022728&amp;di=f9739f006bff045911dc498cefdcc2d5&amp;imgtype=0&amp;src=http%3A%2F%2Fs16.sinaimg.cn%2Fbmiddle%2Fa1409149tc03587ddf4cf%26690" alt="image"><br><a id="more"></a><br>网上扣的图，出错的忘记截图了</p><p>验证:</p><p><img src="https://oscimg.oschina.net/oscnet/7e7f7db4302bdd925605ad65c705d2f477a.jpg" alt="image"></p><p>上图是解决后 截图的， 出错时,/dev/sda2 Use% 是 100%</p><ul><li>/dev/sda这是Linux系统下的设备文件，类似Windows系统上面的本地磁盘、U盘、光驱等设备</li><li>设备文件系统</li><li>tmpfs（temporary filesystem）是Linux特有的文件系统，标准挂载点是/dev/shm，默认大小是实际内存的一半，如下图所示。当然，用户也可以将tmpfs挂载在其他地方。tmpfs可以使用物理内存，也可以使用swap交换空间。tmpfs有些像虚拟磁盘（ramdisk）</li></ul><p>解决方案：删除一些临时文件或是不用的文件</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;周一早上来上班，刚打开电脑，同事就接到的 客户的投诉，数据提交不了。&lt;br&gt;同事问我，是不是服务挂了，  我赶忙连接上服务器，发现服务并没有挂，查询数据时就卡住了，第一个反应，&lt;br&gt;？？？？ 是不是 数据 锁住了，打开Navicat 查询 爆出 下面这件 橙装，&lt;br&gt;没遇到过，只能百度，&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;原因：存储引擎不够，无法执行此SQL语句。(大致理解是磁盘空间不足)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1535364022728&amp;amp;di=f9739f006bff045911dc498cefdcc2d5&amp;amp;imgtype=0&amp;amp;src=http%3A%2F%2Fs16.sinaimg.cn%2Fbmiddle%2Fa1409149tc03587ddf4cf%26690&quot; alt=&quot;image&quot;&gt;&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="数据库" scheme="https://puruis.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="Mysql" scheme="https://puruis.github.io/tags/Mysql/"/>
+    
+      <category term="磁盘" scheme="https://puruis.github.io/tags/%E7%A3%81%E7%9B%98/"/>
+    
+      <category term="Linux" scheme="https://puruis.github.io/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>为什么需要微服务架构</title>
+    <link href="https://puruis.github.io/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%20%20/"/>
+    <id>https://puruis.github.io/为什么需要微服务架构  /</id>
+    <published>2018-08-21T16:00:00.000Z</published>
+    <updated>2019-03-21T06:39:32.731Z</updated>
+    
+    <content type="html"><![CDATA[<p>任何一种东西的出现都不会是偶然,那么微服务的架构的出现自然也会有出现的原因,由于传统应用架构的不合理或者说是对于业务的发展不适用,从而产生了新的架构模式,这和大自然的适者生存的生存法则一样,这类现象在正常不过了,那么,传统架构有那么问题呢？ 我从自己工作及学习中谈谈自己的看法。</p><p> 2014年Martin Fowler(马丁)提出了Micro Service (微服务)的概念,业界就掀起了一股关于微服务的热潮,人们不再需要ESB(Enterprise Service Bus,企业服务总线)。恰逢Docker技术的发展及逐渐 普及,一个崭新的轻量级SOA架构MSA(Micro Service Architecture,微服务架构),伴随着Docker技术发展越来越快。</p><h3 id="传统应用架构的问题"><a href="#传统应用架构的问题" class="headerlink" title="传统应用架构的问题"></a>传统应用架构的问题</h3><p>所有的功能及WebUi 一起封装在同一个war中,然后将war放到tomcat或是其他服务器中运行,程序会连接DataBase(例如MySql) 来操作数据库。</p><p><img src="https://static.oschina.net/uploads/space/2017/1209/222808_Botj_3394890.png" alt="image"><br>一开始 用户量小,程序不会有任何问题,但是随着业务及用户量的增长,单体架构的弊端开始凸显出来。内存不足,代码逻辑复杂,维护困难。一系列问题…</p><p>那么如何来解决这个问题呢?<br>人们想到了一个简单的办法。</p><h3 id="如何解决单体架构应用的问题"><a href="#如何解决单体架构应用的问题" class="headerlink" title="如何解决单体架构应用的问题"></a>如何解决单体架构应用的问题</h3><p>只需要将同样的war包 copy一份一样的，并将其部署到另一台服务器中,数据库连接同一个,只是在这些WebService 上 架设一台Load Balancer(负载均衡,简称LB)来进行水平扩展</p><p><img src="https://static.oschina.net/uploads/space/2017/1209/223205_75KZ_3394890.png" alt="image"></p><p>请求会先发送到LB 上,通过LB的路由算法(例如轮询或哈希)，将请求分发到后面具体的Web Service,这类请求转发技术被称为Reverse Proxy(反向代理),由于此种技术使流量得到了均摊,负载得到了均衡,所以也称为 负载均衡技术。</p><p>理论上机器可以无限水平扩展,只要LB能够承受流量的冲击。</p><p>通过以上技术方案,轻松将负载进行了均衡，在一定程度上缓解了流量对Web Service的压力,但此时却造成了大量系统资源的浪费。</p><p>除了资源的浪费,传统的单体架构还存在其它问题。</p><h3 id="单体架构还有那些问题"><a href="#单体架构还有那些问题" class="headerlink" title="单体架构还有那些问题"></a>单体架构还有那些问题</h3><p>传统应用架构实际上是一个Monolith(单体架构),因为整个应用都封装到了一个war中,就像是一块巨石,无法拆分。</p><p>我们在实际工作中部署单体架构的应用可能会遇到以下问题</p><ul><li>修改一行代码,就需要重新部署整个应用.</li><li>部署应用带来的时间消耗和系统性能的开销使非常大的</li></ul><p>综上所述:单体架构应用还会有以下的问题。</p><ul><li>系统资源浪费</li><li>部署效率低下</li><li>技术选型单一</li></ul><p>问题可能不只是这些,当业务越来越复杂,应用会变得越来越臃肿,’身材越来越胖’,于是,人们开始寻找新的解决思路,这就是微服务架构。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;任何一种东西的出现都不会是偶然,那么微服务的架构的出现自然也会有出现的原因,由于传统应用架构的不合理或者说是对于业务的发展不适用,从而产生了新的架构模式,这和大自然的适者生存的生存法则一样,这类现象在正常不过了,那么,传统架构有那么问题呢？ 我从自己工作及学习中谈谈自己的看
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="https://puruis.github.io/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="微服务" scheme="https://puruis.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+      <category term="架构" scheme="https://puruis.github.io/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>手动实现数据库连接池</title>
+    <link href="https://puruis.github.io/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/"/>
+    <id>https://puruis.github.io/手动实现数据库连接池/</id>
+    <published>2018-08-21T16:00:00.000Z</published>
+    <updated>2019-03-21T06:38:51.127Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://gitee.com/zprsss/pool.git" target="_blank" rel="noopener">https://gitee.com/zprsss/pool.git</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://gitee.com/zprsss/pool.git&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://gitee.com/zprsss/pool.git&lt;/a&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="JAVA" scheme="https://puruis.github.io/categories/JAVA/"/>
+    
+    
+      <category term="数据库连接池" scheme="https://puruis.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0/"/>
+    
+      <category term="多线程" scheme="https://puruis.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ActiveMq 入门</title>
+    <link href="https://puruis.github.io/ActiveMq%20%E5%85%A5%E9%97%A8/"/>
+    <id>https://puruis.github.io/ActiveMq 入门/</id>
+    <published>2018-08-09T16:00:00.000Z</published>
+    <updated>2019-03-21T04:37:06.803Z</updated>
+    
+    <content type="html"><![CDATA[<p>首先我们需要下载 ActiveMq 然后双击activemq.bat 启动 ActiveMq</p><p><img src="https://static.oschina.net/uploads/space/2017/0817/164714_tb08_3394890.png" alt="image"><br><!--更多...--><br>如下启动成功！<br><img src="https://static.oschina.net/uploads/space/2017/0817/164828_KyAW_3394890.png" alt="image"></p><p>然后访问 <a href="http://localhost:8161/admin/" target="_blank" rel="noopener">http://localhost:8161/admin/</a>    ActiveMq提供的一个管理界面</p><p><img src="https://static.oschina.net/uploads/space/2017/0817/164925_aKLs_3394890.png" alt="image"></p><p>然后 我使用JAVA来操作<br>首先,我们创一个 消息发送者</p><pre><code>public class Sender {    public static void main(String[] args) throws JMSException {        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(                ActiveMQConnectionFactory.DEFAULT_USER,                ActiveMQConnectionFactory.DEFAULT_PASSWORD,                ActiveMQConnectionFactory.DEFAULT_BROKER_URL);        //创建一个连接        Connection connection = activeMQConnectionFactory.createConnection();        //开启连接        connection.start();        //创建会话        // 1.是否启动 事务    2.签收模式        Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);        //创建 一个队列        Destination destination = session.createQueue(&quot;queue1&quot;);        //通过 session 创建 发送消息的生产者/接收消息的 消费者        MessageProducer producer = session.createProducer(destination);        //设置持久化        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);        TextMessage textMessage = session.createTextMessage();        textMessage.setText(&quot;hello active!&quot;);        //发送        producer.send(textMessage);        //释放资源        if(null != connection){            connection.close();        }    }}</code></pre><p>当然我们也需要一个接收者 </p><pre><code>public class Receiver {    public static void main(String[] args) {        // ConnectionFactory ：连接工厂，JMS 用它创建连接        ConnectionFactory connectionFactory;        // Connection ：JMS 客户端到JMS Provider 的连接        Connection connection = null;        // Session： 一个发送或接收消息的线程        Session session;        // Destination ：消息的目的地;消息发送给谁.        Destination destination;        // 消费者，消息接收者        MessageConsumer consumer;        connectionFactory = new ActiveMQConnectionFactory(                ActiveMQConnection.DEFAULT_USER,                ActiveMQConnection.DEFAULT_PASSWORD,                ActiveMQConnectionFactory.DEFAULT_BROKER_URL);        try {            // 构造从工厂得到连接对象            connection = connectionFactory.createConnection();            // 启动            connection.start();            // 获取操作连接            session = connection.createSession(Boolean.FALSE,                    Session.AUTO_ACKNOWLEDGE);            destination = session.createQueue(&quot;queue1&quot;);            consumer = session.createConsumer(destination);            while (true) {                //设置接收者接收消息的时间，为了便于测试，这里谁定为100s                TextMessage message = (TextMessage) consumer.receive(100000);                if (null != message) {                    System.out.println(&quot;收到消息&quot; + message.getText());                } else {                    break;                }            }        } catch (Exception e) {            e.printStackTrace();        } finally {            try {                if (null != connection)                    connection.close();            } catch (Throwable ignore) {            }        }    }}</code></pre><p>运行结果</p><p><img src="https://static.oschina.net/uploads/space/2017/0817/165120_qElJ_3394890.png" alt="image"></p><p>代码-》》 <a href="https://git.oschina.net/zprsss/ActiveMqDemo.git" target="_blank" rel="noopener">https://git.oschina.net/zprsss/ActiveMqDemo.git</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;首先我们需要下载 ActiveMq 然后双击activemq.bat 启动 ActiveMq&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.oschina.net/uploads/space/2017/0817/164714_tb08_3394890.pn
+      
+    
+    </summary>
+    
+      <category term="ActiveMq" scheme="https://puruis.github.io/categories/ActiveMq/"/>
+    
+    
+      <category term="ActiveMq" scheme="https://puruis.github.io/tags/ActiveMq/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx 配置阿里云免费证书</title>
+    <link href="https://puruis.github.io/nginx%20%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E4%BA%91%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/"/>
+    <id>https://puruis.github.io/nginx 配置阿里云免费证书/</id>
+    <published>2018-08-08T16:00:00.000Z</published>
+    <updated>2019-03-21T04:36:16.927Z</updated>
+    
+    <content type="html"><![CDATA[<p>申请阿里云证书 绑定自己的域名<br><img src="https://oscimg.oschina.net/oscnet/b7a0f06cdcd18bc465eac507a26675a9cb0.jpg" alt="image"><br><a id="more"></a></p><p>然后下载证书<br><img src="https://oscimg.oschina.net/oscnet/504e6784feffbb19e8928f8f86a4b6ad28b.jpg" alt="image"></p><p>==重点：服务器打开443端口==<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">然后把下载的证书 放到nginx的安装目录,新建一个cert目录，把证书放到里面</span><br></pre></td></tr></table></figure></p><p><img src="https://oscimg.oschina.net/oscnet/c09831d462620a2ee7f5333882e46434afb.jpg" alt="image"></p><p>然后保存 重启 nginx</p><p>访问你的 https 站点 类似<a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;申请阿里云证书 绑定自己的域名&lt;br&gt;&lt;img src=&quot;https://oscimg.oschina.net/oscnet/b7a0f06cdcd18bc465eac507a26675a9cb0.jpg&quot; alt=&quot;image&quot;&gt;&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="支付" scheme="https://puruis.github.io/categories/%E6%94%AF%E4%BB%98/"/>
+    
+    
+      <category term="https" scheme="https://puruis.github.io/tags/https/"/>
+    
+      <category term="阿里云证书" scheme="https://puruis.github.io/tags/%E9%98%BF%E9%87%8C%E4%BA%91%E8%AF%81%E4%B9%A6/"/>
+    
+      <category term="nginx" scheme="https://puruis.github.io/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Zookeeper(四)-实战</title>
+    <link href="https://puruis.github.io/Zookeeper(%E5%9B%9B)-%E5%AE%9E%E6%88%98/"/>
+    <id>https://puruis.github.io/Zookeeper(四)-实战/</id>
+    <published>2018-08-07T16:00:00.000Z</published>
+    <updated>2019-03-21T06:33:55.933Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://static.oschina.net/uploads/space/2017/0822/232711_gKvk_3394890.png" alt="image"><br><a id="more"></a><br>注册到我自己的测试服务器上的zookeeper，然后我们去看看 zookeeper的节点是怎么样的<br><img src="https://static.oschina.net/uploads/space/2017/0822/232823_KFAK_3394890.png" alt="image"></p><p>除了一个默认的zookeeper的节点 ，多了一个dubbo(持久节点)的节点，然后我们去看看dubbo下面的节点是啥</p><p><img src="https://static.oschina.net/uploads/space/2017/0822/232921_TYQZ_3394890.png" alt="image"></p><p>可以看到 dubbo下面的节点全是 java的service类的权限定包名，O(∩_∩)O~，想看其它信息，自己也去试试吧</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://static.oschina.net/uploads/space/2017/0822/232711_gKvk_3394890.png&quot; alt=&quot;image&quot;&gt;&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Zookeeper" scheme="https://puruis.github.io/categories/Zookeeper/"/>
+    
+    
+      <category term="分布式" scheme="https://puruis.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+      <category term="高可用" scheme="https://puruis.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Zookeeper入门(三)</title>
+    <link href="https://puruis.github.io/Zookeeper(%E4%B8%89)/"/>
+    <id>https://puruis.github.io/Zookeeper(三)/</id>
+    <published>2018-08-06T16:00:00.000Z</published>
+    <updated>2019-03-21T06:33:27.303Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.集群环境搭建 - 启动<br>    修改zooo.cfg 配置文件 如下<br><img src="https://static.oschina.net/uploads/space/2017/0819/215436_PIlt_3394890.png" alt="image"></p><a id="more"></a><p>为了方便，我这搭建的只是一个伪集群环境</p><p>2888 表示 心跳检测端口</p><p>3888 表示 领导选举，用于投票的端口</p><p>2.使用命令行客户端连接Zookeeper</p><p>$ bin/zkCli.sh 会出现以下信息<br><img src="https://static.oschina.net/uploads/space/2017/0819/221238_r6YL_3394890.png" alt="image"></p><p>表示成功连接， 若是想连接别的服务器上的zookeeper 则 使用如下命令:</p><p>$ bin/zkCli.sh -server <ip>:<port></port></ip></p><p>好了，我们来通过命令行来操作zookeeper吧。</p><p>我不知道命令啊？？？？   没关系，  叫help（帮助）</p><p><img src="https://static.oschina.net/uploads/space/2017/0819/221534_98B5_3394890.png" alt="image"></p><p>以上命令大多数是针对ZNode节点进行操作</p><p>1.列出子节点<br>命令格式: ls path [watch]</p><p>那么我们先列出根节点的所有子节点:<br><img src="https://static.oschina.net/uploads/space/2017/0819/221858_H8s6_3394890.png" alt="image"></p><p>默认根节点下有一个 zookeeper的子节点，它作为Zookeeper的保留节点，我们一般不使用它</p><p>另外我们还可以使用 ls2</p><p>来看看<br><img src="https://static.oschina.net/uploads/space/2017/0819/222103_1TTK_3394890.png" alt="image"></p><p>cZxid : 表示节点创建时的事务ID （每个客户点的请求都会形成一个事务）</p><p>ctime : 表示节点创建的时间</p><p>mZxid : 表示最后一次修改节点的事务ID</p><p>mtime : 最后一次修改节点的时间</p><p>pZxid ： 表示最后一次修改父节点的事务ID</p><p>cversion : 表示子节点的版本号</p><p>dataVersion : 表示节点所包含数据的版本号(每个数据都有自己的版本，它与节点的版本不一样)</p><p>aclVersion : 表示节点的ACL 权限版本号(权限也有自己的版本)</p><p>ephemeralOwner : 表示临时会话的ID</p><p>dataLength : 表示节点所包含的数据内容长度</p><p>numChildren : 表示当前节点的子节点数</p><p>以上信息都称为 Stat(统计)</p><p>2.判断子节点是否存在<br>判断foo 节点是否存在</p><pre><code>stat /foo</code></pre><p><img src="https://static.oschina.net/uploads/space/2017/0819/222938_pVXg_3394890.png" alt="image"></p><p>可以看出 该节点不存在</p><p>3.创建节点<br>create [-s] [-e] path data acl</p><p>-s 用于指定该节点是否为顺序节点</p><p>-c 用于指定该节点是否为临时节点</p><p>最后一个acl 用于权限控制  zookeeper 内部提供了一个Access Contronl List(访问权限控制列表，简称ACL)，默认情况下不做任何权限控制.</p><p>我们来创建一个 hello的节点 数据内容为 hello world<br><img src="https://static.oschina.net/uploads/space/2017/0819/223415_Ky0f_3394890.png" alt="image"></p><p>创建成功!</p><p>4.获取节点<br>get path [watch]<br><img src="https://static.oschina.net/uploads/space/2017/0819/223521_cUFY_3394890.png" alt="image"></p><p>即可获得 该节点的 Stat信息</p><p>5.更新节点信息<br>set path data [version]<br><img src="https://static.oschina.net/uploads/space/2017/0819/223646_4ULW_3394890.png" alt="image"></p><p>大家可以看到Stat信息产生了变化 版本从0变成了1 其它数据也产生了变化</p><p>6.删除节点<br>delete path [version]<br><img src="https://static.oschina.net/uploads/space/2017/0819/223847_hUPT_3394890.png" alt="image"></p><p>该命令执行后不会有任何提示，注意只有该节点没有子节点时才能删除成功，否则将给出”Node not empty”</p><p>但是我们可以通过 rmr path  一次性删除该节点及下面的所有子节点</p><p>下次继续分享  通过java 来操作Zookeeper!</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1.集群环境搭建 - 启动&lt;br&gt;    修改zooo.cfg 配置文件 如下&lt;br&gt;&lt;img src=&quot;https://static.oschina.net/uploads/space/2017/0819/215436_PIlt_3394890.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Zookeeper" scheme="https://puruis.github.io/categories/Zookeeper/"/>
+    
+    
+      <category term="分布式" scheme="https://puruis.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+      <category term="高可用" scheme="https://puruis.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Zookeeper入门(二)</title>
+    <link href="https://puruis.github.io/Zookeeper%E5%85%A5%E9%97%A8(%E4%BA%8C)/"/>
+    <id>https://puruis.github.io/Zookeeper入门(二)/</id>
+    <published>2018-08-05T16:00:00.000Z</published>
+    <updated>2019-03-21T06:33:00.517Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.下载Zookeeper:<br>            下载地址: <a href="http://www.apache.org/dyn/closer.cgi/zookeeper/" target="_blank" rel="noopener">http://www.apache.org/dyn/closer.cgi/zookeeper/</a></p><pre><code>    linux 下执行：     wget http://apache.fayea.com/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz即可下载成功!</code></pre><p>tar zxvf zookeeper-3.4.10.tar.gz<br><a id="more"></a><br>以上命令解压文件</p><p>   第一步修改 配置文件：</p><pre><code>Zookeeper 默认给了一个zoo_sample.cfg 的实例配置文件，我们需要复制并将其命名为zoo.cfg </code></pre><p>   这样做: $ cp conf/zoo_sample.cfg conf/zoo.cfg </p><p>让我们看看里面的配置参数：<br><img src="https://static.oschina.net/uploads/space/2017/0819/212221_SZNV_3394890.png" alt="image"></p><p>tickTime=2000</p><p>initLimit=10</p><p>syncLimit=5</p><p>dataDir=/tmp/zookeeper</p><p>clientPort=2181</p><p>我们一次来解释：</p><pre><code>tickTime : 成为滴答时间，用于配置zookeeper中的最小时间单元的长度，实际上zookeeper中很多时间间隔都是使用tickTime的配置来表示。例如 zookeeper中会话超时数 是 2*tickTime 该值默认为3000msinitLimit : 用于配置Leader 节点等待Follower 节点启动并完成数据同步的时间syncLimit : 心跳检测时间dataDir : 快照文件目录clientPort ： 对外端口</code></pre><p>2.启动Zookeeper<br>    $ bin/zkServer.sh start</p><p>即可启动服务</p><p><img src="https://static.oschina.net/uploads/space/2017/0819/212936_9NyA_3394890.png" alt="image"></p><p>3.验证Zookeeper服务是否有效<br>    可以执行以下脚本来获取zookeeper的状态</p><p> $ bin/zkServer.sh status</p><p>ZooKeeper JMX enabled by default<br>Using config: /zpr/zookeeper-3.4.10/bin/../conf/zoo.cfg<br>Mode: standalone</p><p>输出以上信息 就表示zookeeper 服务有效。</p><p>此外我们还可以用 telnet 命令来验证zookeeper服务的有效性，查看本机是否有安装telnet（centOS5默认有安装telnet）</p><p>一、查看本机是否安装telnet</p><p>#rpm -qa | grep telnet</p><p>如果什么都不显示。说明你没有安装telnet</p><p>二、开始安装</p><p>yum install  xinetd</p><p>yum install telnet</p><p>yum install telnet-server</p><p>三、装好telnet服务之后，默认是不开启服务的，下面我们需要修改文件来开启服务。</p><p>vim  /etc/xinetd.d/telnet    修改 disable = yes 为 disable = no</p><p>四、需要激活xinetd服务</p><h1 id="service-xinetd-restart-或者-etc-rc-d-init-d-xinetd-restart"><a href="#service-xinetd-restart-或者-etc-rc-d-init-d-xinetd-restart" class="headerlink" title="service  xinetd restart    或者  #/etc/rc.d/init.d/xinetd  restart"></a>service  xinetd restart    或者  #/etc/rc.d/init.d/xinetd  restart</h1><p>然后 我们继续 执行 telnet 127.0.0.1 2181</p><p>即可看到 </p><p> <img src="https://static.oschina.net/uploads/space/2017/0819/214730_g824_3394890.png" alt="image"></p><p>上图没还打印出 zookeeper的状态  我这网速太差了。。。  </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1.下载Zookeeper:&lt;br&gt;            下载地址: &lt;a href=&quot;http://www.apache.org/dyn/closer.cgi/zookeeper/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://www.apache.org/dyn/closer.cgi/zookeeper/&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    linux 下执行：
+
+     wget http://apache.fayea.com/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz
+
+即可下载成功!
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;tar zxvf zookeeper-3.4.10.tar.gz&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Zookeeper" scheme="https://puruis.github.io/categories/Zookeeper/"/>
+    
+    
+      <category term="分布式" scheme="https://puruis.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+      <category term="高可用" scheme="https://puruis.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Zookeeper 入门 (一)</title>
+    <link href="https://puruis.github.io/Zookeeper%20%E5%85%A5%E9%97%A8%20(%E4%B8%80)/"/>
+    <id>https://puruis.github.io/Zookeeper 入门 (一)/</id>
+    <published>2018-08-04T16:00:00.000Z</published>
+    <updated>2019-03-21T06:32:28.493Z</updated>
+    
+    <content type="html"><![CDATA[<p>Zookeeper 介绍<br>    Zookeeper是软件世界的一名管理者，它被用来提供分布式环境下的协调服务， Yahoo公司使用JAVA 语言开发了Zookeeper，它是Hadoop项目中的子项目，基于Google的Chubby 的开源实现，在Hadoop，HBase，Kafka等技术中充当了核心角色，它的目标就是将那些复杂且容易出错的分布式一致性服务加以封装，形成一个高效且可靠的服务，并为用户提供了一系列简单易用的接口。</p><pre><code>Zookeeper 官网 ：http://zookeeper.apache.org/</code></pre><a id="more"></a>    <p>Zookeeper 一般以集群的方式对外提供服务，一个集群包括多个节点，每个节点对应一个zookeeper服务器，所有的节点共同对外提供服务，整个集群对分布式数据一致性提供了全面的支持，具体包含如下五个特性：</p><pre><code>1.顺序性        好比一个队列，先进先出，一个个排队2.原子性        和事务的原子性一致3.单一性        Zokeeper 各个节点间 不可能出现两种不一样的数据状态4.可靠性        一旦服务器数据发生变化，就会立即被储存起来。5.实时性        服务器的请求被处理，客户端能够及时得到最新数据状态</code></pre><p>Zookeeper 树状模型<br>    Zookeeper 内部有一个树状的内存模型，类型文件系统，有若干个目录，每一个目录都有自己的文件，只是在Zookeeper中把这个统称为ZNode ，每个ZNode有对应的路径及其包含的数据，ZNode 由Zookeeper 客户端来创建，客户端建立连接后， 服务端会创建一个session， 客户端所有操作都将在这个sessiuon(会话)中进行</p><p><img src="https://static.oschina.net/uploads/space/2017/0819/205659_51h8_3394890.png" alt="image"></p><p>ZNode 有四类节点：</p><pre><code>Persistent(持久节点)            会话结束后，该节点不会删除Persistent Sequential(之久顺序节点)   会话结束后，该节点不会删除 且节点名中自带自增后缀Ephemeral(临时节点)           会话结束被删除Ephemeral Sequentia(临时顺序节点)   会话结束被删除， 且节点名中自带自增后缀</code></pre><p>Persistent  AND Persistent Sequential 才能有子节点</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Zookeeper 介绍&lt;br&gt;    Zookeeper是软件世界的一名管理者，它被用来提供分布式环境下的协调服务， Yahoo公司使用JAVA 语言开发了Zookeeper，它是Hadoop项目中的子项目，基于Google的Chubby 的开源实现，在Hadoop，HBase，Kafka等技术中充当了核心角色，它的目标就是将那些复杂且容易出错的分布式一致性服务加以封装，形成一个高效且可靠的服务，并为用户提供了一系列简单易用的接口。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Zookeeper 官网 ：http://zookeeper.apache.org/
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+      <category term="Zookeeper" scheme="https://puruis.github.io/categories/Zookeeper/"/>
+    
+    
+      <category term="分布式" scheme="https://puruis.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+      <category term="高可用" scheme="https://puruis.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>支付宝对接-查询对账单下载地址接口 遇到的坑</title>
+    <link href="https://puruis.github.io/%E6%94%AF%E4%BB%98%E5%AE%9D%E5%AF%B9%E6%8E%A5-%E6%9F%A5%E8%AF%A2%E5%AF%B9%E8%B4%A6%E5%8D%95%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%E6%8E%A5%E5%8F%A3%20%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/"/>
+    <id>https://puruis.github.io/支付宝对接-查询对账单下载地址接口 遇到的坑/</id>
+    <published>2018-07-14T16:00:00.000Z</published>
+    <updated>2019-03-21T06:40:04.770Z</updated>
+    
+    <content type="html"><![CDATA[<p>**因为公司后面准备开发财务系统，那么支付肯定是必不可少的，本来想找个随手即用的封装好的支付来直接使用，但是在网上找了一圈，没有找到太中意的，于是准备利用周末时间自己来封装一个 开箱即用的 支付模块。</p><hr><p><img src="https://oscimg.oschina.net/oscnet/c4866fce0956f9f4d41f94c5da60cb25874.jpg" alt="image"><br><a id="more"></a></p><p>说到开箱即用，我第一想到了springboot，于是准备准备写一个</p><h1 id="spring-boot-starter-pay"><a href="#spring-boot-starter-pay" class="headerlink" title="spring-boot-starter-pay"></a>spring-boot-starter-pay</h1><p>简单配置即可使用<br><img src="https://oscimg.oschina.net/oscnet/9b404f812ce42440184221551dc27e3996a.jpg" alt="image"></p><h3 id="注入service-直接调用"><a href="#注入service-直接调用" class="headerlink" title="注入service 直接调用"></a>注入service 直接调用</h3><p><img src="https://oscimg.oschina.net/oscnet/713e1c5289e0a691d38e69ed2249f0ea110.jpg" alt="image"></p><p>前面的接口封装 基本都是顺风顺水</p><h1 id="alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><a href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址" class="headerlink" title="alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)"></a>alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</h1><p>测试时一直 参数不合法 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;alipay_data_dataservice_bill_downloadurl_query_response&quot;: &#123;</span><br><span class="line">&quot;code&quot;: &quot;40004&quot;,</span><br><span class="line">&quot;msg&quot;: &quot;Business Failed&quot;,</span><br><span class="line">&quot;sub_code&quot;: &quot;isv.invalid_arguments&quot;,</span><br><span class="line">&quot;sub_msg&quot;: &quot;入参不合法&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>莫名其妙了，哪里参数不合法了，一开始 我还真认为是我参数传错了，好半天都没解决，问题出在哪呢？</p><h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h1><ul><li>这个接口是下载离线账单的，需要T+1天生成账单，不能查询当日或者是当月的账单，如果日期是当天或者是当月的会返回“参数不合法”； </li><li>下载对账单地址接口只有当面付接口可以下载trade类型的账单，其他支付接口只能下载signcustomer 这个类型的 </li></ul><p>等我把代码封装完善，会上传到码云上， springBoot-Pay 开箱即用 欢迎期待</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;**因为公司后面准备开发财务系统，那么支付肯定是必不可少的，本来想找个随手即用的封装好的支付来直接使用，但是在网上找了一圈，没有找到太中意的，于是准备利用周末时间自己来封装一个 开箱即用的 支付模块。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;https://oscimg.oschina.net/oscnet/c4866fce0956f9f4d41f94c5da60cb25874.jpg&quot; alt=&quot;image&quot;&gt;&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="支付" scheme="https://puruis.github.io/categories/%E6%94%AF%E4%BB%98/"/>
+    
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+      <category term="支付宝" scheme="https://puruis.github.io/tags/%E6%94%AF%E4%BB%98%E5%AE%9D/"/>
+    
+      <category term="账单" scheme="https://puruis.github.io/tags/%E8%B4%A6%E5%8D%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>利用 jconsole 查看远程服务器的运行情况</title>
+    <link href="https://puruis.github.io/%E5%88%A9%E7%94%A8%20jconsole%20%E6%9F%A5%E7%9C%8B%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E8%BF%90%E8%A1%8C%E6%83%85%E5%86%B5/"/>
+    <id>https://puruis.github.io/利用 jconsole 查看远程服务器的运行情况/</id>
+    <published>2018-07-06T16:00:00.000Z</published>
+    <updated>2019-03-21T06:37:39.517Z</updated>
+    
+    <content type="html"><![CDATA[<p> jconsole  是JDK 提供的一个工具 可以。。。  如下图</p><p> <img src="https://static.oschina.net/uploads/space/2017/0817/175732_r49U_3394890.png" alt="image"></p><p> 如此好的东西 为什么不知道用呢？  哈哈哈  ++其实它一直在你的眼皮子底下++ </p><p> <img src="https://static.oschina.net/uploads/space/2017/0817/175824_hG6F_3394890.png" alt="image"></p><p> 它可以帮我们 了解服务器的服务情况  并且是 UI 的方式显示 ，更加直观</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt; jconsole  是JDK 提供的一个工具 可以。。。  如下图&lt;/p&gt;
+&lt;p&gt; &lt;img src=&quot;https://static.oschina.net/uploads/space/2017/0817/175732_r49U_3394890.png&quot; alt=&quot;ima
+      
+    
+    </summary>
+    
+      <category term="Proxy" scheme="https://puruis.github.io/categories/Proxy/"/>
+    
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>让JPA 飞 - QueryDSL</title>
+    <link href="https://puruis.github.io/%E8%AE%A9JPA%20%E9%A3%9E%20-%20QueryDSL/"/>
+    <id>https://puruis.github.io/让JPA 飞 - QueryDSL/</id>
+    <published>2018-07-06T16:00:00.000Z</published>
+    <updated>2019-03-21T06:38:14.233Z</updated>
+    
+    <content type="html"><![CDATA[<p>jpa是什么？</p><pre><code>JPA由EJB 3.0软件专家组开发，作为JSR-220实现的一部分。但它又不限于EJB 3.0，你可以在Web应用、甚至桌面应用中使用。JPA的宗旨是为POJO提供持久化标准规范，由此可见，经过这几年的实践探索，能够脱离容器独立运行，方便开发和测试的理念已经深入人心了。Hibernate3.2+、TopLink 10.1.3以及OpenJPA都提供了JPA的实现。</code></pre><p>以上 来自 百度百科</p><p>既然 JPA 只是 java的一种规范，那么肯定需要厂家来支持 它的规范，我们来看看哪些厂家实现了它的规范。</p><ol><li>Hibernate</li><li>Spring-JPA</li><li>OpenJPA</li></ol><p>其实我们在项目中用得比较多得就是hibernate 和 spring-jpa ，但是今天我们的主角还是 spring-jpa</p><p>尽管 spring-jpa 已经封装了底层的一些处理，但是用起来 还是有些繁琐，在工作中，我就发现了 一个好东西–QueryDSL。</p><p>QueryDSL简介</p><ol><li><p>QueryDSL仅仅是一个通用的查询框架，专注于通过Java API构建类型安全的SQL查询。</p></li><li><p>Querydsl可以通过一组通用的查询API为用户构建出适合不同类型ORM框架或者是SQL的查询语句，也就是说QueryDSL是基于各种ORM框架以及SQL之上的一个通用的查询框架。</p></li><li><p>借助QueryDSL可以在任何支持的ORM框架或者SQL平台上以一种通用的API方式来构建查询。目前QueryDSL支持的平台包括JPA,JDO,SQL,Java Collections,RDF,Lucene,Hibernate Search。</p></li><li><p>官网地址:<a href="http://www.querydsl.com/static/querydsl/4.1.3/reference/html_single/" target="_blank" rel="noopener">点击进入</a> </p></li></ol><p>配置到项目</p><pre><code>首先对于queryDSL有两个版本,com.mysema.querydsl和com.querydsl,前者是3.X系列后者是4.X系列,这里使用的是后者.</code></pre><p>第一步:Maven引入依赖:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--query dsl--&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;com.querydsl&lt;/groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;querydsl-jpa&lt;/artifactId&gt;</span><br><span class="line">     &lt;version&gt;$&#123;querydsl.version&#125;&lt;/version&gt;</span><br><span class="line">   &lt;/dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;com.querydsl&lt;/groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;querydsl-apt&lt;/artifactId&gt;</span><br><span class="line">     &lt;version&gt;$&#123;querydsl.version&#125;&lt;/version&gt;</span><br><span class="line">     &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">   &lt;/dependency&gt;</span><br><span class="line">   &lt;!--query dsl end--&gt;</span><br></pre></td></tr></table></figure><p>第二步:加入插件,用于生成查询实例</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--该插件可以生成querysdl需要的查询对象，执行mvn compile即可--&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;com.mysema.maven&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;apt-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.1.3&lt;/version&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">          &lt;execution&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">              &lt;goal&gt;process&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">              &lt;outputDirectory&gt;target/generated-sources/java&lt;/outputDirectory&gt;</span><br><span class="line">              &lt;processor&gt;com.querydsl.apt.jpa.JPAAnnotationProcessor&lt;/processor&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">          &lt;/execution&gt;</span><br><span class="line">        &lt;/executions&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br></pre></td></tr></table></figure><p>APT插件会自动生成 Q开头的实体<br>用法如下</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public SanitationOrder findOneOrder(String orderId) &#123;</span><br><span class="line">    BooleanExpression eq = QSanitationOrder.sanitationOrder.orderId.eq(orderId);</span><br><span class="line">    SanitationOrder one = sanitationOrderRepository.findOne(eq);</span><br><span class="line">    return one;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>还有更多强大用法，大家可以去搜搜，我这里 只是分享下 这个 好东西</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;jpa是什么？&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;JPA由EJB 3.0软件专家组开发，作为JSR-220实现的一部分。但它又不限于EJB 3.0，你可以在Web应用、甚至桌面应用中使用。JPA的宗旨是为POJO提供持久化标准规范，由此可见，经过这几年的实践探索，能够脱离容器独
+      
+    
+    </summary>
+    
+      <category term="QueryDSL" scheme="https://puruis.github.io/categories/QueryDSL/"/>
+    
+    
+      <category term="JPA" scheme="https://puruis.github.io/tags/JPA/"/>
+    
+      <category term="QueryDSL" scheme="https://puruis.github.io/tags/QueryDSL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于 Proxy 续集 -代码重构</title>
+    <link href="https://puruis.github.io/%E5%85%B3%E4%BA%8E%20Proxy%20%E7%BB%AD%E9%9B%86%20-%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84/"/>
+    <id>https://puruis.github.io/关于 Proxy 续集 -代码重构/</id>
+    <published>2018-07-06T16:00:00.000Z</published>
+    <updated>2019-03-21T06:37:09.518Z</updated>
+    
+    <content type="html"><![CDATA[<p>上篇文章我们说了静态代理，那么有静态代理自然也就有动态代理咯，这次我们主要说 javaJDK给我提供的 一套动态代理。</p><pre><code>老规矩先看代码,</code></pre><p>接口类：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Hello &#123;</span><br><span class="line">    public void say(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>//实现类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class HelloImpl implements Hello&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void say(String name) &#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        DynamicProxy dynamicProxy = new DynamicProxy(new HelloImpl());</span><br><span class="line">        Hello proxy = dynamicProxy.getProxy();</span><br><span class="line">        proxy.say(&quot;一战成佛&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>动态代理类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class DynamicProxy implements InvocationHandler&#123;</span><br><span class="line">    private Object object;</span><br><span class="line">    public DynamicProxy(Object object)&#123;</span><br><span class="line">        this.object = object;</span><br><span class="line">    &#125;</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public &lt;T&gt; T getProxy()&#123;</span><br><span class="line">        return (T)Proxy.newProxyInstance(object.getClass().getClassLoader(),object.getClass().getInterfaces(),this);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        berofe();</span><br><span class="line">        Object invoke = method.invoke(object, args);</span><br><span class="line">        after();</span><br><span class="line">        return invoke;</span><br><span class="line">    &#125;</span><br><span class="line">    public void berofe()&#123;</span><br><span class="line">        System.out.println(&quot;before&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;after&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>根据注释 很好理解 动态代理，总结下 java提供的动态代理</p><pre><code>优点:    1.被代理类变动，代理不需要变动    2.更加灵活缺点:    1.依赖接口，必须要有接口 才能代理 被代理对象</code></pre><p>万一 需要代理的对象没有接口，那就玩玩拉，所以下一篇 开始说CGLIB 这也是springAop实现动态代理的依赖，等着感受它的强大魅力吧<img src="http://img.baidu.com/hi/jx2/j_0035.gif" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;上篇文章我们说了静态代理，那么有静态代理自然也就有动态代理咯，这次我们主要说 javaJDK给我提供的 一套动态代理。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;老规矩先看代码,
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接口类：&lt;/p&gt;
+&lt;figure class=&quot;highlight pla
+      
+    
+    </summary>
+    
+      <category term="Proxy" scheme="https://puruis.github.io/categories/Proxy/"/>
+    
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+      <category term="Aop" scheme="https://puruis.github.io/tags/Aop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于 Proxy</title>
+    <link href="https://puruis.github.io/%E5%85%B3%E4%BA%8E%20Proxy/"/>
+    <id>https://puruis.github.io/关于 Proxy/</id>
+    <published>2018-07-04T16:00:00.000Z</published>
+    <updated>2019-03-21T06:36:15.833Z</updated>
+    
+    <content type="html"><![CDATA[<p>大家都用过，但是可能没有仔细去研究过，今天我们一起看看吧。        项目中最直接的就是 事务，日志 ，就是传说中的spring的AOP功能， 今天我们一起来揭露它的神秘面纱吧。         </p><pre><code>首先我们来说说静态代理：   我写了一个接口 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Hello &#123;</span><br><span class="line">    public void say(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后这是它的实现类 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class HelloImpl implements Hello&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void say(String name) &#123;</span><br><span class="line">        System.out.println(name+&quot;-----&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>//这是代理类 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class StaticProxy implements Hello&#123;</span><br><span class="line">    private Hello hello;</span><br><span class="line">    public StaticProxy(Hello hello)&#123;</span><br><span class="line">        this.hello = hello;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void say(String name) &#123;</span><br><span class="line">        System.out.println(&quot;之前&quot;);</span><br><span class="line">        System.out.println(name);</span><br><span class="line">        System.out.println(&quot;之后&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        new StaticProxy(new HelloImpl()).say(&quot;斗神一叶知秋&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>console:       </p><pre><code>之前斗神一叶知秋之后</code></pre><p>代码很好理解，我就不做过多的讲解了，说说静态代理的优缺点吧</p><pre><code>优点：                  1.实现了 代理功能                  2.简单易容，很容易 也很好理解    缺点：                  1.被代理的类变动，代理类也要变动</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;大家都用过，但是可能没有仔细去研究过，今天我们一起看看吧。        项目中最直接的就是 事务，日志 ，就是传说中的spring的AOP功能， 今天我们一起来揭露它的神秘面纱吧。         &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;首先我们来说说静态代理：   我写了一个接
+      
+    
+    </summary>
+    
+      <category term="Proxy" scheme="https://puruis.github.io/categories/Proxy/"/>
+    
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+      <category term="Aop" scheme="https://puruis.github.io/tags/Aop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mybatis 传参的方式</title>
+    <link href="https://puruis.github.io/Mybatis%20%E4%BC%A0%E5%8F%82%E7%9A%84%E6%96%B9%E5%BC%8F/"/>
+    <id>https://puruis.github.io/Mybatis 传参的方式/</id>
+    <published>2018-07-01T16:00:00.000Z</published>
+    <updated>2019-03-21T04:37:55.387Z</updated>
+    
+    <content type="html"><![CDATA[<p>现在公司在使用Mybatis 做开发,遇到Mybatis传参的问题，刚好总结下，因为之前也没总结归纳过，刚好有时间做个总结。</p><h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public User selectUser(String name,int deptId);</span><br><span class="line">&lt;select id=&quot;selectUser&quot; resultMap=&quot;UserResultMap&quot;&gt;</span><br><span class="line">select</span><br><span class="line">    *</span><br><span class="line">from</span><br><span class="line"> user</span><br><span class="line">where</span><br><span class="line"> user_name=#&#123;0&#125; and dept_id = #&#123;1&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure><p>#{} 里面的数字 代表传入的 参数的 顺序,这样的传参方式,其实不太直观, 看代码的话,不方便。 不推荐</p><h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>@Param 注解</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public User selectUser(@Param(&quot;name&quot;) String name,@Param(&quot;deptId&quot;) int deptId);</span><br><span class="line">&lt;select id=&quot;selectUser&quot; resultMap=&quot;UserResultMap&quot;&gt;</span><br><span class="line">select</span><br><span class="line">    *</span><br><span class="line">from</span><br><span class="line"> user</span><br><span class="line">where</span><br><span class="line"> user_name=#&#123;name&#125; and dept_id = #&#123;deptId&#125;</span><br><span class="line">&lt;/select</span><br></pre></td></tr></table></figure><p>#{} 里面 直接就是 @Param() 里面的值</p><h2 id="推荐此方法-直观-一目了然"><a href="#推荐此方法-直观-一目了然" class="headerlink" title="==推荐此方法,直观,一目了然=="></a>==推荐此方法,直观,一目了然==</h2><h2 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h2><p>Bean 传参<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public User selectUser(User user);</span><br><span class="line">&lt;select id=&quot;selectUser&quot; resultMap=&quot;UserResultMap&quot;&gt;</span><br><span class="line">select</span><br><span class="line">    *</span><br><span class="line">from</span><br><span class="line"> user</span><br><span class="line">where</span><br><span class="line"> user_name=#&#123;user.name&#125; and dept_id = #&#123;user.deptId&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure></p><h2 id="推荐此方法-直观-使用对象传参-看情况使用-需要建实体，扩展不便"><a href="#推荐此方法-直观-使用对象传参-看情况使用-需要建实体，扩展不便" class="headerlink" title="==推荐此方法,直观,使用对象传参,看情况使用,需要建实体，扩展不便=="></a>==推荐此方法,直观,使用对象传参,看情况使用,需要建实体，扩展不便==</h2><h2 id="方法四"><a href="#方法四" class="headerlink" title="方法四"></a>方法四</h2><p>Map 传参</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public User selectUser(Map&lt;String,Object&gt; params);</span><br><span class="line">&lt;select id=&quot;selectUser&quot; resultMap=&quot;UserResultMap&quot;&gt;</span><br><span class="line">select</span><br><span class="line">    *</span><br><span class="line">from</span><br><span class="line"> user</span><br><span class="line">where</span><br><span class="line"> user_name=#&#123;name&#125; and dept_id = #&#123;deptId&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure><h2 id="适用于多个参数-传参的情况-传参方式灵活-里面就是-map的-key"><a href="#适用于多个参数-传参的情况-传参方式灵活-里面就是-map的-key" class="headerlink" title="==适用于多个参数 传参的情况,传参方式灵活,#{} 里面就是 map的 key=="></a>==适用于多个参数 传参的情况,传参方式灵活,#{} 里面就是 map的 key==</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;现在公司在使用Mybatis 做开发,遇到Mybatis传参的问题，刚好总结下，因为之前也没总结归纳过，刚好有时间做个总结。&lt;/p&gt;
+&lt;h2 id=&quot;方法一&quot;&gt;&lt;a href=&quot;#方法一&quot; class=&quot;headerlink&quot; title=&quot;方法一&quot;&gt;&lt;/a&gt;方法一&lt;/h2
+      
+    
+    </summary>
+    
+      <category term="Mybatis" scheme="https://puruis.github.io/categories/Mybatis/"/>
+    
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+      <category term="数据库" scheme="https://puruis.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>实现ThreadLocal</title>
+    <link href="https://puruis.github.io/ThreadLocal%E5%AE%9E%E7%8E%B0/"/>
+    <id>https://puruis.github.io/ThreadLocal实现/</id>
+    <published>2017-11-18T16:00:00.000Z</published>
+    <updated>2019-03-21T06:34:25.556Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>public class MyThreadLocal&lt;T&gt; {    Map&lt;Thread,T&gt; container = Collections.synchronizedMap(new HashMap&lt;Thread, T&gt;());    public T get(){        Thread t = Thread.currentThread();        T value = container.get(t);        if(null == value&amp;&amp;     !container.containsKey(t)){            value = initialValue();            container.put(t,value);        }        return value;    }    public void set(T value){        container.put(Thread.currentThread(),value);    }    public void remove(){        container.remove(Thread.currentThread());    }    protected T initialValue(){        return null;    }</code></pre><p>}</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;public class MyThreadLocal&amp;lt;T&amp;gt; {
+
+    Map&amp;lt;Thread,T&amp;gt; container = Collections.synchronizedMap(new HashMap&amp;lt;Thread, T&amp;g
+      
+    
+    </summary>
+    
+      <category term="ThreadLocal" scheme="https://puruis.github.io/categories/ThreadLocal/"/>
+    
+    
+      <category term="ThreadLocal" scheme="https://puruis.github.io/tags/ThreadLocal/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>对ThreadLocal的思考</title>
+    <link href="https://puruis.github.io/%E5%AF%B9ThreadLocal%E7%9A%84%E6%80%9D%E8%80%83/"/>
+    <id>https://puruis.github.io/对ThreadLocal的思考/</id>
+    <published>2017-11-17T16:00:00.000Z</published>
+    <updated>2019-03-21T06:35:27.054Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="对ThreadLocal的思考"><a href="#对ThreadLocal的思考" class="headerlink" title="对ThreadLocal的思考"></a>对ThreadLocal的思考</h1><p>ThreadLocal 直译过来是 ‘本地线程’，这个理解是不正确的。来看一个案例。</p><h4 id="1-0-案例"><a href="#1-0-案例" class="headerlink" title="1.0 案例"></a>1.0 案例</h4><p> 先是一个接口</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Sequence &#123;</span><br><span class="line">    int getNumber();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>实现类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class SequenceA implements Sequence&#123;</span><br><span class="line">    static int i = 0;</span><br><span class="line">    public int getNumber() &#123;</span><br><span class="line">       return i++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        SequenceA sequenceA = new SequenceA();</span><br><span class="line">        new MyThread(sequenceA).start();</span><br><span class="line">        new MyThread(sequenceA).start();</span><br><span class="line">        new MyThread(sequenceA).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>//线程类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class MyThread extends Thread &#123;</span><br><span class="line">    private Sequence sequence;</span><br><span class="line"></span><br><span class="line">    public MyThread(Sequence sequence)&#123;</span><br><span class="line">        this.sequence = sequence;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void run() &#123;</span><br><span class="line">        for(int i=0;i&lt;4;i++)&#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+&quot;--&quot;+sequence.getNumber());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">运行结果</span><br><span class="line">Thread-0--0</span><br><span class="line">Thread-0--1</span><br><span class="line">Thread-0--2</span><br><span class="line">Thread-0--3</span><br><span class="line">Thread-1--4</span><br><span class="line">Thread-1--5</span><br><span class="line">Thread-1--6</span><br><span class="line">Thread-1--7</span><br><span class="line">Thread-2--8</span><br><span class="line">Thread-2--9</span><br><span class="line">Thread-2--10</span><br><span class="line">Thread-2--11</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure><p>因为 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static int i = 0;</span><br></pre></td></tr></table></figure><p>是静态的  是所有线程所共享的，所以会出现以上结果，那么我希望每个线程都有独立的  i  呢？ </p><p>这时候ThreadLocal 派上用场了，</p><p>稍微改造了一下</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class SequenceA implements Sequence&#123;</span><br><span class="line"></span><br><span class="line">    private static ThreadLocal&lt;Integer&gt; contaner = new ThreadLocal&lt;Integer&gt;()&#123;</span><br><span class="line">        @Override</span><br><span class="line">        protected Integer initialValue() &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    public int getNumber()&#123;</span><br><span class="line">        contaner.set(contaner.get()+1);</span><br><span class="line">        return contaner.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        SequenceA sequenceA = new SequenceA();</span><br><span class="line">        new MyThread(sequenceA).start();</span><br><span class="line">        new MyThread(sequenceA).start();</span><br><span class="line">        new MyThread(sequenceA).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">输出结果:</span><br><span class="line"></span><br><span class="line">Thread-0--1</span><br><span class="line">Thread-0--2</span><br><span class="line">Thread-0--3</span><br><span class="line">Thread-0--4</span><br><span class="line">Thread-1--1</span><br><span class="line">Thread-1--2</span><br><span class="line">Thread-1--3</span><br><span class="line">Thread-1--4</span><br><span class="line">Thread-2--1</span><br><span class="line">Thread-2--2</span><br><span class="line">Thread-2--3</span><br><span class="line">Thread-2--4</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">这才是我要的结果嘛，可是为什么 明明是 static的变量 却 每个线程都有了一份，，其实ThreadLocal其实相当于一个容器，它为每个线程 保存了 一个副本</span><br><span class="line"></span><br><span class="line">那么 我们有必要来了解下ThreadLocal是怎么实现的  还有为什么我们要实现 </span><br><span class="line"></span><br><span class="line">它的   initialValue   方法</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protected T initialValue() &#123;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这是它的源码   方式是protected 那么 它就是提示我们去 现实它，</p><p>以下是它的源码 可以看出来 它里面封装了 一个Map 容器 来实现 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public T get() &#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    if (map != null) &#123;</span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(this);</span><br><span class="line">        if (e != null) &#123;</span><br><span class="line">            @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">            T result = (T)e.value;</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>有兴趣可以看看它的源码</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;对ThreadLocal的思考&quot;&gt;&lt;a href=&quot;#对ThreadLocal的思考&quot; class=&quot;headerlink&quot; title=&quot;对ThreadLocal的思考&quot;&gt;&lt;/a&gt;对ThreadLocal的思考&lt;/h1&gt;&lt;p&gt;ThreadLocal 直译过来是 
+      
+    
+    </summary>
+    
+      <category term="ThreadLocal" scheme="https://puruis.github.io/categories/ThreadLocal/"/>
+    
+    
+      <category term="ThreadLocal" scheme="https://puruis.github.io/tags/ThreadLocal/"/>
+    
+  </entry>
+  
 </feed>
