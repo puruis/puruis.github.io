@@ -328,7 +328,7 @@
     <link href="https://puruis.github.io/Zookeeper%20%E5%85%A5%E9%97%A8%20(%E4%B8%80)/"/>
     <id>https://puruis.github.io/Zookeeper 入门 (一)/</id>
     <published>2018-08-04T16:00:00.000Z</published>
-    <updated>2019-03-21T06:32:28.493Z</updated>
+    <updated>2019-03-21T06:52:46.128Z</updated>
     
     <content type="html"><![CDATA[<p>Zookeeper 介绍<br>    Zookeeper是软件世界的一名管理者，它被用来提供分布式环境下的协调服务， Yahoo公司使用JAVA 语言开发了Zookeeper，它是Hadoop项目中的子项目，基于Google的Chubby 的开源实现，在Hadoop，HBase，Kafka等技术中充当了核心角色，它的目标就是将那些复杂且容易出错的分布式一致性服务加以封装，形成一个高效且可靠的服务，并为用户提供了一系列简单易用的接口。</p><pre><code>Zookeeper 官网 ：http://zookeeper.apache.org/</code></pre><a id="more"></a>    <p>Zookeeper 一般以集群的方式对外提供服务，一个集群包括多个节点，每个节点对应一个zookeeper服务器，所有的节点共同对外提供服务，整个集群对分布式数据一致性提供了全面的支持，具体包含如下五个特性：</p><pre><code>1.顺序性        好比一个队列，先进先出，一个个排队2.原子性        和事务的原子性一致3.单一性        Zokeeper 各个节点间 不可能出现两种不一样的数据状态4.可靠性        一旦服务器数据发生变化，就会立即被储存起来。5.实时性        服务器的请求被处理，客户端能够及时得到最新数据状态</code></pre><p>Zookeeper 树状模型<br>    Zookeeper 内部有一个树状的内存模型，类型文件系统，有若干个目录，每一个目录都有自己的文件，只是在Zookeeper中把这个统称为ZNode ，每个ZNode有对应的路径及其包含的数据，ZNode 由Zookeeper 客户端来创建，客户端建立连接后， 服务端会创建一个session， 客户端所有操作都将在这个sessiuon(会话)中进行</p><p><img src="https://static.oschina.net/uploads/space/2017/0819/205659_51h8_3394890.png" alt="image"></p><p>ZNode 有四类节点：</p><pre><code>Persistent(持久节点)            会话结束后，该节点不会删除Persistent Sequential(之久顺序节点)   会话结束后，该节点不会删除 且节点名中自带自增后缀Ephemeral(临时节点)           会话结束被删除Ephemeral Sequentia(临时顺序节点)   会话结束被删除， 且节点名中自带自增后缀</code></pre><p>Persistent  AND Persistent Sequential 才能有子节点</p>]]></content>
     
@@ -374,6 +374,36 @@
       <category term="支付宝" scheme="https://puruis.github.io/tags/%E6%94%AF%E4%BB%98%E5%AE%9D/"/>
     
       <category term="账单" scheme="https://puruis.github.io/tags/%E8%B4%A6%E5%8D%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于 Proxy 续集 -代码重构</title>
+    <link href="https://puruis.github.io/%E5%85%B3%E4%BA%8E%20Proxy%20%E7%BB%AD%E9%9B%86%20-%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84/"/>
+    <id>https://puruis.github.io/关于 Proxy 续集 -代码重构/</id>
+    <published>2018-07-06T16:00:00.000Z</published>
+    <updated>2019-03-21T06:37:09.518Z</updated>
+    
+    <content type="html"><![CDATA[<p>上篇文章我们说了静态代理，那么有静态代理自然也就有动态代理咯，这次我们主要说 javaJDK给我提供的 一套动态代理。</p><pre><code>老规矩先看代码,</code></pre><p>接口类：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Hello &#123;</span><br><span class="line">    public void say(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>//实现类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class HelloImpl implements Hello&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void say(String name) &#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        DynamicProxy dynamicProxy = new DynamicProxy(new HelloImpl());</span><br><span class="line">        Hello proxy = dynamicProxy.getProxy();</span><br><span class="line">        proxy.say(&quot;一战成佛&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>动态代理类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class DynamicProxy implements InvocationHandler&#123;</span><br><span class="line">    private Object object;</span><br><span class="line">    public DynamicProxy(Object object)&#123;</span><br><span class="line">        this.object = object;</span><br><span class="line">    &#125;</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public &lt;T&gt; T getProxy()&#123;</span><br><span class="line">        return (T)Proxy.newProxyInstance(object.getClass().getClassLoader(),object.getClass().getInterfaces(),this);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        berofe();</span><br><span class="line">        Object invoke = method.invoke(object, args);</span><br><span class="line">        after();</span><br><span class="line">        return invoke;</span><br><span class="line">    &#125;</span><br><span class="line">    public void berofe()&#123;</span><br><span class="line">        System.out.println(&quot;before&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;after&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>根据注释 很好理解 动态代理，总结下 java提供的动态代理</p><pre><code>优点:    1.被代理类变动，代理不需要变动    2.更加灵活缺点:    1.依赖接口，必须要有接口 才能代理 被代理对象</code></pre><p>万一 需要代理的对象没有接口，那就玩玩拉，所以下一篇 开始说CGLIB 这也是springAop实现动态代理的依赖，等着感受它的强大魅力吧<img src="http://img.baidu.com/hi/jx2/j_0035.gif" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;上篇文章我们说了静态代理，那么有静态代理自然也就有动态代理咯，这次我们主要说 javaJDK给我提供的 一套动态代理。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;老规矩先看代码,
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接口类：&lt;/p&gt;
+&lt;figure class=&quot;highlight pla
+      
+    
+    </summary>
+    
+      <category term="Proxy" scheme="https://puruis.github.io/categories/Proxy/"/>
+    
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+      <category term="Aop" scheme="https://puruis.github.io/tags/Aop/"/>
     
   </entry>
   
@@ -428,36 +458,6 @@
       <category term="JPA" scheme="https://puruis.github.io/tags/JPA/"/>
     
       <category term="QueryDSL" scheme="https://puruis.github.io/tags/QueryDSL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于 Proxy 续集 -代码重构</title>
-    <link href="https://puruis.github.io/%E5%85%B3%E4%BA%8E%20Proxy%20%E7%BB%AD%E9%9B%86%20-%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84/"/>
-    <id>https://puruis.github.io/关于 Proxy 续集 -代码重构/</id>
-    <published>2018-07-06T16:00:00.000Z</published>
-    <updated>2019-03-21T06:37:09.518Z</updated>
-    
-    <content type="html"><![CDATA[<p>上篇文章我们说了静态代理，那么有静态代理自然也就有动态代理咯，这次我们主要说 javaJDK给我提供的 一套动态代理。</p><pre><code>老规矩先看代码,</code></pre><p>接口类：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Hello &#123;</span><br><span class="line">    public void say(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>//实现类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class HelloImpl implements Hello&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void say(String name) &#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        DynamicProxy dynamicProxy = new DynamicProxy(new HelloImpl());</span><br><span class="line">        Hello proxy = dynamicProxy.getProxy();</span><br><span class="line">        proxy.say(&quot;一战成佛&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>动态代理类</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class DynamicProxy implements InvocationHandler&#123;</span><br><span class="line">    private Object object;</span><br><span class="line">    public DynamicProxy(Object object)&#123;</span><br><span class="line">        this.object = object;</span><br><span class="line">    &#125;</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public &lt;T&gt; T getProxy()&#123;</span><br><span class="line">        return (T)Proxy.newProxyInstance(object.getClass().getClassLoader(),object.getClass().getInterfaces(),this);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        berofe();</span><br><span class="line">        Object invoke = method.invoke(object, args);</span><br><span class="line">        after();</span><br><span class="line">        return invoke;</span><br><span class="line">    &#125;</span><br><span class="line">    public void berofe()&#123;</span><br><span class="line">        System.out.println(&quot;before&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;after&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>根据注释 很好理解 动态代理，总结下 java提供的动态代理</p><pre><code>优点:    1.被代理类变动，代理不需要变动    2.更加灵活缺点:    1.依赖接口，必须要有接口 才能代理 被代理对象</code></pre><p>万一 需要代理的对象没有接口，那就玩玩拉，所以下一篇 开始说CGLIB 这也是springAop实现动态代理的依赖，等着感受它的强大魅力吧<img src="http://img.baidu.com/hi/jx2/j_0035.gif" alt="image"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;上篇文章我们说了静态代理，那么有静态代理自然也就有动态代理咯，这次我们主要说 javaJDK给我提供的 一套动态代理。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;老规矩先看代码,
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接口类：&lt;/p&gt;
-&lt;figure class=&quot;highlight pla
-      
-    
-    </summary>
-    
-      <category term="Proxy" scheme="https://puruis.github.io/categories/Proxy/"/>
-    
-    
-      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
-    
-      <category term="Aop" scheme="https://puruis.github.io/tags/Aop/"/>
     
   </entry>
   
