@@ -6,16 +6,16 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>支付宝对接-查询对账单下载地址接口 遇到的坑 | FS&#39;Blog</title>
+  <title>为什么需要微服务架构 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="支付,JAVA,支付宝,账单,">
+    <meta name="keywords" content="微服务,JAVA,微服务,架构,">
   
 
   
-  <meta name="description" content="**因为公司后面准备开发财务系统，那么支付肯定是必不可少的，本来想找个随手即用的封装好的支付来直接使用，但是在网上找了一圈，没有找到太中意的，于是准备利用周末时间自己来封装一个 开箱即用的 支付模块。">
+  <meta name="description" content="埔枘的个人博客">
 
   
 
@@ -160,11 +160,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2018-07-15
+      <i class="fa fa-calendar"></i>2018-08-22
     </span>
     
       <span>
-        | <a href="/categories/支付/"><i class="fa fa-bookmark"></i>支付</a>
+        | <a href="/categories/微服务/"><i class="fa fa-bookmark"></i>微服务</a>
       </span>
     
     
@@ -174,23 +174,35 @@
     
   </div>
   <h1 class="passage-title">
-    支付宝对接-查询对账单下载地址接口 遇到的坑
+    为什么需要微服务架构
   </h1>
   
   <article class="passage-article">
-    <p></p>
-<p>说到开箱即用，我第一想到了springboot，于是准备准备写一个</p>
-<h1 id="spring-boot-starter-pay"><a href="#spring-boot-starter-pay" class="headerlink" title="spring-boot-starter-pay"></a>spring-boot-starter-pay</h1><p>简单配置即可使用<br><img src="https://oscimg.oschina.net/oscnet/9b404f812ce42440184221551dc27e3996a.jpg" alt="image"></p>
-<h3 id="注入service-直接调用"><a href="#注入service-直接调用" class="headerlink" title="注入service 直接调用"></a>注入service 直接调用</h3><p><img src="https://oscimg.oschina.net/oscnet/713e1c5289e0a691d38e69ed2249f0ea110.jpg" alt="image"></p>
-<p>前面的接口封装 基本都是顺风顺水</p>
-<h1 id="alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><a href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址" class="headerlink" title="alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)"></a>alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</h1><p>测试时一直 参数不合法 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;alipay_data_dataservice_bill_downloadurl_query_response&quot;: &#123;</span><br><span class="line">		&quot;code&quot;: &quot;40004&quot;,</span><br><span class="line">		&quot;msg&quot;: &quot;Business Failed&quot;,</span><br><span class="line">		&quot;sub_code&quot;: &quot;isv.invalid_arguments&quot;,</span><br><span class="line">		&quot;sub_msg&quot;: &quot;入参不合法&quot;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>莫名其妙了，哪里参数不合法了，一开始 我还真认为是我参数传错了，好半天都没解决，问题出在哪呢？</p>
-<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h1><ul>
-<li>这个接口是下载离线账单的，需要T+1天生成账单，不能查询当日或者是当月的账单，如果日期是当天或者是当月的会返回“参数不合法”； </li>
-<li>下载对账单地址接口只有当面付接口可以下载trade类型的账单，其他支付接口只能下载signcustomer 这个类型的 </li>
+    <p>任何一种东西的出现都不会是偶然,那么微服务的架构的出现自然也会有出现的原因,由于传统应用架构的不合理或者说是对于业务的发展不适用,从而产生了新的架构模式,这和大自然的适者生存的生存法则一样,这类现象在正常不过了,那么,传统架构有那么问题呢？ 我从自己工作及学习中谈谈自己的看法。</p>
+<p> 2014年Martin Fowler(马丁)提出了Micro Service (微服务)的概念,业界就掀起了一股关于微服务的热潮,人们不再需要ESB(Enterprise Service Bus,企业服务总线)。恰逢Docker技术的发展及逐渐 普及,一个崭新的轻量级SOA架构MSA(Micro Service Architecture,微服务架构),伴随着Docker技术发展越来越快。</p>
+<h3 id="传统应用架构的问题"><a href="#传统应用架构的问题" class="headerlink" title="传统应用架构的问题"></a>传统应用架构的问题</h3><p>所有的功能及WebUi 一起封装在同一个war中,然后将war放到tomcat或是其他服务器中运行,程序会连接DataBase(例如MySql) 来操作数据库。</p>
+<p><img src="https://static.oschina.net/uploads/space/2017/1209/222808_Botj_3394890.png" alt="image"><br>一开始 用户量小,程序不会有任何问题,但是随着业务及用户量的增长,单体架构的弊端开始凸显出来。内存不足,代码逻辑复杂,维护困难。一系列问题…</p>
+<p>那么如何来解决这个问题呢?<br>人们想到了一个简单的办法。</p>
+<h3 id="如何解决单体架构应用的问题"><a href="#如何解决单体架构应用的问题" class="headerlink" title="如何解决单体架构应用的问题"></a>如何解决单体架构应用的问题</h3><p>只需要将同样的war包 copy一份一样的，并将其部署到另一台服务器中,数据库连接同一个,只是在这些WebService 上 架设一台Load Balancer(负载均衡,简称LB)来进行水平扩展</p>
+<p><img src="https://static.oschina.net/uploads/space/2017/1209/223205_75KZ_3394890.png" alt="image"></p>
+<p>请求会先发送到LB 上,通过LB的路由算法(例如轮询或哈希)，将请求分发到后面具体的Web Service,这类请求转发技术被称为Reverse Proxy(反向代理),由于此种技术使流量得到了均摊,负载得到了均衡,所以也称为 负载均衡技术。</p>
+<p>理论上机器可以无限水平扩展,只要LB能够承受流量的冲击。</p>
+<p>通过以上技术方案,轻松将负载进行了均衡，在一定程度上缓解了流量对Web Service的压力,但此时却造成了大量系统资源的浪费。</p>
+<p>除了资源的浪费,传统的单体架构还存在其它问题。</p>
+<h3 id="单体架构还有那些问题"><a href="#单体架构还有那些问题" class="headerlink" title="单体架构还有那些问题"></a>单体架构还有那些问题</h3><p>传统应用架构实际上是一个Monolith(单体架构),因为整个应用都封装到了一个war中,就像是一块巨石,无法拆分。</p>
+<p>我们在实际工作中部署单体架构的应用可能会遇到以下问题</p>
+<ul>
+<li>修改一行代码,就需要重新部署整个应用.</li>
+<li>部署应用带来的时间消耗和系统性能的开销使非常大的</li>
 </ul>
-<p>等我把代码封装完善，会上传到码云上， springBoot-Pay 开箱即用 欢迎期待</p>
+<p>综上所述:单体架构应用还会有以下的问题。</p>
+<ul>
+<li>系统资源浪费</li>
+<li>部署效率低下</li>
+<li>技术选型单一</li>
+</ul>
+<p>问题可能不只是这些,当业务越来越复杂,应用会变得越来越臃肿,’身材越来越胖’,于是,人们开始寻找新的解决思路,这就是微服务架构。</p>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -198,7 +210,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-boot-starter-pay"><span class="toc-text">spring-boot-starter-pay</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注入service-直接调用"><span class="toc-text">注入service 直接调用</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><span class="toc-text">alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项:</span></a></li>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#传统应用架构的问题"><span class="toc-text">传统应用架构的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何解决单体架构应用的问题"><span class="toc-text">如何解决单体架构应用的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单体架构还有那些问题"><span class="toc-text">单体架构还有那些问题</span></a></li></ol>
   </div>
 </aside>
   
@@ -207,7 +219,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/支付宝对接-查询对账单下载地址接口 遇到的坑/</a>
+          <a href="" target="_blank">https://puruis.github.io/为什么需要微服务架构/</a>
         </div>
       
       <div>
@@ -220,9 +232,9 @@
      
       <a href="/tags/JAVA/"><i class="fa fa-tags"></i>JAVA</a>
      
-      <a href="/tags/支付宝/"><i class="fa fa-tags"></i>支付宝</a>
+      <a href="/tags/微服务/"><i class="fa fa-tags"></i>微服务</a>
      
-      <a href="/tags/账单/"><i class="fa fa-tags"></i>账单</a>
+      <a href="/tags/架构/"><i class="fa fa-tags"></i>架构</a>
     
     </div>
   
@@ -324,10 +336,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/Zookeeper 入门 (一)/" data-enable="true">
+    <a href="/手动实现数据库连接池/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/让JPA 飞 - QueryDSL/" data-enable="true">
+    <a href="/ActiveMq 入门/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
