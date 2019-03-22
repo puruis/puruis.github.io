@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>归档: 2018/8 | FS&#39;Blog</title>
+  <title>docker 简单入门-image | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, Theme-AD">
+    <meta name="keywords" content="docker,image,">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2018-05-01",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -156,73 +156,79 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 21篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2018-08-10
+    </span>
+    
+      <span>
+        | <a href="/categories/docker/"><i class="fa fa-bookmark"></i>docker</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    docker 简单入门-image
+  </h1>
   
+  <article class="passage-article">
+    <p>什么是 image？</p>
+<p>1.文件和metaData的集合（root fileSystem）<br>2.并且它是分层的，每一层都可以添加或删除文件，成为一个新的image<br>3.不同的image 可以共享同一个layer（分层）<br>4.image本身是只读的</p>
+<p>image是运行于 Linux Kernel（bootfs）之上的<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-21 下午10.58.43.png" alt="3b5782dfd8329c2a0a7e188eeb4a6e2f"></p>
+<p>这里简单说下 docker 的image（镜像），在<a href="https://puruis.github.io/2019-03-16-docker%20%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%EF%BC%881%EF%BC%89/">第一篇文章</a>的结尾 我们试着使用 docker pull hello-world 来拉取docker hub 的image，这个和 git的思路差不多，<a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Hub</a><br>这里 我们简单看 images 和 Docker Register 的关系即可，</p>
+<p>我们可以把Docker register想象成 github<br>images 想象成 我们开发本地的 git仓库<br>docker pull mysql 就是 通过 git 从github上拉取一个项目。 这样 我们就能理解了 docker 的image 和 register的关系，<br>不同的是 我们通过 git拉取的是一个个项目<br>docker pull 拉取的是 一个个镜像<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.13.07.png" alt="d59d09be7f02911661797e8d883a7b7b"><br>我们 通过 docker pull mysql<br>简单拉取一个 mysql<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.20.52.png" alt="b75a81732ddc6c9c07ac07f47e797f3b"></p>
+<p>然后运行 docker image ls<br>就可以看到 我们刚刚拉取的 mysql 镜像 还有一些centos的镜像.<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.22.48.png" alt="aabeef1c5fb6b86ae292bccb3e88bc36"></p>
+<p>image 的获取有 两种方式</p>
+<p>1.去 build    Dockerfile文件获取<br>参考命令：    docker build -t xxx/sss .<br>2.或 register pull   <a href="https://hub.docker.com/search/?q=&amp;type=image" target="_blank" rel="noopener">dockerHub</a><br>参考命令：docker pull mysql</p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
     
-      <h3 class="timeline-subtitle">2018</h3>
-    
-    <div class="timeline-item">
-      <time>2018-08-27</time>
-      <a target="_self" href="/Got error 28 from storage engine 解决记录/">Got error 28 from storage engine 解决记录</a>
-    </div>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-08-22</time>
-      <a target="_self" href="/手动实现数据库连接池/">手动实现数据库连接池</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: purui</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/2019-03-22-docker 简单入门（3）/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-08-22</time>
-      <a target="_self" href="/为什么需要微服务架构/">为什么需要微服务架构</a>
-    </div>
   
+    <div class="passage-tags">
+     
+      <a href="/tags/image/"><i class="fa fa-tags"></i>image</a>
     
-    <div class="timeline-item">
-      <time>2018-08-10</time>
-      <a target="_self" href="/ActiveMq 入门/">ActiveMq 入门</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-10</time>
-      <a target="_self" href="/2019-03-22-docker 简单入门（3）/">docker 简单入门-image</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-09</time>
-      <a target="_self" href="/nginx 配置阿里云免费证书/">nginx 配置阿里云免费证书</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-08</time>
-      <a target="_self" href="/Zookeeper(四)-实战/">Zookeeper(四)-实战</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-07</time>
-      <a target="_self" href="/Zookeeper(三)/">Zookeeper入门(三)</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-06</time>
-      <a target="_self" href="/Zookeeper入门(二)/">Zookeeper入门(二)</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-08-05</time>
-      <a target="_self" href="/Zookeeper 入门 (一)/">Zookeeper 入门 (一)</a>
     </div>
   
 </div>
+
     </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -310,19 +316,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/ActiveMq 入门/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/nginx 配置阿里云免费证书/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
