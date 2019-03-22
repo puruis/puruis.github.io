@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://puruis.github.io/"/>
-  <updated>2019-03-19T03:25:51.831Z</updated>
+  <updated>2019-03-22T07:21:28.686Z</updated>
   <id>https://puruis.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker 简单入门-image</title>
+    <link href="https://puruis.github.io/2019-03-22-docker%20%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%EF%BC%883%EF%BC%89/"/>
+    <id>https://puruis.github.io/2019-03-22-docker 简单入门（3）/</id>
+    <published>2019-03-21T16:00:00.000Z</published>
+    <updated>2019-03-22T07:21:28.686Z</updated>
+    
+    <content type="html"><![CDATA[<p>什么是 image？</p><p>1.文件和metaData的集合（root fileSystem）<br>2.并且它是分层的，每一层都可以添加或删除文件，成为一个新的image<br>3.不同的image 可以共享同一个layer（分层）<br>4.image本身是只读的</p><p>image是运行于 Linux Kernel（bootfs）之上的<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-21 下午10.58.43.png" alt="3b5782dfd8329c2a0a7e188eeb4a6e2f"></p><p>这里简单说下 docker 的image（镜像），在<a href="https://puruis.github.io/2019-03-16-docker%20%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%EF%BC%881%EF%BC%89/">第一篇文章</a>的结尾 我们试着使用 docker pull hello-world 来拉取docker hub 的image，这个和 git的思路差不多，<a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Hub</a><br>这里 我们简单看 images 和 Docker Register 的关系即可，</p><p>我们可以把Docker register想象成 github<br>images 想象成 我们开发本地的 git仓库<br>docker pull mysql 就是 通过 git 从github上拉取一个项目。 这样 我们就能理解了 docker 的image 和 register的关系，<br>不同的是 我们通过 git拉取的是一个个项目<br>docker pull 拉取的是 一个个镜像<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.13.07.png" alt="d59d09be7f02911661797e8d883a7b7b"><br>我们 通过 docker pull mysql<br>简单拉取一个 mysql<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.20.52.png" alt="b75a81732ddc6c9c07ac07f47e797f3b"></p><p>然后运行 docker image ls<br>就可以看到 我们刚刚拉取的 mysql 镜像 还有一些centos的镜像.<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.22.48.png" alt="aabeef1c5fb6b86ae292bccb3e88bc36"></p><p>image 的获取有 两种方式</p><p>1.去 build    Dockerfile文件获取<br>参考命令：    docker build -t xxx/sss .<br>2.或 register pull   <a href="https://hub.docker.com/search/?q=&amp;type=image" target="_blank" rel="noopener">dockerHub</a><br>参考命令：docker pull mysql</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;什么是 image？&lt;/p&gt;
+&lt;p&gt;1.文件和metaData的集合（root fileSystem）&lt;br&gt;2.并且它是分层的，每一层都可以添加或删除文件，成为一个新的image&lt;br&gt;3.不同的image 可以共享同一个layer（分层）&lt;br&gt;4.image本身是只读
+      
+    
+    </summary>
+    
+      <category term="docker" scheme="https://puruis.github.io/categories/docker/"/>
+    
+    
+      <category term="image" scheme="https://puruis.github.io/tags/image/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker 简单入门-Docker-machine</title>
@@ -216,32 +242,6 @@
     
     
       <category term="ActiveMq" scheme="https://puruis.github.io/tags/ActiveMq/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>docker 简单入门-image</title>
-    <link href="https://puruis.github.io/2019-03-22-docker%20%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%EF%BC%883%EF%BC%89/"/>
-    <id>https://puruis.github.io/2019-03-22-docker 简单入门（3）/</id>
-    <published>2018-08-09T16:00:00.000Z</published>
-    <updated>2019-03-22T04:14:44.259Z</updated>
-    
-    <content type="html"><![CDATA[<p>什么是 image？</p><p>1.文件和metaData的集合（root fileSystem）<br>2.并且它是分层的，每一层都可以添加或删除文件，成为一个新的image<br>3.不同的image 可以共享同一个layer（分层）<br>4.image本身是只读的</p><p>image是运行于 Linux Kernel（bootfs）之上的<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-21 下午10.58.43.png" alt="3b5782dfd8329c2a0a7e188eeb4a6e2f"></p><p>这里简单说下 docker 的image（镜像），在<a href="https://puruis.github.io/2019-03-16-docker%20%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%EF%BC%881%EF%BC%89/">第一篇文章</a>的结尾 我们试着使用 docker pull hello-world 来拉取docker hub 的image，这个和 git的思路差不多，<a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Hub</a><br>这里 我们简单看 images 和 Docker Register 的关系即可，</p><p>我们可以把Docker register想象成 github<br>images 想象成 我们开发本地的 git仓库<br>docker pull mysql 就是 通过 git 从github上拉取一个项目。 这样 我们就能理解了 docker 的image 和 register的关系，<br>不同的是 我们通过 git拉取的是一个个项目<br>docker pull 拉取的是 一个个镜像<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.13.07.png" alt="d59d09be7f02911661797e8d883a7b7b"><br>我们 通过 docker pull mysql<br>简单拉取一个 mysql<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.20.52.png" alt="b75a81732ddc6c9c07ac07f47e797f3b"></p><p>然后运行 docker image ls<br>就可以看到 我们刚刚拉取的 mysql 镜像 还有一些centos的镜像.<br><img src="/2019-03-22-docker 简单入门（3）/屏幕快照 2019-03-19 下午7.22.48.png" alt="aabeef1c5fb6b86ae292bccb3e88bc36"></p><p>image 的获取有 两种方式</p><p>1.去 build    Dockerfile文件获取<br>参考命令：    docker build -t xxx/sss .<br>2.或 register pull   <a href="https://hub.docker.com/search/?q=&amp;type=image" target="_blank" rel="noopener">dockerHub</a><br>参考命令：docker pull mysql</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;什么是 image？&lt;/p&gt;
-&lt;p&gt;1.文件和metaData的集合（root fileSystem）&lt;br&gt;2.并且它是分层的，每一层都可以添加或删除文件，成为一个新的image&lt;br&gt;3.不同的image 可以共享同一个layer（分层）&lt;br&gt;4.image本身是只读
-      
-    
-    </summary>
-    
-      <category term="docker" scheme="https://puruis.github.io/categories/docker/"/>
-    
-    
-      <category term="image" scheme="https://puruis.github.io/tags/image/"/>
     
   </entry>
   
