@@ -186,10 +186,9 @@
 </ol>
 <p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.37.03.png" alt="25f06b6df9519bbfbcda00bd46cd185f"></p>
 <p>我们来用image 来创建一个 container<br>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure></p>
-<p>因为我本地没有 hello-world这个镜像所以 它回去 dockerhub 上拉取官方的镜像，我们能看到它打印出了 hello from docker<br>然后我们运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.40.51.png" alt="c88262104eb28e30468ed99e64664417"><br>因为我本地没有 hello-world这个镜像所以 它回去 dockerhub 上拉取官方的镜像，我们能看到它打印出了 hello from docker<br>然后我们运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls</span><br></pre></td></tr></table></figure></p>
 <p>看第二张图，我们发现 运行完成后没有然后运行记录，这是因为 它已经运行完了，自动退出了，<br>然后我们运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -a</span><br></pre></td></tr></table></figure></p>
-<p>就能看到 它已经退出三分钟了。<br><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.40.51.png" alt="c88262104eb28e30468ed99e64664417"></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.44.31.png" alt="3f34565bc628b62c2c4f71364022af70"></p>
+<p>就能看到 它已经退出三分钟了。<br><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.44.31.png" alt="3f34565bc628b62c2c4f71364022af70"></p>
 <p>那么有什么办法 让它不停止运行吗？</p>
 <p>答案是 有的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu</span><br></pre></td></tr></table></figure></p>
 <p>ps:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d ubuntu</span><br></pre></td></tr></table></figure></p>
