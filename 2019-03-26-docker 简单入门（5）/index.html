@@ -6,16 +6,16 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>支付宝对接-查询对账单下载地址接口 遇到的坑 | FS&#39;Blog</title>
+  <title>Docker 简单入门-Dockderfile基础语法 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="支付,JAVA,支付宝,账单,">
+    <meta name="keywords" content="Docker,Docker,入门,Dockderfile,">
   
 
   
-  <meta name="description" content="**因为公司后面准备开发财务系统，那么支付肯定是必不可少的，本来想找个随手即用的封装好的支付来直接使用，但是在网上找了一圈，没有找到太中意的，于是准备利用周末时间自己来封装一个 开箱即用的 支付模块。">
+  <meta name="description" content="埔枘的个人博客">
 
   
 
@@ -160,11 +160,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2018-07-15
+      <i class="fa fa-calendar"></i>2019-03-19
     </span>
     
       <span>
-        | <a href="/categories/支付/"><i class="fa fa-bookmark"></i>支付</a>
+        | <a href="/categories/Docker/"><i class="fa fa-bookmark"></i>Docker</a>
       </span>
     
     
@@ -174,23 +174,39 @@
     
   </div>
   <h1 class="passage-title">
-    支付宝对接-查询对账单下载地址接口 遇到的坑
+    Docker 简单入门-Dockderfile基础语法
   </h1>
   
   <article class="passage-article">
-    <p></p>
-<p>说到开箱即用，我第一想到了springboot，于是准备准备写一个</p>
-<h1 id="spring-boot-starter-pay"><a href="#spring-boot-starter-pay" class="headerlink" title="spring-boot-starter-pay"></a>spring-boot-starter-pay</h1><p>简单配置即可使用<br><img src="https://oscimg.oschina.net/oscnet/9b404f812ce42440184221551dc27e3996a.jpg" alt="image"></p>
-<h3 id="注入service-直接调用"><a href="#注入service-直接调用" class="headerlink" title="注入service 直接调用"></a>注入service 直接调用</h3><p><img src="https://oscimg.oschina.net/oscnet/713e1c5289e0a691d38e69ed2249f0ea110.jpg" alt="image"></p>
-<p>前面的接口封装 基本都是顺风顺水</p>
-<h1 id="alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><a href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址" class="headerlink" title="alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)"></a>alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</h1><p>测试时一直 参数不合法 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;alipay_data_dataservice_bill_downloadurl_query_response&quot;: &#123;</span><br><span class="line">		&quot;code&quot;: &quot;40004&quot;,</span><br><span class="line">		&quot;msg&quot;: &quot;Business Failed&quot;,</span><br><span class="line">		&quot;sub_code&quot;: &quot;isv.invalid_arguments&quot;,</span><br><span class="line">		&quot;sub_msg&quot;: &quot;入参不合法&quot;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>莫名其妙了，哪里参数不合法了，一开始 我还真认为是我参数传错了，好半天都没解决，问题出在哪呢？</p>
-<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h1><ul>
-<li>这个接口是下载离线账单的，需要T+1天生成账单，不能查询当日或者是当月的账单，如果日期是当天或者是当月的会返回“参数不合法”； </li>
-<li>下载对账单地址接口只有当面付接口可以下载trade类型的账单，其他支付接口只能下载signcustomer 这个类型的 </li>
-</ul>
-<p>等我把代码封装完善，会上传到码云上， springBoot-Pay 开箱即用 欢迎期待</p>
+    <p>还是话不多说，直接开始</p>
+<p>我们先说说 Dockerfile的语法</p>
+<hr>
+<p>1.每个Dockerfile必须以FROM指令开头，FROM指明了当前镜像创建的基镜像，也就是说每个镜像必须基于一个已存在的镜像进行创建。FROM指令后直接跟基镜像的名称或者镜像名称加标签。镜像的名称和标签可以去Docker Hub或者使用命令docker search keyword 进行搜索。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;案例：</span><br><span class="line">&gt;     1.FROM scratch 表示不指定具体镜像使用空镜像作为基础镜像。</span><br><span class="line">&gt;     2.FROM centos #使用centos做为基础镜像</span><br><span class="line">&gt;     3.FROM ubuntu:14.00 #指定具体版本</span><br></pre></td></tr></table></figure></p>
+<p><u>ps： 为了安全 应尽量使用官方 image 作为基础镜像</u></p>
+<hr>
+<p>2.LABEL 关键字 标签？ 看案例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;    1.LABEL maintainer=“purui@qq.com”</span><br><span class="line">&gt;    2.LABEL version=&quot;1.0.0&quot;</span><br><span class="line">&gt;    3.LABEL description=&quot;描述&quot;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>3.RUN 关键字 运行命令 RUN命令有两种格式<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt;    1.RUN yum update &amp;&amp; yum install -y vim</span><br><span class="line">&gt;    2.RUN [&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;echo hello&quot;]</span><br><span class="line">   ``` </span><br><span class="line">&lt;u&gt;ps:注意：多行命令不要写多个RUN，原因是Dockerfile中每一个指令都会建立一层.</span><br><span class="line"></span><br><span class="line"> 多少个RUN就构建了多少层镜像，会造成镜像的臃肿、多层，不仅仅增加了构件部署的时间，还容易出错。</span><br><span class="line"></span><br><span class="line">RUN书写时的换行符是\&lt;/u&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* * *</span><br><span class="line"></span><br><span class="line">4.WORKDIR 关键字 可以设定当前的工作目录</span><br><span class="line">&gt;    1.WORKDIR /root #如果没有 root目录会自动创建</span><br><span class="line">    </span><br><span class="line"> &lt;u&gt;ps:不推荐使用 RUN cd 推荐使用决定目录&lt;/u&gt;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">* * *</span><br><span class="line"></span><br><span class="line">5.ADD关键字 可以从宿主机copy 文件到image中，如果是压缩文件还会自动解压</span><br><span class="line">&gt;    1.ADD hello.sh / #copy hello.sh 到 根目录下</span><br><span class="line">&gt;    2.如果先使用 WORKDIR /root 指定目录，再运行 ADD hello.sh /test #会copy到 /root/test/下面</span><br><span class="line">    </span><br><span class="line">6.ENV 关键字 声明常量</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>   语法有两种</p>
+<ol>
+<li>ENV <key> <value></value></key></li>
+<li>ENV <key>=<value> …<br>3.ENV MYSQL_VERSION 5.6<br>RUN apt-get install mysql-server=”${MYSQL_VERSION}”<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">7.CMD 命令为运行容器执行默认的命令，如果有多个命令那么它只执行最后一个</span><br><span class="line"></span><br><span class="line">语法有三种写法</span><br></pre></td></tr></table></figure>
+</value></key></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol>
+<li>CMD [“executable”,”param1”,”param2”]</li>
+<li>CMD [“param1”,”param2”]</li>
+<li>CMD command param1 param2<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">8.RUN &amp; CMD</span><br><span class="line"></span><br><span class="line">&gt;不要把RUN和CMD搞混了。</span><br><span class="line">&gt;</span><br><span class="line">&gt;RUN是构件容器时就运行的命令以及提交运行结果</span><br><span class="line">&gt;</span><br><span class="line">&gt;CMD是容器启动时执行的命令，在构件时并不运行，构件时紧紧指定了这个命令到底是个什么样子</span><br><span class="line"></span><br><span class="line">9.EXPOSE 可以暴露容器内部的应用端口 给宿主机访问</span><br><span class="line">      </span><br><span class="line">10.ENTRYPOINT 功能是启动时的默认命令</span><br><span class="line"></span><br><span class="line">&gt;与CMD比较说明（这俩命令太像了，而且还可以配合使用）：</span><br><span class="line">&gt;</span><br><span class="line">&gt;1. 相同点：</span><br><span class="line">&gt;</span><br><span class="line">&gt;只能写一条，如果写了多条，那么只有最后一条生效</span><br><span class="line">&gt;</span><br><span class="line">&gt;容器启动时才运行，运行时机相同</span><br><span class="line">&gt;</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br><span class="line">&gt;2. 不同点：</span><br><span class="line">&gt;</span><br><span class="line">&gt; ENTRYPOINT不会被运行的command覆盖，而CMD则会被覆盖</span><br><span class="line">&gt;</span><br><span class="line">&gt; 如果我们在Dockerfile种同时写了ENTRYPOINT和CMD，并且CMD指令不是一个完整的可执行命令，那么CMD指定的内容将会作为ENTRYPOINT的参数</span><br><span class="line">&gt; 如下：</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p>FROM ubuntu<br>ENTRYPOINT [“top”, “-b”]<br>CMD [“-c”]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如果我们在Dockerfile种同时写了ENTRYPOINT和CMD，并且CMD是一个完整的指令，那么它们两个会互相覆盖，谁在最后谁生效</span><br><span class="line"></span><br><span class="line">如下：</span><br></pre></td></tr></table></figure></p>
+<p>FROM ubuntu<br>ENTRYPOINT [“top”, “-b”]<br>CMD ls -al<br><code>`</code><br>那么将执行ls -al ,top -b不会执行。<br>这是docker 官方给出的 组合执行情况<br><img src="evernotecid://363B8399-5A48-48E1-9461-9FE53C911BD7/appyinxiangcom/23751615/ENNote/p7?hash=7c24fb309d1d9634aa01a05e09ce02ca" alt="7c24fb309d1d9634aa01a05e09ce02ca.jpeg"></p>
+<p>#参考<br><a href="https://www.cnblogs.com/dazhoushuoceshi/p/7066041.html" target="_blank" rel="noopener">https://www.cnblogs.com/dazhoushuoceshi/p/7066041.html</a></p>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -198,7 +214,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-boot-starter-pay"><span class="toc-text">spring-boot-starter-pay</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注入service-直接调用"><span class="toc-text">注入service 直接调用</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><span class="toc-text">alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项:</span></a></li>
+    
   </div>
 </aside>
   
@@ -207,7 +223,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/支付宝对接-查询对账单下载地址接口 遇到的坑/</a>
+          <a href="" target="_blank">https://puruis.github.io/2019-03-26-docker 简单入门（5）/</a>
         </div>
       
       <div>
@@ -218,11 +234,11 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/JAVA/"><i class="fa fa-tags"></i>JAVA</a>
+      <a href="/tags/Docker/"><i class="fa fa-tags"></i>Docker</a>
      
-      <a href="/tags/支付宝/"><i class="fa fa-tags"></i>支付宝</a>
+      <a href="/tags/入门/"><i class="fa fa-tags"></i>入门</a>
      
-      <a href="/tags/账单/"><i class="fa fa-tags"></i>账单</a>
+      <a href="/tags/Dockderfile/"><i class="fa fa-tags"></i>Dockderfile</a>
     
     </div>
   
@@ -324,10 +340,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/Zookeeper 入门 (一)/" data-enable="true">
+    <a href="/2019-03-22-docker 简单入门（3）/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/利用 jconsole 查看远程服务器的运行情况/" data-enable="true">
+    <a href="/2019-03-19-docker 简单入门（2）/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
