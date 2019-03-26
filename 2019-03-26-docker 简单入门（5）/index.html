@@ -160,7 +160,7 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2019-03-19
+      <i class="fa fa-calendar"></i>2019-03-26
     </span>
     
       <span>
@@ -204,7 +204,7 @@
 </ol>
 </blockquote>
 <p>FROM ubuntu<br>ENTRYPOINT [“top”, “-b”]<br>CMD [“-c”]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如果我们在Dockerfile种同时写了ENTRYPOINT和CMD，并且CMD是一个完整的指令，那么它们两个会互相覆盖，谁在最后谁生效</span><br><span class="line"></span><br><span class="line">如下：</span><br></pre></td></tr></table></figure></p>
-<p>FROM ubuntu<br>ENTRYPOINT [“top”, “-b”]<br>CMD ls -al<br><code>`</code><br>那么将执行ls -al ,top -b不会执行。<br>这是docker 官方给出的 组合执行情况<br><img src="evernotecid://363B8399-5A48-48E1-9461-9FE53C911BD7/appyinxiangcom/23751615/ENNote/p7?hash=7c24fb309d1d9634aa01a05e09ce02ca" alt="7c24fb309d1d9634aa01a05e09ce02ca.jpeg"></p>
+<p>FROM ubuntu<br>ENTRYPOINT [“top”, “-b”]<br>CMD ls -al<br><code>`</code><br>那么将执行ls -al ,top -b不会执行。<br>这是docker 官方给出的 组合执行情况<br><img src="/2019-03-26-docker 简单入门（5）/9C7EDE9A-0F54-449B-BE72-73D73984AA5D.jpg" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p>
 <p>#参考<br><a href="https://www.cnblogs.com/dazhoushuoceshi/p/7066041.html" target="_blank" rel="noopener">https://www.cnblogs.com/dazhoushuoceshi/p/7066041.html</a></p>
 
   </article>
@@ -340,10 +340,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/2019-03-22-docker 简单入门（3）/" data-enable="true">
+    <a href="/2019-03-26-Elasticsearch/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/2019-03-19-docker 简单入门（2）/" data-enable="true">
+    <a href="/2019-03-25-docker 简单入门（4）/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
