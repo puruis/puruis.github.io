@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Dong Yuanxin">
+  
+  
+  <title>FS&#39;Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Hexo, Theme-AD">
+  
+
+  
+  <meta name="description" content="埔枘的个人博客">
+
+  
+
+  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"tWCfJzSH6LBChsputCN8gvNh-gzGzoHsz","appkey":"01RHAtqQIvBDflNXxcY6x2Ja","comment":true,"count":true},
+    welcome: {"enable":true,"interval":30},
+    start_time: "2018-05-01",
+    passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
+    is_post: true,
+    lock: false,
+    author: "Dong Yuanxin",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">QUIET</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 用代码服务生活</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/puruis" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-03-26
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    
+  </h1>
+  
+  <article class="passage-article">
+    <p>ȫ������������������󣬿�Դ�� Elasticsearch �����¼�� Elastic����Ŀǰȫ�������������ѡ��</p>
+<p>�����Կ��ٵش��桢�����ͷ����������ݡ�ά���ٿơ�Stack Overflow��Github ����������</p>
+<p>Elastic �ĵײ��ǿ�Դ�� Lucene�����ǣ���û��ֱ���� Lucene�������Լ�д����ȥ�������Ľӿڡ�Elastic �� Lucene �ķ�װ���ṩ�� REST API �Ĳ����ӿڣ����伴�á�</p>
+<p>���Ĵ��㿪ʼ���������ʹ�� Elastic ��Լ���ȫ���������档ÿһ��������ϸ��˵������Ҹ���������ѧ�ᡣ</p>
+<p>һ����װ<br>Elastic ��Ҫ Java 8 �����������Ļ�����û��װ Java�����Բο���ƪ���£�ע��Ҫ��֤��������JAVA_HOME��ȷ���á�</p>
+<p>��װ�� Java���Ϳ��Ը��Źٷ��ĵ���װ Elastic��ֱ������ѹ�����Ƚϼ򵥡�</p>
+<p>$ wget <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.1.zip" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.1.zip</a><br>$ unzip elasticsearch-5.5.1.zip<br>$ cd elasticsearch-5.5.1/<br>���ţ������ѹ���Ŀ¼������������������ Elastic��</p>
+<p>$ ./bin/elasticsearch<br>�����ʱ����”max virtual memory areas vm.maxmapcount [65530] is too low”��Ҫ������������</p>
+<p>$ sudo sysctl -w vm.max_map_count=262144<br>���һ��������Elastic �ͻ���Ĭ�ϵ�9200�˿����С���ʱ������һ�������д��ڣ�����ö˿ڣ���õ�˵����Ϣ��</p>
+<p>$ curl localhost:9200</p>
+<p>{<br>  “name” : “atntrTf”,<br>  “cluster_name” : “elasticsearch”,<br>  “cluster_uuid” : “tf9250XhQ6ee4h7YI11anA”,<br>  “version” : {<br>    “number” : “5.5.1”,<br>    “build_hash” : “19c13d0”,<br>    “build_date” : “2017-07-18T20:44:24.823Z”,<br>    “build_snapshot” : false,<br>    “lucene_version” : “6.6.0”<br>  },<br>  “tagline” : “You Know, for Search”<br>}<br>��������У�����9200�˿ڣ�Elastic ����һ�� JSON ���󣬰�����ǰ�ڵ㡢��Ⱥ���汾����Ϣ��</p>
+<p>���� Ctrl + C��Elastic �ͻ�ֹͣ���С�</p>
+<p>Ĭ������£�Elastic ֻ�����������ʣ������ҪԶ�̷��ʣ������޸� Elastic ��װĿ¼��config/elasticsearch.yml�ļ���ȥ��network.host��ע�ͣ�������ֵ�ĳ�0.0.0.0��Ȼ���������� Elastic��</p>
+<p>network.host: 0.0.0.0<br>��������У����0.0.0.0���κ��˶����Է��ʡ����Ϸ���Ҫ�������ã�Ҫ��ɾ���� IP��</p>
+<p>������������<br>2.1 Node �� Cluster<br>Elastic ��������һ���ֲ�ʽ���ݿ⣬������̨������Эͬ������ÿ̨�������������ж�� Elastic ʵ����</p>
+<p>���� Elastic ʵ����Ϊһ���ڵ㣨node����һ��ڵ㹹��һ����Ⱥ��cluster����</p>
+<p>2.2 Index<br>Elastic �����������ֶΣ�����������д��һ������������Inverted Index�����������ݵ�ʱ��ֱ�Ӳ��Ҹ�������</p>
+<p>���ԣ�Elastic ���ݹ����Ķ��㵥λ�ͽ��� Index�������������ǵ������ݿ��ͬ��ʡ�ÿ�� Index �������ݿ⣩�����ֱ�����Сд��</p>
+<p>�����������Բ鿴��ǰ�ڵ������ Index��</p>
+<p>$ curl -X GET ‘<a href="http://localhost:9200/_cat/indices?v&#39;" target="_blank" rel="noopener">http://localhost:9200/_cat/indices?v&#39;</a><br>2.3 Document<br>Index ���浥���ļ�¼��Ϊ Document���ĵ����������� Document ������һ�� Index��</p>
+<p>Document ʹ�� JSON ��ʽ��ʾ��������һ�����ӡ�</p>
+<p>{<br>  “user”: “����”,<br>  “title”: “����ʦ”,<br>  “desc”: “���ݿ����”<br>}<br>ͬһ�� Index ����� Document����Ҫ������ͬ�Ľṹ��scheme����������ñ�����ͬ�������������������Ч�ʡ�</p>
+<p>2.4 Type<br>Document ���Է��飬����weather��� Index ���棬���԰����з��飨�������Ϻ�����Ҳ���԰�������飨��������죩�����ַ���ͽ��� Type������������߼����飬�������� Document��</p>
+<p>��ͬ�� Type Ӧ�������ƵĽṹ��schema����������˵��id�ֶβ�������������ַ���������һ��������ֵ���������ϵ�����ݿ�ı���һ������������ȫ��ͬ�����ݣ�����products��logs��Ӧ�ô������ Index��������һ�� Index ��������� Type����Ȼ������������</p>
+<p>�������������г�ÿ�� Index �������� Type��</p>
+<p>$ curl ‘localhost:9200/_mapping?pretty=true’<br>���ݹ滮��Elastic 6.x ��ֻ����ÿ�� Index ����һ�� Type��7.x �潫�᳹���Ƴ� Type��</p>
+<p>�����½���ɾ�� Index<br>�½� Index������ֱ���� Elastic ���������� PUT ����������������½�һ������weather�� Index��</p>
+<p>$ curl -X PUT ‘localhost:9200/weather’<br>����������һ�� JSON ���������acknowledged�ֶα�ʾ�����ɹ���</p>
+<p>{<br>  “acknowledged”:true,<br>  “shards_acknowledged”:true<br>}<br>Ȼ�����Ƿ��� DELETE ����ɾ����� Index��</p>
+<p>$ curl -X DELETE ‘localhost:9200/weather’<br>�ġ����ķִ�����<br>���ȣ���װ���ķִʲ��������ʹ�õ��� ik��Ҳ���Կ���������������� smartcn����</p>
+<p>$ ./bin/elasticsearch-plugin install <a href="https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.5.1/elasticsearch-analysis-ik-5.5.1.zip" target="_blank" rel="noopener">https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.5.1/elasticsearch-analysis-ik-5.5.1.zip</a><br>������밲װ����5.5.1��Ĳ������ Elastic 5.5.1 ���ʹ�á�</p>
+<p>���ţ��������� Elastic���ͻ��Զ���������°�װ�Ĳ����</p>
+<p>Ȼ���½�һ�� Index��ָ����Ҫ�ִʵ��ֶΡ���һ���������ݽṹ���죬���������ֻ��Ա��ġ������ϣ�������Ҫ�����������ֶΣ���Ҫ��������һ�¡�</p>
+<p>$ curl -X PUT ‘localhost:9200/accounts’ -d ‘<br>{<br>  “mappings”: {<br>    “person”: {<br>      “properties”: {<br>        “user”: {<br>          “type”: “text”,<br>          “analyzer”: “ik_max_word”,<br>          “search_analyzer”: “ik_max_word”<br>        },<br>        “title”: {<br>          “type”: “text”,<br>          “analyzer”: “ik_max_word”,<br>          “search_analyzer”: “ik_max_word”<br>        },<br>        “desc”: {<br>          “type”: “text”,<br>          “analyzer”: “ik_max_word”,<br>          “search_analyzer”: “ik_max_word”<br>        }<br>      }<br>    }<br>  }<br>}’<br>��������У������½�һ������Ϊaccounts�� Index��������һ������Ϊperson�� Type��person�������ֶΡ�</p>
+<p>user<br>title<br>desc<br>�������ֶζ������ģ��������Ͷ����ı���text����������Ҫָ�����ķִ���������ʹ��Ĭ�ϵ�Ӣ�ķִ�����</p>
+<p>Elastic �ķִ�����Ϊ analyzer�����Ƕ�ÿ���ֶ�ָ���ִ�����</p>
+<p>“user”: {<br>  “type”: “text”,<br>  “analyzer”: “ik_max_word”,<br>  “search_analyzer”: “ik_max_word”<br>}<br>��������У�analyzer���ֶ��ı��ķִ�����search_analyzer�������ʵķִ�����ik_max_word�ִ����ǲ��ik�ṩ�ģ����Զ��ı�������������ķִʡ�</p>
+<p>�塢���ݲ���<br>5.1 ������¼<br>��ָ���� /Index/Type ���� PUT ���󣬾Ϳ����� Index ��������һ����¼�����磬��/accounts/person�������󣬾Ϳ�������һ����Ա��¼��</p>
+<p>$ curl -X PUT ‘localhost:9200/accounts/person/1’ -d ‘<br>{<br>  “user”: “����”,<br>  “title”: “����ʦ”,<br>  “desc”: “���ݿ����”<br>}’<br>���������ص� JSON ���󣬻���� Index��Type��Id��Version ����Ϣ��</p>
+<p>{<br>  “_index”:”accounts”,<br>  “_type”:”person”,<br>  “_id”:”1”,<br>  “_version”:1,<br>  “result”:”created”,<br>  “_shards”:{“total”:2,”successful”:1,”failed”:0},<br>  “created”:true<br>}<br>�������ϸ�����ᷢ������·����/accounts/person/1������1�Ǹ�����¼�� Id������һ�������֣������ַ���������abc�������ԡ�</p>
+<p>������¼��ʱ��Ҳ���Բ�ָ�� Id����ʱҪ�ĳ� POST ����</p>
+<p>$ curl -X POST ‘localhost:9200/accounts/person’ -d ‘<br>{<br>  “user”: “����”,<br>  “title”: “����ʦ”,<br>  “desc”: “ϵͳ����”<br>}’<br>��������У���/accounts/person����һ�� POST ��������һ����¼����ʱ�����������ص� JSON �������棬_id�ֶξ���һ������ַ�����</p>
+<p>{<br>  “_index”:”accounts”,<br>  “_type”:”person”,<br>  “_id”:”AV3qGfrC6jMbsbXb6k1p”,<br>  “_version”:1,<br>  “result”:”created”,<br>  “_shards”:{“total”:2,”successful”:1,”failed”:0},<br>  “created”:true<br>}<br>ע�⣬���û���ȴ��� Index�����������accounts����ֱ��ִ����������Elastic Ҳ���ᱨ��������ֱ������ָ���� Index�����ԣ����ֵ�ʱ��ҪС�ģ���Ҫд�� Index �����ơ�</p>
+<p>5.2 �鿴��¼<br>��/Index/Type/Id���� GET ���󣬾Ϳ��Բ鿴������¼��</p>
+<p>$ curl ‘localhost:9200/accounts/person/1?pretty=true’<br>�����������鿴/accounts/person/1������¼��URL �Ĳ���pretty=true��ʾ���׶��ĸ�ʽ���ء�</p>
+<p>���ص������У�found�ֶα�ʾ��ѯ�ɹ���_source�ֶη���ԭʼ��¼��</p>
+<p>{<br>  “_index” : “accounts”,<br>  “_type” : “person”,<br>  “_id” : “1”,<br>  “_version” : 1,<br>  “found” : true,<br>  “_source” : {<br>    “user” : “����”,<br>    “title” : “����ʦ”,<br>    “desc” : “���ݿ����”<br>  }<br>}<br>��� Id ����ȷ���Ͳ鲻�����ݣ�found�ֶξ���false��</p>
+<p>$ curl ‘localhost:9200/weather/beijing/abc?pretty=true’</p>
+<p>{<br>  “_index” : “accounts”,<br>  “_type” : “person”,<br>  “_id” : “abc”,<br>  “found” : false<br>}<br>5.3 ɾ����¼<br>ɾ����¼���Ƿ��� DELETE ����</p>
+<p>$ curl -X DELETE ‘localhost:9200/accounts/person/1’<br>�����Ȳ�Ҫɾ��������¼�����滹Ҫ�õ���</p>
+<p>5.4 ���¼�¼<br>���¼�¼����ʹ�� PUT �������·���һ�����ݡ�</p>
+<p>$ curl -X PUT ‘localhost:9200/accounts/person/1’ -d ‘<br>{<br>    “user” : “����”,<br>    “title” : “����ʦ”,<br>    “desc” : “���ݿ��������������”<br>}’ </p>
+<p>{<br>  “_index”:”accounts”,<br>  “_type”:”person”,<br>  “_id”:”1”,<br>  “_version”:2,<br>  “result”:”updated”,<br>  “_shards”:{“total”:2,”successful”:1,”failed”:0},<br>  “created”:false<br>}<br>��������У����ǽ�ԭʼ���ݴ�”���ݿ����”�ĳ�”���ݿ��������������”�� ���ؽ�����棬�м����ֶη����˱仯��</p>
+<p>“_version” : 2,<br>“result” : “updated”,<br>“created” : false<br>���Կ�������¼�� Id û�䣬���ǰ汾��version����1���2���������ͣ�result����created���updated��created�ֶα��false����Ϊ��β����½���¼��</p>
+<p>�������ݲ�ѯ<br>6.1 �������м�¼<br>ʹ�� GET ������ֱ������/Index/Type/_search���ͻ᷵�����м�¼��</p>
+<p>$ curl ‘localhost:9200/accounts/person/_search’</p>
+<p>{<br>  “took”:2,<br>  “timed_out”:false,<br>  “_shards”:{“total”:5,”successful”:5,”failed”:0},<br>  “hits”:{<br>    “total”:2,<br>    “max_score”:1.0,<br>    “hits”:[<br>      {<br>        “_index”:”accounts”,<br>        “_type”:”person”,<br>        “_id”:”AV3qGfrC6jMbsbXb6k1p”,<br>        “_score”:1.0,<br>        “_source”: {<br>          “user”: “����”,<br>          “title”: “����ʦ”,<br>          “desc”: “ϵͳ����”<br>        }<br>      },<br>      {<br>        “_index”:”accounts”,<br>        “_type”:”person”,<br>        “_id”:”1”,<br>        “_score”:1.0,<br>        “_source”: {<br>          “user” : “����”,<br>          “title” : “����ʦ”,<br>          “desc” : “���ݿ��������������”<br>        }<br>      }<br>    ]<br>  }<br>}<br>��������У����ؽ���� took�ֶα�ʾ�ò����ĺ�ʱ����λΪ���룩��timed_out�ֶα�ʾ�Ƿ�ʱ��hits�ֶα�ʾ���еļ�¼���������ֶεĺ������¡�</p>
+<p>total�����ؼ�¼����������2����<br>max_score����ߵ�ƥ��̶ȣ�������1.0��<br>hits�����صļ�¼��ɵ����顣<br>���صļ�¼�У�ÿ����¼����һ��_score�ֶΣ���ʾƥ��ĳ���Ĭ���ǰ�������ֶν������С�</p>
+<p>6.2 ȫ������<br>Elastic �Ĳ�ѯ�ǳ��ر�ʹ���Լ��Ĳ�ѯ�﷨��Ҫ�� GET ������������塣</p>
+<p>$ curl ‘localhost:9200/accounts/person/_search’  -d ‘<br>{<br>  “query” : { “match” : { “desc” : “����” }}<br>}’<br>�������ʹ�� Match ��ѯ��ָ����ƥ��������desc�ֶ��������”����”����ʡ����ؽ�����¡�</p>
+<p>{<br>  “took”:3,<br>  “timed_out”:false,<br>  “_shards”:{“total”:5,”successful”:5,”failed”:0},<br>  “hits”:{<br>    “total”:1,<br>    “max_score”:0.28582606,<br>    “hits”:[<br>      {<br>        “_index”:”accounts”,<br>        “_type”:”person”,<br>        “_id”:”1”,<br>        “_score”:0.28582606,<br>        “_source”: {<br>          “user” : “����”,<br>          “title” : “����ʦ”,<br>          “desc” : “���ݿ��������������”<br>        }<br>      }<br>    ]<br>  }<br>}<br>Elastic Ĭ��һ�η���10�����������ͨ��size�ֶθı�������á�</p>
+<p>$ curl ‘localhost:9200/accounts/person/_search’  -d ‘<br>{<br>  “query” : { “match” : { “desc” : “����” }},<br>  “size”: 1<br>}’<br>�������ָ����ÿ��ֻ����һ�������</p>
+<p>������ͨ��from�ֶΣ�ָ��λ�ơ�</p>
+<p>$ curl ‘localhost:9200/accounts/person/_search’  -d ‘<br>{<br>  “query” : { “match” : { “desc” : “����” }},<br>  “from”: 1,<br>  “size”: 1<br>}’<br>�������ָ������λ��1��ʼ��Ĭ���Ǵ�λ��0��ʼ����ֻ����һ�������</p>
+<p>6.3 �߼�����<br>����ж�������ؼ��֣� Elastic ��Ϊ������or��ϵ��</p>
+<p>$ curl ‘localhost:9200/accounts/person/_search’  -d ‘<br>{<br>  “query” : { “match” : { “desc” : “���� ϵͳ” }}<br>}’<br>������������������� or ϵͳ��</p>
+<p>���Ҫִ�ж���ؼ��ʵ�and����������ʹ�ò�����ѯ��</p>
+<p>$ curl ‘localhost:9200/accounts/person/_search’  -d ‘<br>{<br>  “query”: {<br>    “bool”: {<br>      “must”: [<br>        { “match”: { “desc”: “����” } },<br>        { “match”: { “desc”: “ϵͳ” } }<br>      ]<br>    }<br>  }<br>}’<br>�ߡ��ο�����<br>ElasticSearch �ٷ��ֲ�<br>A Practical Introduction to Elasticsearch</p>
+<h1 id="ת��-��-http-www-ruanyifeng-com-blog-2017-08-elasticsearch-html"><a href="#ת��-��-http-www-ruanyifeng-com-blog-2017-08-elasticsearch-html" class="headerlink" title="ת�� �� http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html"></a>ת�� �� <a href="http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html</a></h1>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ת��-��-http-www-ruanyifeng-com-blog-2017-08-elasticsearch-html"><span class="toc-text">ת�� �� http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: purui</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/2019-03-26-Elasticsearch/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+</div>
+
+    </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">博客推荐</h5>
+        
+          <span class="site-footer-item">
+            <a href="https://godbmw.com/" target="_blank">GodBMW</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href="http://ruanyifeng.com/" target="_blank">阮一峰的个人网站</a>
+          </span>
+        
+      </div>
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">社区</h5>
+        
+          <span class="site-footer-item">
+            <a href="https://juejin.im" target="_blank">掘金</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href="https://segmentfault.com/" target="_blank">思否</a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: 854554762@qq.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="javascript:void(0);" data-enable="false">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/2019-03-25-docker 简单入门（4）/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '');
+  </script>
+
+
+
+  <script async>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+  <script async>
+    (function(){
+    var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?":"https://jspassport.ssl.qhimg.com/11.0.1.js?";
+    document.write('<script src="' + src + '" id="sozz"><\/script>');
+    })();
+  </script>
+
+
+    
+  </body>
+</html>
