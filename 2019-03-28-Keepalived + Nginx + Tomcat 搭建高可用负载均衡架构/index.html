@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="Dong Yuanxin">
+  
+  
+  <title>FS&#39;Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Hexo, Theme-AD">
+  
+
+  
+  <meta name="description" content="埔枘的个人博客">
+
+  
+
+  <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"tWCfJzSH6LBChsputCN8gvNh-gzGzoHsz","appkey":"01RHAtqQIvBDflNXxcY6x2Ja","comment":true,"count":true},
+    welcome: {"enable":true,"interval":30},
+    start_time: "2018-05-01",
+    passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
+    is_post: true,
+    lock: false,
+    author: "Dong Yuanxin",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">QUIET</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 用代码服务生活</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/puruis" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-03-28
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    
+  </h1>
+  
+  <article class="passage-article">
+    <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
+<p>初期的互联网企业由于业务量较小，所以一般单机部署，实现单点访问即可满足业务的需求，这也是最简单的部署方式，但是随着业务的不断扩大，系统的访问量逐渐的上升，单机部署的模式已无法承载现有的业务量，需要进行服务集群化部署，本文主要介绍服务端Tomcat多实例部署，以及如何保证web服务的高可用方案。</p>
+</blockquote>
+<ol>
+<li>Nginx 是一个高性能的 HTTP反向代理服务器</li>
+<li>Keepalived 是一个基于VRRP协议来实现的LVS服务高可用方案，可以利用其来避免服务的单点故障</li>
+<li>Tomcat 是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器。</li>
+</ol>
+<h1 id="Nginx的高可用负载均衡架构"><a href="#Nginx的高可用负载均衡架构" class="headerlink" title="Nginx的高可用负载均衡架构"></a>Nginx的高可用负载均衡架构</h1><p>如下图：为典型的Tomcat服务多实例部署的架构图</p>
+<blockquote>
+<p>（1）用户通过域名请求到DNS，由DNS解析域名后返回对应的IP地址，该IP及为Keepalived映射服务器的虚拟IP</p>
+</blockquote>
+<blockquote>
+<p>（2）通过该虚拟IP访问到对应的负载均衡器（Nginx），这里Nginx部署两个，然后通过Keepalived来保证NG的高可用，正常情况下由Keepalived-M将虚拟IP映射转发至Nginx-M，如果Nginx-M出现故障，此时Keepalived会切换至Keepalived-S开始工作，从而保证了NG的单点故障问题。</p>
+</blockquote>
+<blockquote>
+<p>（3）通过Nginx负载均衡器，将请求路由到对应的Tomcat服务。</p>
+</blockquote>
+<h2 id="需要准备的软件"><a href="#需要准备的软件" class="headerlink" title="需要准备的软件"></a>需要准备的软件</h2><ol>
+<li>apache-tomcat-8.5.39</li>
+<li>jdk1.8.0_201</li>
+<li>keepalived-1.3.9</li>
+<li>nginx-1.12.2</li>
+</ol>
+<p>以上是我测试时 用的软件版本</p>
+<h2 id="需要准备的环境"><a href="#需要准备的环境" class="headerlink" title="需要准备的环境"></a>需要准备的环境</h2><p>两台 centos7 服务器</p>
+<p>分别是 192.168.205.10，192.168.205.11 两个地址</p>
+<p>服务器这块采用 <a href="https://baike.baidu.com/item/Vagrant/1321946?fr=aladdin" target="_blank" rel="noopener">vagrant</a> + Oracle VM VirtualBox 构建</p>
+<p>这里给出用到的 Vagrantfile</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"># -*- mode: ruby -*-</span><br><span class="line"># vi: set ft=ruby :</span><br><span class="line"></span><br><span class="line">Vagrant.require_version &quot;&gt;= 1.6.0&quot;</span><br><span class="line"></span><br><span class="line">boxes = [</span><br><span class="line">    &#123;</span><br><span class="line">        :name =&gt; &quot;docker-node1&quot;,</span><br><span class="line">        :eth1 =&gt; &quot;192.168.205.10&quot;,</span><br><span class="line">        :mem =&gt; &quot;1024&quot;,</span><br><span class="line">        :cpu =&gt; &quot;1&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        :name =&gt; &quot;docker-node2&quot;,</span><br><span class="line">        :eth1 =&gt; &quot;192.168.205.11&quot;,</span><br><span class="line">        :mem =&gt; &quot;1024&quot;,</span><br><span class="line">        :cpu =&gt; &quot;1&quot;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">Vagrant.configure(2) do |config|</span><br><span class="line"></span><br><span class="line">  config.vm.box = &quot;centos/7&quot;</span><br><span class="line"></span><br><span class="line">  boxes.each do |opts|</span><br><span class="line">      config.vm.define opts[:name] do |config|</span><br><span class="line">        config.vm.hostname = opts[:name]</span><br><span class="line">        config.vm.provider &quot;vmware_fusion&quot; do |v|</span><br><span class="line">          v.vmx[&quot;memsize&quot;] = opts[:mem]</span><br><span class="line">          v.vmx[&quot;numvcpus&quot;] = opts[:cpu]</span><br><span class="line">        end</span><br><span class="line"></span><br><span class="line">        config.vm.provider &quot;virtualbox&quot; do |v|</span><br><span class="line">          v.customize [&quot;modifyvm&quot;, :id, &quot;--memory&quot;, opts[:mem]]</span><br><span class="line">          v.customize [&quot;modifyvm&quot;, :id, &quot;--cpus&quot;, opts[:cpu]]</span><br><span class="line">        end</span><br><span class="line"></span><br><span class="line">        config.vm.network :private_network, ip: opts[:eth1]</span><br><span class="line">      end</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">#  config.vm.synced_folder &quot;./labs&quot;, &quot;/home/vagrant/labs&quot;</span><br><span class="line">#  config.vm.provision &quot;shell&quot;, privileged: true, path: &quot;./setup.sh&quot;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>不熟悉vagrant的朋友 可以直接使用 Oracle VM VirtualBox 或是其他的虚拟环境，比如docker，或是阿里云ECS环境</p>
+<p>准备下篇文章 写一个 vagrant 入门教程==。==</p>
+<h2 id="安装需要的依赖包"><a href="#安装需要的依赖包" class="headerlink" title="安装需要的依赖包"></a>安装需要的依赖包</h2><blockquote>
+<p>$ yum -y install gcc gcc-c++ automake pcre pcre-devel zlib zlib-devel open openssl-devel</p>
+</blockquote>
+<p>下面对 keepalived 和 nginx 的编译需要用到 gcc,因为 这两软件都是采用C语言编译的</p>
+<h2 id="安装的文件都解压在这"><a href="#安装的文件都解压在这" class="headerlink" title="安装的文件都解压在这"></a>安装的文件都解压在这</h2><p><img src="/2019-03-28-Keepalived + Nginx + Tomcat 搭建高可用负载均衡架构/123.png" alt="123"></p>
+<p>jdk的安装就不说了</p>
+<h2 id="安装Tomcat"><a href="#安装Tomcat" class="headerlink" title="安装Tomcat"></a>安装Tomcat</h2><p>解压即可</p>
+<h2 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h2><blockquote>
+<p>（1）解压安装包：tar -zxvf nginx-1.12.2.tar.gz</p>
+</blockquote>
+<blockquote>
+<p>（2）进入到nginx-1.12.2目录：cd nginx-1.12.2</p>
+</blockquote>
+<blockquote>
+<p>（3）编译：</p>
+</blockquote>
+<blockquote>
+<p>a) ./configure –with-http_stub_status_module –with-http_ssl_module  –prefix=/usr/local/nginx</p>
+</blockquote>
+<blockquote>
+<p>b) sudo make &amp;&amp; sudo make install</p>
+</blockquote>
+<h2 id="安装Keepalived"><a href="#安装Keepalived" class="headerlink" title="安装Keepalived"></a>安装Keepalived</h2><blockquote>
+<p>（1）解压安装包：tar -zxvf keepalived-1.3.9.tar.gz</p>
+</blockquote>
+<blockquote>
+<p>（2）进入到keepalived-1.3.9目录：cd keepalived-1.3.9</p>
+</blockquote>
+<blockquote>
+<p>（3）执行编译：</p>
+</blockquote>
+<blockquote>
+<p>a）./configure –prefix=/usr/local/keepalived –sysconf=/etc</p>
+</blockquote>
+<blockquote>
+<p>b）sudo make &amp;&amp; sudo make install</p>
+</blockquote>
+<h2 id="分别配置两台服务器的Nginx"><a href="#分别配置两台服务器的Nginx" class="headerlink" title="分别配置两台服务器的Nginx"></a>分别配置两台服务器的Nginx</h2><ol>
+<li>分别修改两台服务器nginx配置文件，vi /usr/local/nginx/conf/nginx.conf</li>
+<li>内容如下：<br>==ps:请仔细看下 里面的注释==<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#nginx进程数</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">#单个进程最大连接数</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#http服务器配置</span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">	#长连接超时时间，单位是秒</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">	#upstream负载均衡配置，配置路由到tomcat的服务地址以及权重</span><br><span class="line">    upstream localhost&#123;</span><br><span class="line">       # 这里是 上面准备的两台服务器的 ip及端口    </span><br><span class="line">       server 192.168.205.10:8080 weight=2;</span><br><span class="line">       server 192.168.205.11:8080 weight=2;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	#虚拟主机的配置</span><br><span class="line">    server &#123;</span><br><span class="line">	    #监听端口</span><br><span class="line">        listen       80;</span><br><span class="line">		 #域名可以有多个，用空格隔开</span><br><span class="line">        server_name  localhost;</span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">			#nginx跟后端服务器连接超时时间(代理连接超时)</span><br><span class="line">            proxy_connect_timeout 3;</span><br><span class="line">			#后端服务器数据回传时间(代理发送超时)</span><br><span class="line">            proxy_send_timeout 30;</span><br><span class="line">			#连接成功后，后端服务器响应时间(代理接收超时)</span><br><span class="line">            proxy_read_timeout 30;</span><br><span class="line">            proxy_pass http://localhost;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="主-Keepalived配置"><a href="#主-Keepalived配置" class="headerlink" title="==主==Keepalived配置"></a>==主==Keepalived配置</h2><ol>
+<li>修改10服务器的keepalived配置文件，vi /etc/keepalived/keepalived.conf</li>
+<li>内容如下：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File for keepalived</span><br><span class="line">#全局配置</span><br><span class="line">global_defs &#123;</span><br><span class="line">   #keepalived切换的时候，发消息到指定的email，可配置多个email</span><br><span class="line">   notification_email &#123;</span><br><span class="line">     854554762@qq.com</span><br><span class="line">   &#125;</span><br><span class="line">   #通知邮件从哪个地址发出</span><br><span class="line">   notification_email_from 854554762@qq.com</span><br><span class="line">   #通知邮件的smtp地址</span><br><span class="line">   smtp_server smtp.qq.com</span><br><span class="line">   #连接smtp服务器的超时时间，单位秒</span><br><span class="line">   smtp_connect_timeout 30</span><br><span class="line">   #Keepalived的机器标识，一个网络内保持唯一</span><br><span class="line">   router_id nginx-master</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#执行脚本配置</span><br><span class="line">vrrp_script chk_nginx &#123;</span><br><span class="line">	#脚本所在路径 下面会给出</span><br><span class="line">    script &quot;/home/project/keepalived/check_nginx.sh&quot;</span><br><span class="line">	#脚本执行间隔时间，秒</span><br><span class="line">    interval 2</span><br><span class="line">	#优先级</span><br><span class="line">    weight 2</span><br><span class="line">&#125;</span><br><span class="line">#keepalived实例配置</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">	#指定实例的初始状态，MASTER或BACKUP两种状态，并且需要大写</span><br><span class="line">    state MASTER</span><br><span class="line">	#实例绑定的网卡 这个的网卡 请自行查询 自己机器的网卡 执行 ip a</span><br><span class="line">    interface eth0</span><br><span class="line">	#虚拟路由标识，是一个数字，整个VRRP内唯一，如果keepalived配置了主备，需要相同</span><br><span class="line">    virtual_router_id 51</span><br><span class="line">	#优先级，数值愈大，优先级越高</span><br><span class="line">    priority 100</span><br><span class="line">	#MASTER与BACKUP之间同步检查的时间间隔，单位为秒</span><br><span class="line">    advert_int 1</span><br><span class="line">	#通信验证</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass feinik</span><br><span class="line">    &#125;</span><br><span class="line">	#追踪外围脚本</span><br><span class="line">    track_script &#123;</span><br><span class="line">	    #这里配置vrrp_script的名称</span><br><span class="line">        chk_nginx</span><br><span class="line">    &#125;</span><br><span class="line">	#虚拟ip配置，可配置多个</span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.205.200</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="备-Keepalived配置"><a href="#备-Keepalived配置" class="headerlink" title="==备==Keepalived配置"></a>==备==Keepalived配置</h2><ol>
+<li>修改11服务器的keepalived配置文件，vi /etc/keepalived/keepalived.conf</li>
+<li>内容如下：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File for keepalived</span><br><span class="line">#全局配置</span><br><span class="line">global_defs &#123;</span><br><span class="line">   #keepalived切换的时候，发消息到指定的email，可配置多个email</span><br><span class="line">   notification_email &#123;</span><br><span class="line">     854554762@qq.com</span><br><span class="line">   &#125;</span><br><span class="line">   #通知邮件从哪个地址发出</span><br><span class="line">   notification_email_from 854554762@qq.com</span><br><span class="line">   #通知邮件的smtp地址</span><br><span class="line">   smtp_server smtp.qq.com</span><br><span class="line">   #连接smtp服务器的超时时间，单位秒</span><br><span class="line">   smtp_connect_timeout 30</span><br><span class="line">   #Keepalived的机器标识，一个网络内保持唯一</span><br><span class="line">   router_id nginx-master</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#执行脚本配置</span><br><span class="line">vrrp_script chk_nginx &#123;</span><br><span class="line">	#脚本所在路径</span><br><span class="line">    script &quot;/home/project/keepalived/check_nginx.sh&quot;</span><br><span class="line">	#脚本执行间隔时间，秒</span><br><span class="line">    interval 2</span><br><span class="line">	#优先级</span><br><span class="line">    weight 2</span><br><span class="line">&#125;</span><br><span class="line">#keepalived实例配置</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">	#指定实例的初始状态，MASTER或BACKUP两种状态，并且需要大写</span><br><span class="line">    state BACKUP</span><br><span class="line">	#实例绑定的网卡 这个的网卡 请自行查询 自己机器的网卡 执行 ip a</span><br><span class="line">    interface eth0</span><br><span class="line">	#虚拟路由标识，是一个数字，整个VRRP内唯一，如果keepalived配置了主备，需要相同</span><br><span class="line">    virtual_router_id 51</span><br><span class="line">	#优先级，数值愈大，优先级越高</span><br><span class="line">    priority 99</span><br><span class="line">	#MASTER与BACKUP之间同步检查的时间间隔，单位为秒</span><br><span class="line">    advert_int 1</span><br><span class="line">	#通信验证</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass feinik</span><br><span class="line">    &#125;</span><br><span class="line">	#追踪外围脚本</span><br><span class="line">    track_script &#123;</span><br><span class="line">	    #这里配置vrrp_script的名称</span><br><span class="line">        chk_nginx</span><br><span class="line">    &#125;</span><br><span class="line">	#虚拟ip配置，可配置多个</span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.205.200</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Nginx状态检查脚本创建"><a href="#Nginx状态检查脚本创建" class="headerlink" title="Nginx状态检查脚本创建"></a>Nginx状态检查脚本创建</h2><ol>
+<li>新建Nginx的状态检查脚本：check_nginx.sh</li>
+<li>内容如下：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">NGINX=/usr/common/nginx/sbin/nginx</span><br><span class="line">PORT=80</span><br><span class="line">nmap localhost -p $PORT | grep &quot;$PORT/tcp open&quot;</span><br><span class="line">#echo $?</span><br><span class="line">if [ $? -ne 0 ];then</span><br><span class="line">    $NGINX -s stop</span><br><span class="line">    #这里再次尝试启动NG</span><br><span class="line">    $NGINX</span><br><span class="line">    sleep 5</span><br><span class="line">    nmap localhost -p $PORT | grep &quot;$PORT/tcp open&quot;</span><br><span class="line">    [ $? -ne 0 ] &amp;&amp; cd /usr/common/keepalived/sbin &amp;&amp; pkill keepalived</span><br><span class="line">    echo &quot;stoped&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h2 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h2><ol>
+<li><p>为了更直观的查看到keepalived切换的效果，将10服务器中的nginx的upstream服务只配置10的tomcat服务地址，11服务器中的upstream服务只配置11的tomcat服务地址，这样只需要观察将10服务器中的nginx关闭看使用虚拟ip是否可以访问到11服务器的tomcat。</p>
+</li>
+<li><p>分别启动两个服务器中的tomcat、nginx、keepalived，访问虚拟ip：192.168.10.200，可以查看到访问的是主keepalived服务器的tomcat</p>
+<blockquote>
+<p>Tomcat 启动方式 bin 目录下执行 ./startup.sh<br>nginx 的启动方式 在nginx的安装目录(/usr/local/nginx)下 执行 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx /usr/local/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>Kepalived 的安装目录(/usr/local/kepalived)下执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./keepalived</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>以上操作完成 即可！</p>
+<p><img src="/2019-03-28-Keepalived + Nginx + Tomcat 搭建高可用负载均衡架构/321.png" alt="321"></p>
+<p>关闭11服务器的nginx，nginx -s stop，再次访问虚拟ip，如下：说明主keepalived通过配置的脚本检测到了本服务的nginx服务挂掉了，所以立马切换至了备的keepalived，这时10服务器的keepalived升为了主，所以就访问到了10服务器的tomcat。</p>
+<p><img src="/2019-03-28-Keepalived + Nginx + Tomcat 搭建高可用负载均衡架构/456.png" alt="456"></p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx的高可用负载均衡架构"><span class="toc-text">Nginx的高可用负载均衡架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#需要准备的软件"><span class="toc-text">需要准备的软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需要准备的环境"><span class="toc-text">需要准备的环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装需要的依赖包"><span class="toc-text">安装需要的依赖包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装的文件都解压在这"><span class="toc-text">安装的文件都解压在这</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Tomcat"><span class="toc-text">安装Tomcat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Nginx"><span class="toc-text">安装Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Keepalived"><span class="toc-text">安装Keepalived</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分别配置两台服务器的Nginx"><span class="toc-text">分别配置两台服务器的Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主-Keepalived配置"><span class="toc-text">==主==Keepalived配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#备-Keepalived配置"><span class="toc-text">==备==Keepalived配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx状态检查脚本创建"><span class="toc-text">Nginx状态检查脚本创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行测试"><span class="toc-text">运行测试</span></a></li></ol></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: purui</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/2019-03-28-Keepalived + Nginx + Tomcat 搭建高可用负载均衡架构/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+</div>
+
+    </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">博客推荐</h5>
+        
+          <span class="site-footer-item">
+            <a href="https://godbmw.com/" target="_blank">GodBMW</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href="http://ruanyifeng.com/" target="_blank">阮一峰的个人网站</a>
+          </span>
+        
+      </div>
+    
+      <div class="site-footer-col">
+        <h5 class="site-footer-title">社区</h5>
+        
+          <span class="site-footer-item">
+            <a href="https://juejin.im" target="_blank">掘金</a>
+          </span>
+        
+          <span class="site-footer-item">
+            <a href="https://segmentfault.com/" target="_blank">思否</a>
+          </span>
+        
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: 854554762@qq.com
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i> 
+      2019 <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>.
+      Created by <a href="https://godbmw.com/" target="_blank">GodBMW</a>.
+      All rights reserved.
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+        
+          <div>
+            <img src="/images/wechat.png" alt="WeChat">
+            
+              <p>WeChat</p>
+            
+          </div>
+        
+          <div>
+            <img src="/images/alipay.png" alt="AliPay">
+            
+              <p>AliPay</p>
+            
+          </div>
+        
+      </div>
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="javascript:void(0);" data-enable="false">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/2019-03-26-docker 简单入门（5）/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    <a href="javascript:void(0);" id="site-reward">
+      <i class="fa fa-thumbs-up"></i>
+    </a>
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '');
+  </script>
+
+
+
+  <script async>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+  <script async>
+    (function(){
+    var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?":"https://jspassport.ssl.qhimg.com/11.0.1.js?";
+    document.write('<script src="' + src + '" id="sozz"><\/script>');
+    })();
+  </script>
+
+
+    
+  </body>
+</html>
