@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>关于 Proxy 续集 -代码重构 | FS&#39;Blog</title>
+  <title>标签: Scrapy | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Proxy,JAVA,Aop,">
+    <meta name="keywords" content="Hexo, Theme-AD">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2018-05-01",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: true,
+    is_post: false,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -156,92 +156,19 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      
-  <div class="passage">
-  <div class="passage-meta">
-    <span>
-      <i class="fa fa-calendar"></i>2018-07-07
-    </span>
-    
-      <span>
-        | <a href="/categories/Proxy/"><i class="fa fa-bookmark"></i>Proxy</a>
-      </span>
-    
-    
-      <span>
-        | <i class="fa fa-unlock-alt"></i>UNLOCK
-      </span>
-    
-  </div>
-  <h1 class="passage-title">
-    关于 Proxy 续集 -代码重构
-  </h1>
+      <div class="timeline">
+  <h2 class="timeline-title">标签: Scrapy</h2>
   
-  <article class="passage-article">
-    <p>上篇文章我们说了静态代理，那么有静态代理自然也就有动态代理咯，这次我们主要说 javaJDK给我提供的 一套动态代理。</p>
-<pre><code>老规矩先看代码,
-</code></pre><p>接口类：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Hello &#123;</span><br><span class="line">    public void say(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>//实现类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class HelloImpl implements Hello&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void say(String name) &#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        DynamicProxy dynamicProxy = new DynamicProxy(new HelloImpl());</span><br><span class="line">        Hello proxy = dynamicProxy.getProxy();</span><br><span class="line">        proxy.say(&quot;一战成佛&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>动态代理类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class DynamicProxy implements InvocationHandler&#123;</span><br><span class="line">    private Object object;</span><br><span class="line">    public DynamicProxy(Object object)&#123;</span><br><span class="line">        this.object = object;</span><br><span class="line">    &#125;</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public &lt;T&gt; T getProxy()&#123;</span><br><span class="line">        return (T)Proxy.newProxyInstance(object.getClass().getClassLoader(),object.getClass().getInterfaces(),this);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        berofe();</span><br><span class="line">        Object invoke = method.invoke(object, args);</span><br><span class="line">        after();</span><br><span class="line">        return invoke;</span><br><span class="line">    &#125;</span><br><span class="line">    public void berofe()&#123;</span><br><span class="line">        System.out.println(&quot;before&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;after&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根据注释 很好理解 动态代理，总结下 java提供的动态代理</p>
-<pre><code>优点:
-
-    1.被代理类变动，代理不需要变动
-
-    2.更加灵活
-
-缺点:
-
-    1.依赖接口，必须要有接口 才能代理 被代理对象
-</code></pre><p>万一 需要代理的对象没有接口，那就玩玩拉，所以下一篇 开始说CGLIB 这也是springAop实现动态代理的依赖，等着感受它的强大魅力吧<img src="http://img.baidu.com/hi/jx2/j_0035.gif" alt="image"></p>
-
-  </article>
-  <aside class="table-content" id="site-toc">
-  <div class="table-content-title">
-    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
-    <span>目录</span>
-  </div>
-  <div class="table-content-main">
     
-  </div>
-</aside>
-  
-    <aside class="passage-copyright">
-      <div>本文作者: purui</div>
-      
-        <div>
-          原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/关于 Proxy 续集 -代码重构/</a>
-        </div>
-      
-      <div>
-        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
-      </div>
-    </aside>
-  
-  
-    <div class="passage-tags">
-     
-      <a href="/tags/JAVA/"><i class="fa fa-tags"></i>JAVA</a>
-     
-      <a href="/tags/Aop/"><i class="fa fa-tags"></i>Aop</a>
+      <h3 class="timeline-subtitle">2018</h3>
     
+    <div class="timeline-item">
+      <time>2018-07-05</time>
+      <a target="_self" href="/Scrapy爬虫框架实现异步爬取伯乐在线/">Scrapy爬虫框架实现异步爬取伯乐在线</a>
     </div>
   
 </div>
-
     </main>
-    
-      <div class="site-comment-contanier">
-  <p id="site-comment-info">
-    <i class="fa fa-spinner fa-spin"></i> 评论加载中
-  </p>
-  <div id="site-comment">
-  </div>
-</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -329,19 +256,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/让JPA 飞 - QueryDSL/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/利用 jconsole 查看远程服务器的运行情况/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="#site-comment" data-enable="true">
+      <a href="javascript:void(0);" data-enable="false">
         <i class="fa fa-commenting"></i>
       </a>
     
