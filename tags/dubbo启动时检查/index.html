@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>docker 简单入门-初识Container | FS&#39;Blog</title>
+  <title>标签: dubbo启动时检查 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Docker,container,">
+    <meta name="keywords" content="Hexo, Theme-AD">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2018-05-01",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: true,
+    is_post: false,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -156,97 +156,19 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      
-  <div class="passage">
-  <div class="passage-meta">
-    <span>
-      <i class="fa fa-calendar"></i>2019-03-25
-    </span>
-    
-      <span>
-        | <a href="/categories/Docker/"><i class="fa fa-bookmark"></i>Docker</a>
-      </span>
-    
-    
-      <span>
-        | <i class="fa fa-unlock-alt"></i>UNLOCK
-      </span>
-    
-  </div>
-  <h1 class="passage-title">
-    docker 简单入门-初识Container
-  </h1>
+      <div class="timeline">
+  <h2 class="timeline-title">标签: dubbo启动时检查</h2>
   
-  <article class="passage-article">
-    <p>话不多说半句多，直接上。<br>什么是Container ？</p>
-<ol>
-<li>container是通过image创建</li>
-<li>container的本质是在image（image本身不可读写）的最上层建立了一个layer（可读写的），这个和Java中类与实例的关系比较像</li>
-<li>image负责存储和分发，container负责运行app</li>
-</ol>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.37.03.png" alt="25f06b6df9519bbfbcda00bd46cd185f"></p>
-<p>我们来用image 来创建一个 container<br>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.40.51.png" alt="c88262104eb28e30468ed99e64664417"><br>因为我本地没有 hello-world这个镜像所以 它回去 dockerhub 上拉取官方的镜像，我们能看到它打印出了 hello from docker<br>然后我们运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls</span><br></pre></td></tr></table></figure></p>
-<p>看第二张图，我们发现 运行完成后没有然后运行记录，这是因为 它已经运行完了，自动退出了，<br>然后我们运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -a</span><br></pre></td></tr></table></figure></p>
-<p>就能看到 它已经退出三分钟了。<br><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.44.31.png" alt="3f34565bc628b62c2c4f71364022af70"></p>
-<p>那么有什么办法 让它不停止运行吗？</p>
-<p>答案是 有的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu</span><br></pre></td></tr></table></figure></p>
-<p>ps:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d ubuntu</span><br></pre></td></tr></table></figure></p>
-<p>-d 参数可以 让程序以 后台方式运行<br>这里 -it的意思 是 以交互式运行的方式 去运行这个镜像。<br>运行完毕后我们发现 我们进入了 ubuntu容器内部。ps:输入exit 回车 退出容器<br><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.49.29.png" alt="104a8c361aaa58a479cbf4a54fe21b80"></p>
-<p>大家可以执行,查看详细的命令说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --help</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.52.52.png" alt="983eb8123fb31d888d0bc008099f74e6"></p>
-<p>然后我们输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -a（查询所有）</span><br></pre></td></tr></table></figure></p>
-<p>可以看到 之前我运行过的容器的历史<br>那么 我们怎么把它删除掉呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm(rmi 删除image rm默认删除容器) xxx（容器id）</span><br></pre></td></tr></table></figure></p>
-<p>但是，这样只能一个个删除，有没有简单的方式呢？<br>程序员当然用代码解决<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls qa</span><br></pre></td></tr></table></figure></p>
-<p>会查询出所有容器的 id<br>然后我门运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker container ls -qa)</span><br><span class="line">就能一次性删除所有的 容器了</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.57.17.png" alt="947b4bd346cecf534ea579bf097d8821"></p>
-<p>那么我还有个问题，这样一下子把所有容器都删除了，万一我不想删除所有 只想删除其中几个呢？<br>也是有办法的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -f &quot;status=exited&quot;</span><br></pre></td></tr></table></figure></p>
-<p>查询出所有已经退出的容器 通过 -f 参数过滤<br>然后加上 -qa 参数 可以查询出 所有退出容器的id<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -f &quot;status=exited&quot; -qa</span><br></pre></td></tr></table></figure></p>
-<p>运行下面的命令 即可按照条件删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker container ls -f &quot;status=exited&quot; -qa)</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午11.09.52.png" alt="0156e857efc47f97692110788e814a9d"></p>
-
-  </article>
-  <aside class="table-content" id="site-toc">
-  <div class="table-content-title">
-    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
-    <span>目录</span>
-  </div>
-  <div class="table-content-main">
     
-  </div>
-</aside>
-  
-    <aside class="passage-copyright">
-      <div>本文作者: purui</div>
-      
-        <div>
-          原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/2019-03-25-docker 简单入门（4）/</a>
-        </div>
-      
-      <div>
-        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
-      </div>
-    </aside>
-  
-  
-    <div class="passage-tags">
-     
-      <a href="/tags/container/"><i class="fa fa-tags"></i>container</a>
+      <h3 class="timeline-subtitle">2019</h3>
     
+    <div class="timeline-item">
+      <time>2019-04-07</time>
+      <a target="_self" href="/SpringBoot整合Dubbo-启动时检查/">SpringBoot整合Dubbo-启动时检查</a>
     </div>
   
 </div>
-
     </main>
-    
-      <div class="site-comment-contanier">
-  <p id="site-comment-info">
-    <i class="fa fa-spinner fa-spin"></i> 评论加载中
-  </p>
-  <div id="site-comment">
-  </div>
-</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -334,19 +256,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/2019-03-26-Elasticsearch/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/2019-03-22-docker 简单入门（3）/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="#site-comment" data-enable="true">
+      <a href="javascript:void(0);" data-enable="false">
         <i class="fa fa-commenting"></i>
       </a>
     
