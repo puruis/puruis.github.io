@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>归档: 2017/11 | FS&#39;Blog</title>
+  <title>SpringBoot整合Dubbo,直连演示 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, Theme-AD">
+    <meta name="keywords" content="Dubbo,Dubbo,直连,">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2018-05-01",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -156,25 +156,84 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 27篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-04-07
+    </span>
+    
+      <span>
+        | <a href="/categories/Dubbo/"><i class="fa fa-bookmark"></i>Dubbo</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    SpringBoot整合Dubbo,直连演示
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2017</h3>
-    
-    <div class="timeline-item">
-      <time>2017-11-19</time>
-      <a target="_self" href="/ThreadLocal实现/">实现ThreadLocal</a>
-    </div>
+  <article class="passage-article">
+    <h2 id="直连提供者"><a href="#直连提供者" class="headerlink" title="直连提供者"></a>直连提供者</h2><blockquote>
+<p>在开发及测试环境下，经常需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直联方式，将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表。<br><a href="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/dubbo-directly.jpg" title="直连示意图" target="_blank" rel="noopener"><img src="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/dubbo-directly.jpg" alt="直连示意图" title="直连示意图"></a></p>
+</blockquote>
+<h3 id="注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"><a href="#注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。" class="headerlink" title="注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"></a>注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。</h3><p><script src="https://gitee.com/zprsss/springboot_dubbo_records/widget_preview"></script></p>
+<style>
+.pro_name a{color: #4183c4;}
+.osc_git_title{background-color: #fff;}
+.osc_git_box{background-color: #fff;}
+.osc_git_box{border-color: #E3E9ED;}
+.osc_git_info{color: #666;}
+.osc_git_main a{color: #9B9B9B;}
+</style>
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#直连提供者"><span class="toc-text">直连提供者</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"><span class="toc-text">注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。</span></a></li></ol></li></ol>
+  </div>
+</aside>
   
+    <aside class="passage-copyright">
+      <div>本文作者: purui</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/SpringBoot整合dubbo,直连演示/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/Dubbo/"><i class="fa fa-tags"></i>Dubbo</a>
+     
+      <a href="/tags/直连/"><i class="fa fa-tags"></i>直连</a>
     
-    <div class="timeline-item">
-      <time>2017-11-18</time>
-      <a target="_self" href="/对ThreadLocal的思考/">对ThreadLocal的思考</a>
     </div>
   
 </div>
+
     </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -265,16 +324,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/Scrapy爬虫框架实现异步爬取伯乐在线/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
