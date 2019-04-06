@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>docker 简单入门-初识Container | FS&#39;Blog</title>
+  <title>SpringBoot����Dubbo-����ʱ��� | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Docker,container,">
+    <meta name="keywords" content="Dubbo,dubbo����ʱ���,">
   
 
   
@@ -160,11 +160,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2019-03-25
+      <i class="fa fa-calendar"></i>2019-04-07
     </span>
     
       <span>
-        | <a href="/categories/Docker/"><i class="fa fa-bookmark"></i>Docker</a>
+        | <a href="/categories/Dubbo/"><i class="fa fa-bookmark"></i>Dubbo</a>
       </span>
     
     
@@ -174,36 +174,25 @@
     
   </div>
   <h1 class="passage-title">
-    docker 简单入门-初识Container
+    SpringBoot����Dubbo-����ʱ���
   </h1>
   
   <article class="passage-article">
-    <p>话不多说半句多，直接上。<br>什么是Container ？</p>
-<ol>
-<li>container是通过image创建</li>
-<li>container的本质是在image（image本身不可读写）的最上层建立了一个layer（可读写的），这个和Java中类与实例的关系比较像</li>
-<li>image负责存储和分发，container负责运行app</li>
-</ol>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.37.03.png" alt="25f06b6df9519bbfbcda00bd46cd185f"></p>
-<p>我们来用image 来创建一个 container<br>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.40.51.png" alt="c88262104eb28e30468ed99e64664417"><br>因为我本地没有 hello-world这个镜像所以 它回去 dockerhub 上拉取官方的镜像，我们能看到它打印出了 hello from docker<br>然后我们运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls</span><br></pre></td></tr></table></figure></p>
-<p>看第二张图，我们发现 运行完成后没有然后运行记录，这是因为 它已经运行完了，自动退出了，<br>然后我们运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -a</span><br></pre></td></tr></table></figure></p>
-<p>就能看到 它已经退出三分钟了。<br><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.44.31.png" alt="3f34565bc628b62c2c4f71364022af70"></p>
-<p>那么有什么办法 让它不停止运行吗？</p>
-<p>答案是 有的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu</span><br></pre></td></tr></table></figure></p>
-<p>ps:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d ubuntu</span><br></pre></td></tr></table></figure></p>
-<p>-d 参数可以 让程序以 后台方式运行<br>这里 -it的意思 是 以交互式运行的方式 去运行这个镜像。<br>运行完毕后我们发现 我们进入了 ubuntu容器内部。ps:输入exit 回车 退出容器<br><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.49.29.png" alt="104a8c361aaa58a479cbf4a54fe21b80"></p>
-<p>大家可以执行,查看详细的命令说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --help</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.52.52.png" alt="983eb8123fb31d888d0bc008099f74e6"></p>
-<p>然后我们输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -a（查询所有）</span><br></pre></td></tr></table></figure></p>
-<p>可以看到 之前我运行过的容器的历史<br>那么 我们怎么把它删除掉呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm(rmi 删除image rm默认删除容器) xxx（容器id）</span><br></pre></td></tr></table></figure></p>
-<p>但是，这样只能一个个删除，有没有简单的方式呢？<br>程序员当然用代码解决<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls qa</span><br></pre></td></tr></table></figure></p>
-<p>会查询出所有容器的 id<br>然后我门运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker container ls -qa)</span><br><span class="line">就能一次性删除所有的 容器了</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午10.57.17.png" alt="947b4bd346cecf534ea579bf097d8821"></p>
-<p>那么我还有个问题，这样一下子把所有容器都删除了，万一我不想删除所有 只想删除其中几个呢？<br>也是有办法的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -f &quot;status=exited&quot;</span><br></pre></td></tr></table></figure></p>
-<p>查询出所有已经退出的容器 通过 -f 参数过滤<br>然后加上 -qa 参数 可以查询出 所有退出容器的id<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls -f &quot;status=exited&quot; -qa</span><br></pre></td></tr></table></figure></p>
-<p>运行下面的命令 即可按照条件删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker container ls -f &quot;status=exited&quot; -qa)</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019-03-25-docker 简单入门（4）/屏幕快照 2019-03-24 下午11.09.52.png" alt="0156e857efc47f97692110788e814a9d"></p>
+    <h2 id="����ʱ���"><a href="#����ʱ���" class="headerlink" title="����ʱ���"></a>����ʱ���</h2><blockquote>
+<p>Dubbo ȱʡ��������ʱ��������ķ����Ƿ���ã�������ʱ���׳��쳣����ֹ Spring ��ʼ����ɣ��Ա�����ʱ���ܼ��緢�����⣬Ĭ�� check=”true”��<br>����ͨ�� check=”false” �رռ�飬���磬����ʱ����Щ���񲻹��ģ����߳�����ѭ��������������һ����������<br>���⣬������ Spring �����������صģ�����ͨ�� API ����ӳ����÷�����ر� check�����������ʱ������ʱ�����׳��쳣���õ� null ���ã���� check=”false”�����ǻ᷵�����ã�������ָ�ʱ�����Զ����ϡ�</p>
+</blockquote>
+<p>Ĭ�� dubbo ������ʱ�Զ����,���񲻿����������������<br><img src="/SpringBoot整合Dubbo-启动时检查/123.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p>
+<h2 id="ʾ��"><a href="#ʾ��" class="headerlink" title="ʾ��"></a>ʾ��</h2><h3 id="ͨ��-spring-�����l�"><a href="#ͨ��-spring-�����l�" class="headerlink" title="ͨ�� spring �����ļ�"></a>ͨ�� spring �����ļ�</h3><p>�ر�ĳ�����������ʱ��� (û���ṩ��ʱ����)��<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>�ر����з��������ʱ��� (û���ṩ��ʱ����)��<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:consumer</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>�ر�ע����������ʱ��� (ע�ᶩ��ʧ��ʱ����)��<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="ͨ��-dubbo-properties"><a href="#ͨ��-dubbo-properties" class="headerlink" title="ͨ�� dubbo.properties"></a>ͨ�� dubbo.properties</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dubbo.reference.com.foo.BarService.check=false</span><br><span class="line">dubbo.reference.check=false</span><br><span class="line">dubbo.consumer.check=false</span><br><span class="line">dubbo.registry.check=false</span><br></pre></td></tr></table></figure>
+<p>###ͨ�� -D ����<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java -Ddubbo.reference.com.foo.BarService.check=false</span><br><span class="line">java -Ddubbo.reference.check=false</span><br><span class="line">java -Ddubbo.consumer.check=false </span><br><span class="line">java -Ddubbo.registry.check=false</span><br></pre></td></tr></table></figure></p>
+<p>###���õĺ���</p>
+<blockquote>
+<p>dubbo.reference.check=false��ǿ�Ƹı����� reference �� check ֵ��������������������Ҳ�ᱻ���ǡ�<br>dubbo.consumer.check=false�������� check ��ȱʡֵ���������������ʽ���������磺&lt;dubbo:reference check=”true”/&gt;��������Ӱ�졣<br>dubbo.registry.check=false��ǰ����������ָ���ĳɹ������ṩ���б��Ƿ�Ϊ���Ƿ񱨴������ע�ᶩ��ʧ��ʱ��Ҳ������������ʹ�ô�ѡ����ں�̨��ʱ���ԡ�</p>
+</blockquote>
+<p>������Կ��� ��Ĭ�ϻ�ȥ�������Ƿ����<br><img src="/SpringBoot整合Dubbo-启动时检查/234.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"><br>����Ϊfalse �� ������������<br><img src="/SpringBoot整合Dubbo-启动时检查/345.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p>
+<p>�ο�:<a href="https://dubbo.gitbooks.io/dubbo-user-book/content/demos/preflight-check.html" title="Dubbo˵���ĵ�" target="_blank" rel="noopener">Dubbo˵���ĵ�</a></p>
 
   </article>
   <aside class="table-content" id="site-toc">
@@ -212,7 +201,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#����ʱ���"><span class="toc-text">����ʱ���</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ʾ��"><span class="toc-text">ʾ��</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ͨ��-spring-�����l�"><span class="toc-text">ͨ�� spring �����ļ�</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ͨ��-dubbo-properties"><span class="toc-text">ͨ�� dubbo.properties</span></a></li></ol></li></ol>
   </div>
 </aside>
   
@@ -221,7 +210,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/2019-03-25-docker 简单入门（4）/</a>
+          <a href="" target="_blank">https://puruis.github.io/SpringBoot整合Dubbo-启动时检查/</a>
         </div>
       
       <div>
@@ -232,7 +221,7 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/container/"><i class="fa fa-tags"></i>container</a>
+      <a href="/tags/dubbo����ʱ���/"><i class="fa fa-tags"></i>dubbo����ʱ���</a>
     
     </div>
   
@@ -334,10 +323,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/2019-03-26-Elasticsearch/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/2019-03-22-docker 简单入门（3）/" data-enable="true">
+    <a href="/SpringBoot整合dubbo,直连演示/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
