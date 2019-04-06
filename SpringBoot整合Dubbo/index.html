@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>Scrapy爬虫框架实现异步爬取伯乐在线 | FS&#39;Blog</title>
+  <title>SpringBoot整合Dubbo-启动时检查 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Scrapy,Python,爬虫,Scrapy,">
+    <meta name="keywords" content="Dubbo,dubbo启动时检查,">
   
 
   
@@ -160,11 +160,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2019-03-31
+      <i class="fa fa-calendar"></i>2019-04-07
     </span>
     
       <span>
-        | <a href="/categories/Scrapy/"><i class="fa fa-bookmark"></i>Scrapy</a>
+        | <a href="/categories/Dubbo/"><i class="fa fa-bookmark"></i>Dubbo</a>
       </span>
     
     
@@ -174,20 +174,29 @@
     
   </div>
   <h1 class="passage-title">
-    Scrapy爬虫框架实现异步爬取伯乐在线
+    SpringBoot整合Dubbo-启动时检查
   </h1>
   
   <article class="passage-article">
-    <p>最近在学习 python的爬虫框架，下面是实战爬取伯乐在线文章例子，用到了(Twisted)异步插入保存数据，支持大数据量的爬取<br><img src="/Scrapy爬虫框架实现异步爬取伯乐在线/111.png" alt="111"><br><img src="/Scrapy爬虫框架实现异步爬取伯乐在线/222.png" alt="222"><br><img src="/Scrapy爬虫框架实现异步爬取伯乐在线/333.png" alt="333"><br><img src="/Scrapy爬虫框架实现异步爬取伯乐在线/444.png" alt="444"><br><img src="/Scrapy爬虫框架实现异步爬取伯乐在线/555.png" alt="555"></p>
-<p><script src="https://gitee.com/zprsss/jobbole_spider/widget_preview"></script></p>
-<style>
-.pro_name a{color: #4183c4;}
-.osc_git_title{background-color: #fff;}
-.osc_git_box{background-color: #fff;}
-.osc_git_box{border-color: #E3E9ED;}
-.osc_git_info{color: #666;}
-.osc_git_main a{color: #9B9B9B;}
-</style>
+    <h2 id="启动时检查"><a href="#启动时检查" class="headerlink" title="启动时检查"></a>启动时检查</h2><blockquote>
+<p>Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止 Spring 初始化完成，以便上线时，能及早发现问题，默认 check=”true”。<br>可以通过 check=”false” 关闭检查，比如，测试时，有些服务不关心，或者出现了循环依赖，必须有一方先启动。<br>另外，如果你的 Spring 容器是懒加载的，或者通过 API 编程延迟引用服务，请关闭 check，否则服务临时不可用时，会抛出异常，拿到 null 引用，如果 check=”false”，总是会返回引用，当服务恢复时，能自动连上。</p>
+</blockquote>
+<p>默认 dubbo 在启动时自动检查,服务不可用则会出现以下情况<br><img src="/SpringBoot整合Dubbo/123.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="通过-spring-配置文件"><a href="#通过-spring-配置文件" class="headerlink" title="通过 spring 配置文件"></a>通过 spring 配置文件</h3><p>关闭某个服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>关闭所有服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:consumer</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>关闭注册中心启动时检查 (注册订阅失败时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="通过-dubbo-properties"><a href="#通过-dubbo-properties" class="headerlink" title="通过 dubbo.properties"></a>通过 dubbo.properties</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dubbo.reference.com.foo.BarService.check=false</span><br><span class="line">dubbo.reference.check=false</span><br><span class="line">dubbo.consumer.check=false</span><br><span class="line">dubbo.registry.check=false</span><br></pre></td></tr></table></figure>
+<p>###通过 -D 参数<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java -Ddubbo.reference.com.foo.BarService.check=false</span><br><span class="line">java -Ddubbo.reference.check=false</span><br><span class="line">java -Ddubbo.consumer.check=false </span><br><span class="line">java -Ddubbo.registry.check=false</span><br></pre></td></tr></table></figure></p>
+<p>###配置的含义</p>
+<blockquote>
+<p>dubbo.reference.check=false，强制改变所有 reference 的 check 值，就算配置中有声明，也会被覆盖。<br>dubbo.consumer.check=false，是设置 check 的缺省值，如果配置中有显式的声明，如：&lt;dubbo:reference check=”true”/&gt;，不会受影响。<br>dubbo.registry.check=false，前面两个都是指订阅成功，但提供者列表是否为空是否报错，如果注册订阅失败时，也允许启动，需使用此选项，将在后台定时重试。</p>
+</blockquote>
+<p>这里可以看到 它默认回去检查服务是否可用<br><img src="/SpringBoot整合Dubbo/234.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"><br>设置为false 后 服务正常启动<br><img src="/SpringBoot整合Dubbo/345.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p>
+<h2 id="直连提供者"><a href="#直连提供者" class="headerlink" title="直连提供者"></a>直连提供者</h2><blockquote>
+<p>在开发及测试环境下，经常需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直联方式，将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表。<br><a href="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/dubbo-directly.jpg" title="直连示意图" target="_blank" rel="noopener"><img src="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/dubbo-directly.jpg" alt="直连示意图" title="直连示意图"></a></p>
+</blockquote>
+<h3 id="注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"><a href="#注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。" class="headerlink" title="注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"></a>注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。</h3><p>参考:<a href="https://dubbo.gitbooks.io/dubbo-user-book/content/demos/preflight-check.html" title="Dubbo说明文档" target="_blank" rel="noopener">Dubbo说明文档</a></p>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -195,7 +204,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#启动时检查"><span class="toc-text">启动时检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过-spring-配置文件"><span class="toc-text">通过 spring 配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过-dubbo-properties"><span class="toc-text">通过 dubbo.properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直连提供者"><span class="toc-text">直连提供者</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"><span class="toc-text">注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。</span></a></li></ol></li></ol>
   </div>
 </aside>
   
@@ -204,7 +213,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/Scrapy爬虫框架实现异步爬取伯乐在线/</a>
+          <a href="" target="_blank">https://puruis.github.io/SpringBoot整合Dubbo/</a>
         </div>
       
       <div>
@@ -215,11 +224,7 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/Python/"><i class="fa fa-tags"></i>Python</a>
-     
-      <a href="/tags/爬虫/"><i class="fa fa-tags"></i>爬虫</a>
-     
-      <a href="/tags/Scrapy/"><i class="fa fa-tags"></i>Scrapy</a>
+      <a href="/tags/dubbo启动时检查/"><i class="fa fa-tags"></i>dubbo启动时检查</a>
     
     </div>
   
@@ -321,10 +326,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/SpringBoot整合Dubbo/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/2019-03-28-Keepalived + Nginx + Tomcat 搭建高可用负载均衡架构/" data-enable="true">
+    <a href="/Scrapy爬虫框架实现异步爬取伯乐在线/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>

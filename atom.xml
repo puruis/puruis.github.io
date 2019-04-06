@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://puruis.github.io/"/>
-  <updated>2019-04-06T16:55:11.649Z</updated>
+  <updated>2019-04-06T19:06:26.060Z</updated>
   <id>https://puruis.github.io/</id>
   
   <author>
@@ -17,41 +17,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>SpringBoot整合Dubbo,直连演示</title>
-    <link href="https://puruis.github.io/SpringBoot%E6%95%B4%E5%90%88dubbo,%E7%9B%B4%E8%BF%9E%E6%BC%94%E7%A4%BA/"/>
-    <id>https://puruis.github.io/SpringBoot整合dubbo,直连演示/</id>
-    <published>2019-04-06T16:00:00.000Z</published>
-    <updated>2019-04-06T16:55:11.649Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="直连提供者"><a href="#直连提供者" class="headerlink" title="直连提供者"></a>直连提供者</h2><blockquote><p>在开发及测试环境下，经常需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直联方式，将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表。<br><a href="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/dubbo-directly.jpg" title="直连示意图" target="_blank" rel="noopener"><img src="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/dubbo-directly.jpg" alt="直连示意图" title="直连示意图"></a></p></blockquote><h3 id="注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"><a href="#注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。" class="headerlink" title="注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"></a>注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。</h3><p><script src="https://gitee.com/zprsss/springboot_dubbo_records/widget_preview"></script></p><style>.pro_name a{color: #4183c4;}.osc_git_title{background-color: #fff;}.osc_git_box{background-color: #fff;}.osc_git_box{border-color: #E3E9ED;}.osc_git_info{color: #666;}.osc_git_main a{color: #9B9B9B;}</style>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;直连提供者&quot;&gt;&lt;a href=&quot;#直连提供者&quot; class=&quot;headerlink&quot; title=&quot;直连提供者&quot;&gt;&lt;/a&gt;直连提供者&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在开发及测试环境下，经常需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，
-      
-    
-    </summary>
-    
-      <category term="Dubbo" scheme="https://puruis.github.io/categories/Dubbo/"/>
-    
-    
-      <category term="Dubbo" scheme="https://puruis.github.io/tags/Dubbo/"/>
-    
-      <category term="直连" scheme="https://puruis.github.io/tags/%E7%9B%B4%E8%BF%9E/"/>
-    
-  </entry>
-  
-  <entry>
     <title>SpringBoot整合Dubbo-启动时检查</title>
-    <link href="https://puruis.github.io/SpringBoot%E6%95%B4%E5%90%88Dubbo-%E5%90%AF%E5%8A%A8%E6%97%B6%E6%A3%80%E6%9F%A5/"/>
-    <id>https://puruis.github.io/SpringBoot整合Dubbo-启动时检查/</id>
+    <link href="https://puruis.github.io/SpringBoot%E6%95%B4%E5%90%88Dubbo/"/>
+    <id>https://puruis.github.io/SpringBoot整合Dubbo/</id>
     <published>2019-04-06T16:00:00.000Z</published>
-    <updated>2019-04-06T17:47:22.410Z</updated>
+    <updated>2019-04-06T19:06:26.060Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="启动时检查"><a href="#启动时检查" class="headerlink" title="启动时检查"></a>启动时检查</h2><blockquote><p>Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止 Spring 初始化完成，以便上线时，能及早发现问题，默认 check=”true”。<br>可以通过 check=”false” 关闭检查，比如，测试时，有些服务不关心，或者出现了循环依赖，必须有一方先启动。<br>另外，如果你的 Spring 容器是懒加载的，或者通过 API 编程延迟引用服务，请关闭 check，否则服务临时不可用时，会抛出异常，拿到 null 引用，如果 check=”false”，总是会返回引用，当服务恢复时，能自动连上。</p></blockquote><p>默认 dubbo 在启动时自动检查,服务不可用则会出现以下情况<br><img src="/SpringBoot整合Dubbo-启动时检查/123.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="通过-spring-配置文件"><a href="#通过-spring-配置文件" class="headerlink" title="通过 spring 配置文件"></a>通过 spring 配置文件</h3><p>关闭某个服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>关闭所有服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:consumer</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>关闭注册中心启动时检查 (注册订阅失败时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><h3 id="通过-dubbo-properties"><a href="#通过-dubbo-properties" class="headerlink" title="通过 dubbo.properties"></a>通过 dubbo.properties</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dubbo.reference.com.foo.BarService.check=false</span><br><span class="line">dubbo.reference.check=false</span><br><span class="line">dubbo.consumer.check=false</span><br><span class="line">dubbo.registry.check=false</span><br></pre></td></tr></table></figure><p>###通过 -D 参数<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java -Ddubbo.reference.com.foo.BarService.check=false</span><br><span class="line">java -Ddubbo.reference.check=false</span><br><span class="line">java -Ddubbo.consumer.check=false </span><br><span class="line">java -Ddubbo.registry.check=false</span><br></pre></td></tr></table></figure></p><p>###配置的含义</p><blockquote><p>dubbo.reference.check=false，强制改变所有 reference 的 check 值，就算配置中有声明，也会被覆盖。<br>dubbo.consumer.check=false，是设置 check 的缺省值，如果配置中有显式的声明，如：&lt;dubbo:reference check=”true”/&gt;，不会受影响。<br>dubbo.registry.check=false，前面两个都是指订阅成功，但提供者列表是否为空是否报错，如果注册订阅失败时，也允许启动，需使用此选项，将在后台定时重试。</p></blockquote><p>这里可以看到 它默认回去检查服务是否可用<br><img src="/SpringBoot整合Dubbo-启动时检查/234.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"><br>设置为false 后 服务正常启动<br><img src="/SpringBoot整合Dubbo-启动时检查/345.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><p>参考:<a href="https://dubbo.gitbooks.io/dubbo-user-book/content/demos/preflight-check.html" title="Dubbo说明文档" target="_blank" rel="noopener">Dubbo说明文档</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="启动时检查"><a href="#启动时检查" class="headerlink" title="启动时检查"></a>启动时检查</h2><blockquote><p>Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止 Spring 初始化完成，以便上线时，能及早发现问题，默认 check=”true”。<br>可以通过 check=”false” 关闭检查，比如，测试时，有些服务不关心，或者出现了循环依赖，必须有一方先启动。<br>另外，如果你的 Spring 容器是懒加载的，或者通过 API 编程延迟引用服务，请关闭 check，否则服务临时不可用时，会抛出异常，拿到 null 引用，如果 check=”false”，总是会返回引用，当服务恢复时，能自动连上。</p></blockquote><p>默认 dubbo 在启动时自动检查,服务不可用则会出现以下情况<br><img src="/SpringBoot整合Dubbo/123.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="通过-spring-配置文件"><a href="#通过-spring-配置文件" class="headerlink" title="通过 spring 配置文件"></a>通过 spring 配置文件</h3><p>关闭某个服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>关闭所有服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:consumer</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>关闭注册中心启动时检查 (注册订阅失败时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><h3 id="通过-dubbo-properties"><a href="#通过-dubbo-properties" class="headerlink" title="通过 dubbo.properties"></a>通过 dubbo.properties</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dubbo.reference.com.foo.BarService.check=false</span><br><span class="line">dubbo.reference.check=false</span><br><span class="line">dubbo.consumer.check=false</span><br><span class="line">dubbo.registry.check=false</span><br></pre></td></tr></table></figure><p>###通过 -D 参数<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java -Ddubbo.reference.com.foo.BarService.check=false</span><br><span class="line">java -Ddubbo.reference.check=false</span><br><span class="line">java -Ddubbo.consumer.check=false </span><br><span class="line">java -Ddubbo.registry.check=false</span><br></pre></td></tr></table></figure></p><p>###配置的含义</p><blockquote><p>dubbo.reference.check=false，强制改变所有 reference 的 check 值，就算配置中有声明，也会被覆盖。<br>dubbo.consumer.check=false，是设置 check 的缺省值，如果配置中有显式的声明，如：&lt;dubbo:reference check=”true”/&gt;，不会受影响。<br>dubbo.registry.check=false，前面两个都是指订阅成功，但提供者列表是否为空是否报错，如果注册订阅失败时，也允许启动，需使用此选项，将在后台定时重试。</p></blockquote><p>这里可以看到 它默认回去检查服务是否可用<br><img src="/SpringBoot整合Dubbo/234.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"><br>设置为false 后 服务正常启动<br><img src="/SpringBoot整合Dubbo/345.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><h2 id="直连提供者"><a href="#直连提供者" class="headerlink" title="直连提供者"></a>直连提供者</h2><blockquote><p>在开发及测试环境下，经常需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直联方式，将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表。<br><a href="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/dubbo-directly.jpg" title="直连示意图" target="_blank" rel="noopener"><img src="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/dubbo-directly.jpg" alt="直连示意图" title="直连示意图"></a></p></blockquote><h3 id="注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"><a href="#注意-为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。" class="headerlink" title="注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。"></a>注意 为了避免复杂化线上环境，不要在线上使用这个功能，只应在测试阶段使用。</h3><p>参考:<a href="https://dubbo.gitbooks.io/dubbo-user-book/content/demos/preflight-check.html" title="Dubbo说明文档" target="_blank" rel="noopener">Dubbo说明文档</a></p>]]></content>
     
     <summary type="html">
     
@@ -578,6 +550,34 @@
       <category term="分布式" scheme="https://puruis.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
       <category term="高可用" scheme="https://puruis.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>支付宝对接-查询对账单下载地址接口 遇到的坑</title>
+    <link href="https://puruis.github.io/%E6%94%AF%E4%BB%98%E5%AE%9D%E5%AF%B9%E6%8E%A5-%E6%9F%A5%E8%AF%A2%E5%AF%B9%E8%B4%A6%E5%8D%95%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%E6%8E%A5%E5%8F%A3%20%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/"/>
+    <id>https://puruis.github.io/支付宝对接-查询对账单下载地址接口 遇到的坑/</id>
+    <published>2018-07-14T16:00:00.000Z</published>
+    <updated>2019-03-21T06:40:04.770Z</updated>
+    
+    <content type="html"><![CDATA[<p>**因为公司后面准备开发财务系统，那么支付肯定是必不可少的，本来想找个随手即用的封装好的支付来直接使用，但是在网上找了一圈，没有找到太中意的，于是准备利用周末时间自己来封装一个 开箱即用的 支付模块。</p><hr><p><img src="https://oscimg.oschina.net/oscnet/c4866fce0956f9f4d41f94c5da60cb25874.jpg" alt="image"><br><a id="more"></a></p><p>说到开箱即用，我第一想到了springboot，于是准备准备写一个</p><h1 id="spring-boot-starter-pay"><a href="#spring-boot-starter-pay" class="headerlink" title="spring-boot-starter-pay"></a>spring-boot-starter-pay</h1><p>简单配置即可使用<br><img src="https://oscimg.oschina.net/oscnet/9b404f812ce42440184221551dc27e3996a.jpg" alt="image"></p><h3 id="注入service-直接调用"><a href="#注入service-直接调用" class="headerlink" title="注入service 直接调用"></a>注入service 直接调用</h3><p><img src="https://oscimg.oschina.net/oscnet/713e1c5289e0a691d38e69ed2249f0ea110.jpg" alt="image"></p><p>前面的接口封装 基本都是顺风顺水</p><h1 id="alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><a href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址" class="headerlink" title="alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)"></a>alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</h1><p>测试时一直 参数不合法 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;alipay_data_dataservice_bill_downloadurl_query_response&quot;: &#123;</span><br><span class="line">&quot;code&quot;: &quot;40004&quot;,</span><br><span class="line">&quot;msg&quot;: &quot;Business Failed&quot;,</span><br><span class="line">&quot;sub_code&quot;: &quot;isv.invalid_arguments&quot;,</span><br><span class="line">&quot;sub_msg&quot;: &quot;入参不合法&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>莫名其妙了，哪里参数不合法了，一开始 我还真认为是我参数传错了，好半天都没解决，问题出在哪呢？</p><h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h1><ul><li>这个接口是下载离线账单的，需要T+1天生成账单，不能查询当日或者是当月的账单，如果日期是当天或者是当月的会返回“参数不合法”； </li><li>下载对账单地址接口只有当面付接口可以下载trade类型的账单，其他支付接口只能下载signcustomer 这个类型的 </li></ul><p>等我把代码封装完善，会上传到码云上， springBoot-Pay 开箱即用 欢迎期待</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;**因为公司后面准备开发财务系统，那么支付肯定是必不可少的，本来想找个随手即用的封装好的支付来直接使用，但是在网上找了一圈，没有找到太中意的，于是准备利用周末时间自己来封装一个 开箱即用的 支付模块。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;https://oscimg.oschina.net/oscnet/c4866fce0956f9f4d41f94c5da60cb25874.jpg&quot; alt=&quot;image&quot;&gt;&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="支付" scheme="https://puruis.github.io/categories/%E6%94%AF%E4%BB%98/"/>
+    
+    
+      <category term="JAVA" scheme="https://puruis.github.io/tags/JAVA/"/>
+    
+      <category term="支付宝" scheme="https://puruis.github.io/tags/%E6%94%AF%E4%BB%98%E5%AE%9D/"/>
+    
+      <category term="账单" scheme="https://puruis.github.io/tags/%E8%B4%A6%E5%8D%95/"/>
     
   </entry>
   
