@@ -6,16 +6,16 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>支付宝对接-查询对账单下载地址接口 遇到的坑 | FS&#39;Blog</title>
+  <title>标签: 负载均衡 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="支付,JAVA,支付宝,账单,">
+    <meta name="keywords" content="Hexo, Theme-AD">
   
 
   
-  <meta name="description" content="**因为公司后面准备开发财务系统，那么支付肯定是必不可少的，本来想找个随手即用的封装好的支付来直接使用，但是在网上找了一圈，没有找到太中意的，于是准备利用周末时间自己来封装一个 开箱即用的 支付模块。">
+  <meta name="description" content="埔枘的个人博客">
 
   
 
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2018-05-01",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: true,
+    is_post: false,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -156,87 +156,19 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      
-  <div class="passage">
-  <div class="passage-meta">
-    <span>
-      <i class="fa fa-calendar"></i>2018-07-15
-    </span>
-    
-      <span>
-        | <a href="/categories/支付/"><i class="fa fa-bookmark"></i>支付</a>
-      </span>
-    
-    
-      <span>
-        | <i class="fa fa-unlock-alt"></i>UNLOCK
-      </span>
-    
-  </div>
-  <h1 class="passage-title">
-    支付宝对接-查询对账单下载地址接口 遇到的坑
-  </h1>
+      <div class="timeline">
+  <h2 class="timeline-title">标签: 负载均衡</h2>
   
-  <article class="passage-article">
-    <p></p>
-<p>说到开箱即用，我第一想到了springboot，于是准备准备写一个</p>
-<h1 id="spring-boot-starter-pay"><a href="#spring-boot-starter-pay" class="headerlink" title="spring-boot-starter-pay"></a>spring-boot-starter-pay</h1><p>简单配置即可使用<br><img src="https://oscimg.oschina.net/oscnet/9b404f812ce42440184221551dc27e3996a.jpg" alt="image"></p>
-<h3 id="注入service-直接调用"><a href="#注入service-直接调用" class="headerlink" title="注入service 直接调用"></a>注入service 直接调用</h3><p><img src="https://oscimg.oschina.net/oscnet/713e1c5289e0a691d38e69ed2249f0ea110.jpg" alt="image"></p>
-<p>前面的接口封装 基本都是顺风顺水</p>
-<h1 id="alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><a href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址" class="headerlink" title="alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)"></a>alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</h1><p>测试时一直 参数不合法 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;alipay_data_dataservice_bill_downloadurl_query_response&quot;: &#123;</span><br><span class="line">		&quot;code&quot;: &quot;40004&quot;,</span><br><span class="line">		&quot;msg&quot;: &quot;Business Failed&quot;,</span><br><span class="line">		&quot;sub_code&quot;: &quot;isv.invalid_arguments&quot;,</span><br><span class="line">		&quot;sub_msg&quot;: &quot;入参不合法&quot;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>莫名其妙了，哪里参数不合法了，一开始 我还真认为是我参数传错了，好半天都没解决，问题出在哪呢？</p>
-<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h1><ul>
-<li>这个接口是下载离线账单的，需要T+1天生成账单，不能查询当日或者是当月的账单，如果日期是当天或者是当月的会返回“参数不合法”； </li>
-<li>下载对账单地址接口只有当面付接口可以下载trade类型的账单，其他支付接口只能下载signcustomer 这个类型的 </li>
-</ul>
-<p>等我把代码封装完善，会上传到码云上， springBoot-Pay 开箱即用 欢迎期待</p>
-  </article>
-  <aside class="table-content" id="site-toc">
-  <div class="table-content-title">
-    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
-    <span>目录</span>
-  </div>
-  <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-boot-starter-pay"><span class="toc-text">spring-boot-starter-pay</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注入service-直接调用"><span class="toc-text">注入service 直接调用</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><span class="toc-text">alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项:</span></a></li>
-  </div>
-</aside>
-  
-    <aside class="passage-copyright">
-      <div>本文作者: purui</div>
-      
-        <div>
-          原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/支付宝对接-查询对账单下载地址接口 遇到的坑/</a>
-        </div>
-      
-      <div>
-        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
-      </div>
-    </aside>
-  
-  
-    <div class="passage-tags">
-     
-      <a href="/tags/JAVA/"><i class="fa fa-tags"></i>JAVA</a>
-     
-      <a href="/tags/支付宝/"><i class="fa fa-tags"></i>支付宝</a>
-     
-      <a href="/tags/账单/"><i class="fa fa-tags"></i>账单</a>
     
+      <h3 class="timeline-subtitle">2019</h3>
+    
+    <div class="timeline-item">
+      <time>2019-04-07</time>
+      <a target="_self" href="/Spring整合Dubbo-负载均衡案例/">Spring整合Dubbo-负载均衡案例</a>
     </div>
   
 </div>
-
     </main>
-    
-      <div class="site-comment-contanier">
-  <p id="site-comment-info">
-    <i class="fa fa-spinner fa-spin"></i> 评论加载中
-  </p>
-  <div id="site-comment">
-  </div>
-</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -324,19 +256,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/Zookeeper 入门 (一)/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/让JPA 飞 - QueryDSL/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="#site-comment" data-enable="true">
+      <a href="javascript:void(0);" data-enable="false">
         <i class="fa fa-commenting"></i>
       </a>
     

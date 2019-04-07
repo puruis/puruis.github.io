@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://puruis.github.io/"/>
-  <updated>2019-04-06T16:55:11.649Z</updated>
+  <updated>2019-04-06T19:09:47.533Z</updated>
   <id>https://puruis.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringBoot整合Dubbo-启动时检查</title>
+    <link href="https://puruis.github.io/SpringBoot%E6%95%B4%E5%90%88Dubbo-%E5%90%AF%E5%8A%A8%E6%97%B6%E6%A3%80%E6%9F%A5/"/>
+    <id>https://puruis.github.io/SpringBoot整合Dubbo-启动时检查/</id>
+    <published>2019-04-06T16:00:00.000Z</published>
+    <updated>2019-04-06T19:09:47.533Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="启动时检查"><a href="#启动时检查" class="headerlink" title="启动时检查"></a>启动时检查</h2><blockquote><p>Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止 Spring 初始化完成，以便上线时，能及早发现问题，默认 check=”true”。<br>可以通过 check=”false” 关闭检查，比如，测试时，有些服务不关心，或者出现了循环依赖，必须有一方先启动。<br>另外，如果你的 Spring 容器是懒加载的，或者通过 API 编程延迟引用服务，请关闭 check，否则服务临时不可用时，会抛出异常，拿到 null 引用，如果 check=”false”，总是会返回引用，当服务恢复时，能自动连上。</p></blockquote><p>默认 dubbo 在启动时自动检查,服务不可用则会出现以下情况<br><img src="/SpringBoot整合Dubbo-启动时检查/123.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="通过-spring-配置文件"><a href="#通过-spring-配置文件" class="headerlink" title="通过 spring 配置文件"></a>通过 spring 配置文件</h3><p>关闭某个服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>关闭所有服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:consumer</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>关闭注册中心启动时检查 (注册订阅失败时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><h3 id="通过-dubbo-properties"><a href="#通过-dubbo-properties" class="headerlink" title="通过 dubbo.properties"></a>通过 dubbo.properties</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dubbo.reference.com.foo.BarService.check=false</span><br><span class="line">dubbo.reference.check=false</span><br><span class="line">dubbo.consumer.check=false</span><br><span class="line">dubbo.registry.check=false</span><br></pre></td></tr></table></figure><p>###通过 -D 参数<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java -Ddubbo.reference.com.foo.BarService.check=false</span><br><span class="line">java -Ddubbo.reference.check=false</span><br><span class="line">java -Ddubbo.consumer.check=false </span><br><span class="line">java -Ddubbo.registry.check=false</span><br></pre></td></tr></table></figure></p><p>###配置的含义</p><blockquote><p>dubbo.reference.check=false，强制改变所有 reference 的 check 值，就算配置中有声明，也会被覆盖。<br>dubbo.consumer.check=false，是设置 check 的缺省值，如果配置中有显式的声明，如：&lt;dubbo:reference check=”true”/&gt;，不会受影响。<br>dubbo.registry.check=false，前面两个都是指订阅成功，但提供者列表是否为空是否报错，如果注册订阅失败时，也允许启动，需使用此选项，将在后台定时重试。</p></blockquote><p>这里可以看到 它默认回去检查服务是否可用<br><img src="/SpringBoot整合Dubbo-启动时检查/234.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"><br>设置为false 后 服务正常启动<br><img src="/SpringBoot整合Dubbo-启动时检查/345.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><p>参考:<a href="https://dubbo.gitbooks.io/dubbo-user-book/content/demos/preflight-check.html" title="Dubbo说明文档" target="_blank" rel="noopener">Dubbo说明文档</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;启动时检查&quot;&gt;&lt;a href=&quot;#启动时检查&quot; class=&quot;headerlink&quot; title=&quot;启动时检查&quot;&gt;&lt;/a&gt;启动时检查&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止 Spring 
+      
+    
+    </summary>
+    
+      <category term="Dubbo" scheme="https://puruis.github.io/categories/Dubbo/"/>
+    
+    
+      <category term="dubbo启动时检查" scheme="https://puruis.github.io/tags/dubbo%E5%90%AF%E5%8A%A8%E6%97%B6%E6%A3%80%E6%9F%A5/"/>
+    
+  </entry>
   
   <entry>
     <title>SpringBoot整合Dubbo,直连演示</title>
@@ -45,20 +71,23 @@
   </entry>
   
   <entry>
-    <title>SpringBoot整合Dubbo-启动时检查</title>
-    <link href="https://puruis.github.io/SpringBoot%E6%95%B4%E5%90%88Dubbo-%E5%90%AF%E5%8A%A8%E6%97%B6%E6%A3%80%E6%9F%A5/"/>
-    <id>https://puruis.github.io/SpringBoot整合Dubbo-启动时检查/</id>
+    <title>Spring整合Dubbo-负载均衡案例</title>
+    <link href="https://puruis.github.io/Spring%E6%95%B4%E5%90%88Dubbo-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%A1%88%E4%BE%8B/"/>
+    <id>https://puruis.github.io/Spring整合Dubbo-负载均衡案例/</id>
     <published>2019-04-06T16:00:00.000Z</published>
-    <updated>2019-04-06T19:09:47.533Z</updated>
+    <updated>2019-04-07T06:49:26.245Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="启动时检查"><a href="#启动时检查" class="headerlink" title="启动时检查"></a>启动时检查</h2><blockquote><p>Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止 Spring 初始化完成，以便上线时，能及早发现问题，默认 check=”true”。<br>可以通过 check=”false” 关闭检查，比如，测试时，有些服务不关心，或者出现了循环依赖，必须有一方先启动。<br>另外，如果你的 Spring 容器是懒加载的，或者通过 API 编程延迟引用服务，请关闭 check，否则服务临时不可用时，会抛出异常，拿到 null 引用，如果 check=”false”，总是会返回引用，当服务恢复时，能自动连上。</p></blockquote><p>默认 dubbo 在启动时自动检查,服务不可用则会出现以下情况<br><img src="/SpringBoot整合Dubbo-启动时检查/123.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="通过-spring-配置文件"><a href="#通过-spring-配置文件" class="headerlink" title="通过 spring 配置文件"></a>通过 spring 配置文件</h3><p>关闭某个服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>关闭所有服务的启动时检查 (没有提供者时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:consumer</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>关闭注册中心启动时检查 (注册订阅失败时报错)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><h3 id="通过-dubbo-properties"><a href="#通过-dubbo-properties" class="headerlink" title="通过 dubbo.properties"></a>通过 dubbo.properties</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dubbo.reference.com.foo.BarService.check=false</span><br><span class="line">dubbo.reference.check=false</span><br><span class="line">dubbo.consumer.check=false</span><br><span class="line">dubbo.registry.check=false</span><br></pre></td></tr></table></figure><p>###通过 -D 参数<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java -Ddubbo.reference.com.foo.BarService.check=false</span><br><span class="line">java -Ddubbo.reference.check=false</span><br><span class="line">java -Ddubbo.consumer.check=false </span><br><span class="line">java -Ddubbo.registry.check=false</span><br></pre></td></tr></table></figure></p><p>###配置的含义</p><blockquote><p>dubbo.reference.check=false，强制改变所有 reference 的 check 值，就算配置中有声明，也会被覆盖。<br>dubbo.consumer.check=false，是设置 check 的缺省值，如果配置中有显式的声明，如：&lt;dubbo:reference check=”true”/&gt;，不会受影响。<br>dubbo.registry.check=false，前面两个都是指订阅成功，但提供者列表是否为空是否报错，如果注册订阅失败时，也允许启动，需使用此选项，将在后台定时重试。</p></blockquote><p>这里可以看到 它默认回去检查服务是否可用<br><img src="/SpringBoot整合Dubbo-启动时检查/234.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"><br>设置为false 后 服务正常启动<br><img src="/SpringBoot整合Dubbo-启动时检查/345.png" alt="ad2d70f43e9135378d13b9af5ad9beb8"></p><p>参考:<a href="https://dubbo.gitbooks.io/dubbo-user-book/content/demos/preflight-check.html" title="Dubbo说明文档" target="_blank" rel="noopener">Dubbo说明文档</a></p>]]></content>
+    <content type="html"><![CDATA[<p>##负载均衡<br>在集群负载均衡时，Dubbo 提供了多种均衡策略，缺省为 random 随机调用。</p><p>###负载均衡策略</p><p>##Random LoadBalance</p><blockquote><p>随机，按权重设置随机概率。<br>在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。<br>RoundRobin LoadBalance<br>轮循，按公约后的权重设置轮循比率。<br>存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</p></blockquote><p>##LeastActive LoadBalance</p><blockquote><p>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。<br>使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。<br>ConsistentHash LoadBalance<br>一致性 Hash，相同参数的请求总是发到同一提供者。<br>当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。<br>算法参见：<a href="http://en.wikipedia.org/wiki/Consistent_hashing" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Consistent_hashing</a><br>缺省只对第一个参数 Hash，如果要修改，请配置 &lt;dubbo:parameter key=”hash.arguments” value=”0,1” /&gt;<br>缺省用 160 份虚拟节点，如果要修改，请配置 &lt;dubbo:parameter key=”hash.nodes” value=”320” /&gt;<br>配置</p></blockquote><p>##服务端服务级别<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"..."</span> <span class="attr">loadbalance</span>=<span class="string">"roundrobin"</span> &gt;</span><span class="tag">&lt;/<span class="name">dubbo:service</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>##客户端服务级别<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"..."</span> <span class="attr">loadbalance</span>=<span class="string">"roundrobin"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>##服务端方法级别<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"..."</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"..."</span> <span class="attr">loadbalance</span>=<span class="string">"roundrobin"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:service</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>##客户端方法级别<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"..."</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"..."</span> <span class="attr">loadbalance</span>=<span class="string">"roundrobin"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>##测试案例<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:dubbo</span>=<span class="string">"http://code.alibabatech.com/schema/dubbo"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"consumer-of-helloworld-app"</span>  /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://127.0.0.1:2181"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 生成远程服务代理，可以和本地bean一样使用demoService --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--缺省 随机策略--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置轮询策略--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;dubbo:reference id="helloService" interface="com.spring.dubbo.service.HelloService" loadbalance="roundrobin"/&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置最少活跃调用数策略,在Consumer上需要添加loadbalance和actives, actives表示Activity最大的并发数，如果超过这个并发数，--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"helloService"</span> <span class="attr">interface</span>=<span class="string">"com.spring.dubbo.service.HelloService"</span> <span class="attr">loadbalance</span>=<span class="string">"leastactive"</span> <span class="attr">actives</span>=<span class="string">"200"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>有兴趣的朋友可以拉取代码,自己跑跑尝试下</p><p><script src="https://gitee.com/zprsss/springboot_dubbo_records/widget_preview"></script></p><style>.pro_name a{color: #4183c4;}.osc_git_title{background-color: #fff;}.osc_git_box{background-color: #fff;}.osc_git_box{border-color: #E3E9ED;}.osc_git_info{color: #666;}.osc_git_main a{color: #9B9B9B;}</style>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;启动时检查&quot;&gt;&lt;a href=&quot;#启动时检查&quot; class=&quot;headerlink&quot; title=&quot;启动时检查&quot;&gt;&lt;/a&gt;启动时检查&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止 Spring 
+        &lt;p&gt;##负载均衡&lt;br&gt;在集群负载均衡时，Dubbo 提供了多种均衡策略，缺省为 random 随机调用。&lt;/p&gt;
+&lt;p&gt;###负载均衡策略&lt;/p&gt;
+&lt;p&gt;##Random LoadBalance&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;随机，按权重设置随机概率。&lt;br&gt;在一个
       
     
     </summary>
@@ -66,7 +95,7 @@
       <category term="Dubbo" scheme="https://puruis.github.io/categories/Dubbo/"/>
     
     
-      <category term="dubbo启动时检查" scheme="https://puruis.github.io/tags/dubbo%E5%90%AF%E5%8A%A8%E6%97%B6%E6%A3%80%E6%9F%A5/"/>
+      <category term="负载均衡" scheme="https://puruis.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
     
   </entry>
   
@@ -543,32 +572,6 @@
 
 即可下载成功!
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;tar zxvf zookeeper-3.4.10.tar.gz&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Zookeeper" scheme="https://puruis.github.io/categories/Zookeeper/"/>
-    
-    
-      <category term="分布式" scheme="https://puruis.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-      <category term="高可用" scheme="https://puruis.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Zookeeper 入门 (一)</title>
-    <link href="https://puruis.github.io/Zookeeper%20%E5%85%A5%E9%97%A8%20(%E4%B8%80)/"/>
-    <id>https://puruis.github.io/Zookeeper 入门 (一)/</id>
-    <published>2018-08-04T16:00:00.000Z</published>
-    <updated>2019-03-21T06:52:46.128Z</updated>
-    
-    <content type="html"><![CDATA[<p>Zookeeper 介绍<br>    Zookeeper是软件世界的一名管理者，它被用来提供分布式环境下的协调服务， Yahoo公司使用JAVA 语言开发了Zookeeper，它是Hadoop项目中的子项目，基于Google的Chubby 的开源实现，在Hadoop，HBase，Kafka等技术中充当了核心角色，它的目标就是将那些复杂且容易出错的分布式一致性服务加以封装，形成一个高效且可靠的服务，并为用户提供了一系列简单易用的接口。</p><pre><code>Zookeeper 官网 ：http://zookeeper.apache.org/</code></pre><a id="more"></a>    <p>Zookeeper 一般以集群的方式对外提供服务，一个集群包括多个节点，每个节点对应一个zookeeper服务器，所有的节点共同对外提供服务，整个集群对分布式数据一致性提供了全面的支持，具体包含如下五个特性：</p><pre><code>1.顺序性        好比一个队列，先进先出，一个个排队2.原子性        和事务的原子性一致3.单一性        Zokeeper 各个节点间 不可能出现两种不一样的数据状态4.可靠性        一旦服务器数据发生变化，就会立即被储存起来。5.实时性        服务器的请求被处理，客户端能够及时得到最新数据状态</code></pre><p>Zookeeper 树状模型<br>    Zookeeper 内部有一个树状的内存模型，类型文件系统，有若干个目录，每一个目录都有自己的文件，只是在Zookeeper中把这个统称为ZNode ，每个ZNode有对应的路径及其包含的数据，ZNode 由Zookeeper 客户端来创建，客户端建立连接后， 服务端会创建一个session， 客户端所有操作都将在这个sessiuon(会话)中进行</p><p><img src="https://static.oschina.net/uploads/space/2017/0819/205659_51h8_3394890.png" alt="image"></p><p>ZNode 有四类节点：</p><pre><code>Persistent(持久节点)            会话结束后，该节点不会删除Persistent Sequential(之久顺序节点)   会话结束后，该节点不会删除 且节点名中自带自增后缀Ephemeral(临时节点)           会话结束被删除Ephemeral Sequentia(临时顺序节点)   会话结束被删除， 且节点名中自带自增后缀</code></pre><p>Persistent  AND Persistent Sequential 才能有子节点</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Zookeeper 介绍&lt;br&gt;    Zookeeper是软件世界的一名管理者，它被用来提供分布式环境下的协调服务， Yahoo公司使用JAVA 语言开发了Zookeeper，它是Hadoop项目中的子项目，基于Google的Chubby 的开源实现，在Hadoop，HBase，Kafka等技术中充当了核心角色，它的目标就是将那些复杂且容易出错的分布式一致性服务加以封装，形成一个高效且可靠的服务，并为用户提供了一系列简单易用的接口。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Zookeeper 官网 ：http://zookeeper.apache.org/
-&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     

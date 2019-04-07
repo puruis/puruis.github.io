@@ -6,16 +6,16 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>支付宝对接-查询对账单下载地址接口 遇到的坑 | FS&#39;Blog</title>
+  <title>Spring整合Dubbo-负载均衡案例 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="支付,JAVA,支付宝,账单,">
+    <meta name="keywords" content="Dubbo,负载均衡,">
   
 
   
-  <meta name="description" content="**因为公司后面准备开发财务系统，那么支付肯定是必不可少的，本来想找个随手即用的封装好的支付来直接使用，但是在网上找了一圈，没有找到太中意的，于是准备利用周末时间自己来封装一个 开箱即用的 支付模块。">
+  <meta name="description" content="埔枘的个人博客">
 
   
 
@@ -160,11 +160,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2018-07-15
+      <i class="fa fa-calendar"></i>2019-04-07
     </span>
     
       <span>
-        | <a href="/categories/支付/"><i class="fa fa-bookmark"></i>支付</a>
+        | <a href="/categories/Dubbo/"><i class="fa fa-bookmark"></i>Dubbo</a>
       </span>
     
     
@@ -174,23 +174,36 @@
     
   </div>
   <h1 class="passage-title">
-    支付宝对接-查询对账单下载地址接口 遇到的坑
+    Spring整合Dubbo-负载均衡案例
   </h1>
   
   <article class="passage-article">
-    <p></p>
-<p>说到开箱即用，我第一想到了springboot，于是准备准备写一个</p>
-<h1 id="spring-boot-starter-pay"><a href="#spring-boot-starter-pay" class="headerlink" title="spring-boot-starter-pay"></a>spring-boot-starter-pay</h1><p>简单配置即可使用<br><img src="https://oscimg.oschina.net/oscnet/9b404f812ce42440184221551dc27e3996a.jpg" alt="image"></p>
-<h3 id="注入service-直接调用"><a href="#注入service-直接调用" class="headerlink" title="注入service 直接调用"></a>注入service 直接调用</h3><p><img src="https://oscimg.oschina.net/oscnet/713e1c5289e0a691d38e69ed2249f0ea110.jpg" alt="image"></p>
-<p>前面的接口封装 基本都是顺风顺水</p>
-<h1 id="alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><a href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址" class="headerlink" title="alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)"></a>alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</h1><p>测试时一直 参数不合法 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;alipay_data_dataservice_bill_downloadurl_query_response&quot;: &#123;</span><br><span class="line">		&quot;code&quot;: &quot;40004&quot;,</span><br><span class="line">		&quot;msg&quot;: &quot;Business Failed&quot;,</span><br><span class="line">		&quot;sub_code&quot;: &quot;isv.invalid_arguments&quot;,</span><br><span class="line">		&quot;sub_msg&quot;: &quot;入参不合法&quot;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>莫名其妙了，哪里参数不合法了，一开始 我还真认为是我参数传错了，好半天都没解决，问题出在哪呢？</p>
-<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h1><ul>
-<li>这个接口是下载离线账单的，需要T+1天生成账单，不能查询当日或者是当月的账单，如果日期是当天或者是当月的会返回“参数不合法”； </li>
-<li>下载对账单地址接口只有当面付接口可以下载trade类型的账单，其他支付接口只能下载signcustomer 这个类型的 </li>
-</ul>
-<p>等我把代码封装完善，会上传到码云上， springBoot-Pay 开箱即用 欢迎期待</p>
+    <p>##负载均衡<br>在集群负载均衡时，Dubbo 提供了多种均衡策略，缺省为 random 随机调用。</p>
+<p>###负载均衡策略</p>
+<p>##Random LoadBalance</p>
+<blockquote>
+<p>随机，按权重设置随机概率。<br>在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。<br>RoundRobin LoadBalance<br>轮循，按公约后的权重设置轮循比率。<br>存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</p>
+</blockquote>
+<p>##LeastActive LoadBalance</p>
+<blockquote>
+<p>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。<br>使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。<br>ConsistentHash LoadBalance<br>一致性 Hash，相同参数的请求总是发到同一提供者。<br>当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。<br>算法参见：<a href="http://en.wikipedia.org/wiki/Consistent_hashing" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Consistent_hashing</a><br>缺省只对第一个参数 Hash，如果要修改，请配置 &lt;dubbo:parameter key=”hash.arguments” value=”0,1” /&gt;<br>缺省用 160 份虚拟节点，如果要修改，请配置 &lt;dubbo:parameter key=”hash.nodes” value=”320” /&gt;<br>配置</p>
+</blockquote>
+<p>##服务端服务级别<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"..."</span> <span class="attr">loadbalance</span>=<span class="string">"roundrobin"</span> &gt;</span><span class="tag">&lt;/<span class="name">dubbo:service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>##客户端服务级别<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"..."</span> <span class="attr">loadbalance</span>=<span class="string">"roundrobin"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>##服务端方法级别<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"..."</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"..."</span> <span class="attr">loadbalance</span>=<span class="string">"roundrobin"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>##客户端方法级别<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"..."</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"..."</span> <span class="attr">loadbalance</span>=<span class="string">"roundrobin"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>##测试案例<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:dubbo</span>=<span class="string">"http://code.alibabatech.com/schema/dubbo"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"consumer-of-helloworld-app"</span>  /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://127.0.0.1:2181"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 生成远程服务代理，可以和本地bean一样使用demoService --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--缺省 随机策略--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置轮询策略--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;dubbo:reference id="helloService" interface="com.spring.dubbo.service.HelloService" loadbalance="roundrobin"/&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置最少活跃调用数策略,在Consumer上需要添加loadbalance和actives, actives表示Activity最大的并发数，如果超过这个并发数，--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"helloService"</span> <span class="attr">interface</span>=<span class="string">"com.spring.dubbo.service.HelloService"</span> <span class="attr">loadbalance</span>=<span class="string">"leastactive"</span> <span class="attr">actives</span>=<span class="string">"200"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>有兴趣的朋友可以拉取代码,自己跑跑尝试下</p>
+<p><script src="https://gitee.com/zprsss/springboot_dubbo_records/widget_preview"></script></p>
+<style>
+.pro_name a{color: #4183c4;}
+.osc_git_title{background-color: #fff;}
+.osc_git_box{background-color: #fff;}
+.osc_git_box{border-color: #E3E9ED;}
+.osc_git_info{color: #666;}
+.osc_git_main a{color: #9B9B9B;}
+</style>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -198,7 +211,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-boot-starter-pay"><span class="toc-text">spring-boot-starter-pay</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注入service-直接调用"><span class="toc-text">注入service 直接调用</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#alipay-data-dataservice-bill-downloadurl-query-查询对账单下载地址"><span class="toc-text">alipay.data.dataservice.bill.downloadurl.query(查询对账单下载地址)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项:</span></a></li>
+    
   </div>
 </aside>
   
@@ -207,7 +220,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/支付宝对接-查询对账单下载地址接口 遇到的坑/</a>
+          <a href="" target="_blank">https://puruis.github.io/Spring整合Dubbo-负载均衡案例/</a>
         </div>
       
       <div>
@@ -218,11 +231,7 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/JAVA/"><i class="fa fa-tags"></i>JAVA</a>
-     
-      <a href="/tags/支付宝/"><i class="fa fa-tags"></i>支付宝</a>
-     
-      <a href="/tags/账单/"><i class="fa fa-tags"></i>账单</a>
+      <a href="/tags/负载均衡/"><i class="fa fa-tags"></i>负载均衡</a>
     
     </div>
   
@@ -324,10 +333,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/Zookeeper 入门 (一)/" data-enable="true">
+    <a href="/SpringBoot整合dubbo,直连演示/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/让JPA 飞 - QueryDSL/" data-enable="true">
+    <a href="/Scrapy爬虫框架实现异步爬取伯乐在线/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
