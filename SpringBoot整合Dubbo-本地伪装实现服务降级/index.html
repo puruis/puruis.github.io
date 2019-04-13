@@ -180,7 +180,7 @@
   
   <article class="passage-article">
     <h1 id="本地伪装"><a href="#本地伪装" class="headerlink" title="本地伪装"></a>本地伪装</h1><blockquote>
-<p>本地伪装 通常用于服务降级，比如某验权服务，当服务提供方全部挂掉后，客户端不抛出异常，而是通过 Mock 数据返回授权失败。</p>
+<p>本地伪装 通常用于服务降级，比如某验权服务，当服务提供方全部挂掉后，客户端不抛出异常，而是通过 Mock 数据返回授权失败。<br>PS:本地伪装只处理 RPCException 其他的异常不做处理</p>
 </blockquote>
 <p>如果项目时 spring + dubbo 的话 我们是没有办法使用 hystrix 实现服务降级的，单dubbo本身也给我们提供了服务降级，那就是mock，如果时 springBoot+dubbo的形式 那么推荐使用Hystrix 实现服务熔断降级，因为Hystrix 相对来说比较完善些</p>
 <p><a href="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/stub.jpg" title="本地存根" target="_blank" rel="noopener"><img src="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/stub.jpg" alt="本地存根" title="本地存根"></a></p>
