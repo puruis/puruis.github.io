@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>分类: Dubbo | FS&#39;Blog</title>
+  <title>SpringBoot整合Dubbo-本地存根案例讲解 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, Theme-AD">
+    <meta name="keywords" content="Dubbo,本地存根,">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2018-05-01",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -157,55 +157,89 @@
 <div id="site-process"></div>
       <img src="images/poster.png" style="margin-top:4%;margin-left:5%;float:left;width:218px;">
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">系列: Dubbo</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-04-13
+    </span>
+    
+      <span>
+        | <a href="/categories/Dubbo/"><i class="fa fa-bookmark"></i>Dubbo</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    SpringBoot整合Dubbo-本地存根案例讲解
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2019</h3>
-    
-    <div class="timeline-item">
-      <time>2019-04-13</time>
-      <a target="_self" href="/SpringBoot整合Dubbo-本地存根案例讲解/">SpringBoot整合Dubbo-本地存根案例讲解</a>
-    </div>
+  <article class="passage-article">
+    <h1 id="本地存根"><a href="#本地存根" class="headerlink" title="本地存根"></a>本地存根</h1><blockquote>
+<p>远程服务后，客户端通常只剩下接口，而实现全在服务器端，但提供方有些时候想在客户端也执行部分逻辑，比如：做 ThreadLocal 缓存，提前验证参数，调用失败后伪造容错数据等等，此时就需要在 API 中带上 Stub，客户端生成 Proxy 实例，会把 Proxy 通过构造函数传给 Stub 1，然后把 Stub 暴露给用户，Stub 可以决定要不要去调 Proxy。</p>
+</blockquote>
+<p>这张图只需要理解 中下部分，XxxServiceMock 是下 本地伪装的内容<br>可以从图中 看出 Action 是去引用了 XxxService，实际上调用了XxxServiceStub,<br>而 XxxServiceStub 中有构造函数 注入了 XxxServiceProxy代理对象，我们在调用了XxxServiceStub 的方法后，我们可以根据条件判断是否通过代理对象(XxxServiceProxy)需要去调用XxxServiceImpl 实现，这样就实现了 本地存根。</p>
+<p><a href="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/stub.jpg" title="本地存根" target="_blank" rel="noopener"><img src="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/stub.jpg" alt="本地存根" title="本地存根"></a></p>
+<p>在原来的程序基础上 在provide端加一个 Stub的类，然后consumer端也加一个Stub的类，如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyStub</span> <span class="keyword">implements</span> <span class="title">IOrderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> IOrderService orderService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造函数传入真正的远程代理对象(必须有)</span></span><br><span class="line">	<span class="comment">//Stub 实际上是在 consumer端执行，并没有在服务端执行</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyStub</span><span class="params">(IOrderService orderService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orderService = orderService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">orderList</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"做ThreadLocal 存储"</span>);</span><br><span class="line">        <span class="keyword">return</span> orderService.orderList(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后 如果使用的是 spring + dubbo的形式则需要再配置文件加加 如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:service <span class="class"><span class="keyword">interface</span></span>=<span class="string">"com.foo.BarService"</span> stub=<span class="string">"com.foo.BarServiceStub"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果是 springBoot + dubbo<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span>(interfaceClass = IOrderService.class,stub = <span class="string">"com.dubbo.MyStub"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>案例代码:</p>
+<p><script src="https://gitee.com/zprsss/springboot_dubbo_records/widget_preview"></script></p>
+<style>
+.pro_name a{color: #4183c4;}
+.osc_git_title{background-color: #fff;}
+.osc_git_box{background-color: #fff;}
+.osc_git_box{border-color: #E3E9ED;}
+.osc_git_info{color: #666;}
+.osc_git_main a{color: #9B9B9B;}
+</style>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本地存根"><span class="toc-text">本地存根</span></a></li></ol>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2019-04-11</time>
-      <a target="_self" href="/Dubbo服务多版本-案例/">Dubbo服务多版本-案例</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: purui</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/SpringBoot整合Dubbo-本地存根案例讲解/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2019-04-10</time>
-      <a target="_self" href="/Dubbo服务分组案例/">Dubbo服务分组-案例</a>
-    </div>
   
+    <div class="passage-tags">
+     
+      <a href="/tags/本地存根/"><i class="fa fa-tags"></i>本地存根</a>
     
-    <div class="timeline-item">
-      <time>2019-04-08</time>
-      <a target="_self" href="/SpringBoot整合Dubbo-异步/">SpringBoot整合Dubbo-异步</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2019-04-08</time>
-      <a target="_self" href="/Spring整合Dubbo-负载均衡案例/">Spring整合Dubbo-负载均衡案例</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2019-04-07</time>
-      <a target="_self" href="/SpringBoot整合Dubbo-启动时检查/">SpringBoot整合Dubbo-启动时检查</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2019-04-07</time>
-      <a target="_self" href="/SpringBoot整合dubbo,直连演示/">SpringBoot整合Dubbo,直连演示</a>
     </div>
   
 </div>
+
     </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -296,16 +330,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/沙箱环境对接‘支付宝当面付’/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
