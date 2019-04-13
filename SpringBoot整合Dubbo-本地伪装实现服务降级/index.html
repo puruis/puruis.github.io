@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>归档: 2018 | 第2页 | FS&#39;Blog</title>
+  <title>SpringBoot整合Dubbo-本地伪装实现服务降级 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, Theme-AD">
+    <meta name="keywords" content="Dubbo,服务降级,">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2018-05-01",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -157,43 +157,89 @@
 <div id="site-process"></div>
       <img src="images/poster.png" style="margin-top:4%;margin-left:5%;float:left;width:218px;">
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 37篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-04-14
+    </span>
+    
+      <span>
+        | <a href="/categories/Dubbo/"><i class="fa fa-bookmark"></i>Dubbo</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    SpringBoot整合Dubbo-本地伪装实现服务降级
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2018</h3>
-    
-    <div class="timeline-item">
-      <time>2018-07-07</time>
-      <a target="_self" href="/利用 jconsole 查看远程服务器的运行情况/">利用 jconsole 查看远程服务器的运行情况</a>
-    </div>
+  <article class="passage-article">
+    <h1 id="本地伪装"><a href="#本地伪装" class="headerlink" title="本地伪装"></a>本地伪装</h1><blockquote>
+<p>本地伪装 通常用于服务降级，比如某验权服务，当服务提供方全部挂掉后，客户端不抛出异常，而是通过 Mock 数据返回授权失败。</p>
+</blockquote>
+<p>如果项目时 spring + dubbo 的话 我们是没有办法使用 hystrix 实现服务降级的，单dubbo本身也给我们提供了服务降级，那就是mock，如果时 springBoot+dubbo的形式 那么推荐使用Hystrix 实现服务熔断降级，因为Hystrix 相对来说比较完善些</p>
+<p><a href="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/stub.jpg" title="本地存根" target="_blank" rel="noopener"><img src="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/stub.jpg" alt="本地存根" title="本地存根"></a></p>
+<p>在原来的程序基础上 在provide端加一个 Stub的类，然后consumer端也加一个Stub的类，如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BarServiceMock</span> <span class="keyword">implements</span> <span class="title">BarService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 你可以伪造容错数据，此方法只在出现RpcException时被执行</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"容错数据"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后 如果使用的是 spring + dubbo的形式则需要再配置文件加加 如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:service <span class="class"><span class="keyword">interface</span></span>=<span class="string">"com.foo.BarService"</span> mock=<span class="string">"com.foo.BarServiceMock"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果是 springBoot + dubbo<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span>(interfaceClass = BarService.class,stub = <span class="string">"com.foo.BarServiceMock"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>案例代码:</p>
+<p><script src="https://gitee.com/zprsss/springboot_dubbo_records/widget_preview"></script></p>
+<style>
+.pro_name a{color: #4183c4;}
+.osc_git_title{background-color: #fff;}
+.osc_git_box{background-color: #fff;}
+.osc_git_box{border-color: #E3E9ED;}
+.osc_git_info{color: #666;}
+.osc_git_main a{color: #9B9B9B;}
+</style>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本地伪装"><span class="toc-text">本地伪装</span></a></li></ol>
+  </div>
+</aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-07-07</time>
-      <a target="_self" href="/关于 Proxy 续集 -代码重构/">关于 Proxy 续集 -代码重构</a>
-    </div>
+    <aside class="passage-copyright">
+      <div>本文作者: purui</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/SpringBoot整合Dubbo-本地伪装实现服务降级/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
   
-    
-    <div class="timeline-item">
-      <time>2018-07-07</time>
-      <a target="_self" href="/让JPA 飞 - QueryDSL/">让JPA 飞 - QueryDSL</a>
-    </div>
   
+    <div class="passage-tags">
+     
+      <a href="/tags/服务降级/"><i class="fa fa-tags"></i>服务降级</a>
     
-    <div class="timeline-item">
-      <time>2018-07-05</time>
-      <a target="_self" href="/关于 Proxy/">关于 Proxy</a>
-    </div>
-  
-    
-    <div class="timeline-item">
-      <time>2018-07-02</time>
-      <a target="_self" href="/Mybatis 传参的方式/">Mybatis传参的方式</a>
     </div>
   
 </div>
+
     </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -281,19 +327,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/archives/2018/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/SpringBoot整合Dubbo-本地存根案例讲解/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
