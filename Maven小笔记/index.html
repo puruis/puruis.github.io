@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>SpringBoot整合Dubbo-异步 | FS&#39;Blog</title>
+  <title>MavenС�ʼ� | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Dubbo,SpringBoot,Dubbo,异步,">
+    <meta name="keywords" content="Zookeeper,Maven,">
   
 
   
@@ -161,11 +161,11 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2019-04-08
+      <i class="fa fa-calendar"></i>2019-04-16
     </span>
     
       <span>
-        | <a href="/categories/Dubbo/"><i class="fa fa-bookmark"></i>Dubbo</a>
+        | <a href="/categories/Zookeeper/"><i class="fa fa-bookmark"></i>Zookeeper</a>
       </span>
     
     
@@ -175,29 +175,13 @@
     
   </div>
   <h1 class="passage-title">
-    SpringBoot整合Dubbo-异步
+    MavenС�ʼ�
   </h1>
   
   <article class="passage-article">
-    <h1 id="Dubbo-异步调用"><a href="#Dubbo-异步调用" class="headerlink" title="Dubbo 异步调用"></a>Dubbo 异步调用</h1><blockquote>
-<p>基于 NIO 的非阻塞实现并行调用，客户端不需要启动多线程即可完成并行调用多个远程服务，相对多线程开销较小。</p>
-</blockquote>
-<p><a href="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/future.jpg" target="_blank" rel="noopener"><img src="https://dubbo.gitbooks.io/dubbo-user-book/content/sources/images/future.jpg" alt=""></a></p>
-<p>在 consumer.xml 中配置：<br>ps：这里在 consumer中配置，其实在provider中配置也是可以的，文章最后给出基于SpringBoot的注解实现Dubbo异步的案例，在provider中配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"fooService"</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.foo.FooService"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findFoo"</span> <span class="attr">async</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"barService"</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.bar.BarService"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findBar"</span> <span class="attr">async</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此调用会立即返回null</span></span><br><span class="line">fooService.findFoo(fooId);</span><br><span class="line"><span class="comment">// 拿到调用的Future引用，当结果返回后，会被通知和设置到此Future</span></span><br><span class="line">Future&lt;Foo&gt; fooFuture = RpcContext.getContext().getFuture(); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 此调用会立即返回null</span></span><br><span class="line">barService.findBar(barId);</span><br><span class="line"><span class="comment">// 拿到调用的Future引用，当结果返回后，会被通知和设置到此Future</span></span><br><span class="line">Future&lt;Bar&gt; barFuture = RpcContext.getContext().getFuture(); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 此时findFoo和findBar的请求同时在执行，客户端不需要启动多线程来支持并行，而是借助NIO的非阻塞完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果foo已返回，直接拿到返回值，否则线程wait住，等待foo返回后，线程会被notify唤醒</span></span><br><span class="line">Foo foo = fooFuture.get(); </span><br><span class="line"><span class="comment">// 同理等待bar返回</span></span><br><span class="line">Bar bar = barFuture.get(); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果foo需要5秒返回，bar需要6秒返回，实际只需等6秒，即可获取到foo和bar，进行接下来的处理。</span></span><br></pre></td></tr></table></figure>
-<p>你也可以设置是否等待消息发出： 2<br>sent=”true” 等待消息发出，消息发送失败将抛出异常。<br>sent=”false” 不等待消息发出，将消息放入 IO 队列，即刻返回。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findFoo"</span> <span class="attr">async</span>=<span class="string">"true"</span> <span class="attr">sent</span>=<span class="string">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>如果你只是想异步，完全忽略返回值，可以配置 return=”false”，以减少 Future 对象的创建和管理成本：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findFoo"</span> <span class="attr">async</span>=<span class="string">"true"</span> <span class="attr">return</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>异步理解心得:<br>昨晚猴哥想吃宵夜了,于是走近厨房，拔出两根猴毛一吹，出现了两个猴孙，一个烧水煮面，一个调配料，弄完之后 猴哥直接就去吃了，这就是异步，本来一个人做吃的需要先调配料再煮面才能吃，而异步化后，能够同时调配料和煮面，这样调配料(4分钟),煮面(5分钟)，异步化后就只需要5分钟，表述不好将就看。</p>
-<p><script src="https://gitee.com/zprsss/springboot_dubbo_records/widget_preview"></script></p>
-<style>
-.pro_name a{color: #4183c4;}
-.osc_git_title{background-color: #fff;}
-.osc_git_box{background-color: #fff;}
-.osc_git_box{border-color: #E3E9ED;}
-.osc_git_info{color: #666;}
-.osc_git_main a{color: #9B9B9B;}
-</style>
+    <p>��maven����������� mvn -U idea:idea   ����������δ��������������</p>
+<p>mvn install:install-file -Dfile=kaptcha-2.3.jar -DgroupId=com.google.code.kaptcha -DartifactId=kaptcha -Dversion=2.3 -Dpackaging=jar    ���ش����maven�ֿ������</p>
+
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
@@ -205,7 +189,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Dubbo-异步调用"><span class="toc-text">Dubbo 异步调用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码案例"><span class="toc-text">代码案例</span></a></li></ol>
+    
   </div>
 </aside>
   
@@ -214,7 +198,7 @@
       
         <div>
           原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/SpringBoot整合Dubbo-异步/</a>
+          <a href="" target="_blank">https://puruis.github.io/Maven小笔记/</a>
         </div>
       
       <div>
@@ -225,11 +209,7 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/SpringBoot/"><i class="fa fa-tags"></i>SpringBoot</a>
-     
-      <a href="/tags/Dubbo/"><i class="fa fa-tags"></i>Dubbo</a>
-     
-      <a href="/tags/异步/"><i class="fa fa-tags"></i>异步</a>
+      <a href="/tags/Maven/"><i class="fa fa-tags"></i>Maven</a>
     
     </div>
   
@@ -331,10 +311,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/Dubbo服务分组案例/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/Spring整合Dubbo-负载均衡案例/" data-enable="true">
+    <a href="/简单聊聊我理解的事务及实现原理/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>

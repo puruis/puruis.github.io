@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>简单聊聊我理解的事务及实现原理 | FS&#39;Blog</title>
+  <title>标签: Maven | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="事务,Mysql,事务,">
+    <meta name="keywords" content="Hexo, Theme-AD">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2019-03-16",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: true,
+    is_post: false,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -157,84 +157,19 @@
 <div id="site-process"></div>
       <img src="images/poster.png" style="margin-top:4%;margin-left:5%;float:left;width:218px;">
     <main>
-      
-  <div class="passage">
-  <div class="passage-meta">
-    <span>
-      <i class="fa fa-calendar"></i>2019-04-15
-    </span>
-    
-      <span>
-        | <a href="/categories/事务/"><i class="fa fa-bookmark"></i>事务</a>
-      </span>
-    
-    
-      <span>
-        | <i class="fa fa-unlock-alt"></i>UNLOCK
-      </span>
-    
-  </div>
-  <h1 class="passage-title">
-    简单聊聊我理解的事务及实现原理
-  </h1>
+      <div class="timeline">
+  <h2 class="timeline-title">标签: Maven</h2>
   
-  <article class="passage-article">
-    <h1 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务?"></a>什么是事务?</h1><blockquote>
-<p>首先什么是事务?，我个人的理解就是 我早上去坐公交车,我刷了卡，你就不能让我下车。要么我不刷卡，司机可以让我下车,但是我刷了卡,司机就不能赶我下车。(刷卡-&gt;上车)    (不刷卡(失败)-&gt;不能上车) 两件事要么同时成功,要么同时失败!<br><a href="https://upload-images.jianshu.io/upload_images/11349666-15da1666dd69b26d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/583/format/webp" title="sss" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/11349666-15da1666dd69b26d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/583/format/webp" alt="sss" title="sss"></a><br>学事务我们必须知道ACID(我管这个叫一个条子)，为什么呢? 香港皇家警察 就是 叫CID，看过港片的都懂。ACID 分别代表什么呢?带着这疑问我们一一来讲解下.</p>
-</blockquote>
-<p>A——-&gt;原子性<br>C——-&gt;一致性<br>I——–&gt;隔离性<br>D——-&gt;持久性</p>
-<p>1.原子性: 这个来源于 物理学,初中物理课本都讲过,原子是不可再分的最小单位(白话:原子表示这已经是最小的单位了,不能再分了)，这里我们把事务看做原子,事务里面的操作要么一起成功,要么一起失败,没有其它选择，只要其中一个操作失败了,那么整个事务就会回滚。 就是 要么 我刷卡上车，要么不刷卡 不上车，不能我刷了卡 不让我上车。<br>//依靠Undo log实现，为了保证事务的原子性,例如在修改数据时,mysql 先将修改之前的数据保存到Undo log中，到发生事务回滚 则从Undo log 中恢复数据。</p>
-<p>2.一致性: 指的是数据的一致性,比如,我从支付宝转1000 元 给 张三，一致性表示 我的余额要-1000，张三 余额 + 1000  ，不可能出现我-1000 而张三的余额没有变化,或是我的余额不变化,张三的余额+1000的情况。<br>//依靠Undo log实现，为了保证事务的原子性,例如在修改数据时,mysql 先将修改之前的数据保存到Undo log中，到发生事务回滚 则从Undo log 中恢复数据。</p>
-<p>3.隔离性:比如我在给 张三转 1W元，马云在给他老婆转1个亿，不可能发生 张三收到了1个亿，而马云的老婆收到了1W的情况， 两个事务之间是相互隔离的，数据不可能串。<br>事务有四种事务隔离级别:<br>//依靠 mysql 的锁机制实现 事务的隔离</p>
-<p>PS:mysql默认的事务处理级别是’REPEATABLE-READ’（不可重复读）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.READ UNCOMMITTED -----&gt;session会话A 可以读取到session会话B没有提交的更改数据(该数据可能产生回滚),即产生了脏读</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2.READ COMMITTED ---------&gt;session会话A&lt;只&gt;可以读取到session会话B已提交的更改数据，但是可能读取两次可能会是不同的数据(别的并发事务又修改了这条数据)，即产生了 “”不可重复读“”</span><br><span class="line"></span><br><span class="line">3.REPEATABLE READ----------&gt;并发事务中，事务会话A 不能查询到 事务会话B未提交的和已提交的数据，但是 update/insert/delete 确能够对事务会话B提交的数据产生效果。感觉 查不到，但是update/insert/delete 确是生效的，有种迷幻的感觉，这就是幻读。</span><br><span class="line"></span><br><span class="line">4.SERIALIZABLE -----------&gt;使事务串行化执行，避免了脏读,不可重复读,幻读等问题，这里本质上是让并发执行的事务串行,一个一个排队执行,对性能影响较为严重，浪费性能, 建议慎用。合理选择适用的业务场景。</span><br></pre></td></tr></table></figure>
-<p>4.持久性:只要事务成功了，那么数据一定会保存到数据库,即使在事务成功了，还没有保存成功之前服务器断电了，当服务器重启后，数据库也会从日志文件中恢复数据,<br>//依靠 Redo log 实现数据的持久性，如上事务成功之前mysql会把新数据 写入Redo log ，断电恢复服务后，mysql会从 Redo log 中读取恢复数据。</p>
-<p>我们常用的mysql的Innodb支持事务但是MyiSAM不支持事务。</p>
-
-  </article>
-  <aside class="table-content" id="site-toc">
-  <div class="table-content-title">
-    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
-    <span>目录</span>
-  </div>
-  <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是事务"><span class="toc-text">什么是事务?</span></a></li></ol>
-  </div>
-</aside>
-  
-    <aside class="passage-copyright">
-      <div>本文作者: purui</div>
-      
-        <div>
-          原文链接: 
-          <a href="" target="_blank">https://puruis.github.io/简单聊聊我理解的事务及实现原理/</a>
-        </div>
-      
-      <div>
-        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
-      </div>
-    </aside>
-  
-  
-    <div class="passage-tags">
-     
-      <a href="/tags/Mysql/"><i class="fa fa-tags"></i>Mysql</a>
-     
-      <a href="/tags/事务/"><i class="fa fa-tags"></i>事务</a>
     
+      <h3 class="timeline-subtitle">2019</h3>
+    
+    <div class="timeline-item">
+      <time>2019-04-16</time>
+      <a target="_self" href="/Maven小笔记/">MavenС�ʼ�</a>
     </div>
   
 </div>
-
     </main>
-    
-      <div class="site-comment-contanier">
-  <p id="site-comment-info">
-    <i class="fa fa-spinner fa-spin"></i> 评论加载中
-  </p>
-  <div id="site-comment">
-  </div>
-</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -322,19 +257,19 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/Maven小笔记/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/SpringBoot整合Dubbo-本地伪装实现服务降级/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="#site-comment" data-enable="true">
+      <a href="javascript:void(0);" data-enable="false">
         <i class="fa fa-commenting"></i>
       </a>
     
