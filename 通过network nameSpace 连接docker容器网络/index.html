@@ -6,12 +6,12 @@
   <meta name="author" content="Dong Yuanxin">
   
   
-  <title>归档: 2017 | FS&#39;Blog</title>
+  <title>通过Network namespace 连接docker容器网络 | FS&#39;Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, Theme-AD">
+    <meta name="keywords" content="Network namespace,Linux网络,">
   
 
   
@@ -38,7 +38,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2019-03-16",
     passwords: ["ef51306214d9a6361ee1d5b452e6d2bb70dc7ebb85bf9e02c3d4747fb57d6bec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "Dong Yuanxin",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -156,25 +156,83 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 40篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-04-29
+    </span>
+    
+      <span>
+        | <a href="/categories/Network-namespace/"><i class="fa fa-bookmark"></i>Network namespace</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    通过Network namespace 连接docker容器网络
+  </h1>
   
+  <article class="passage-article">
+    <p>首先准备了 两个docker 容器<br>1.启动 docker 容器</p>
+<p>2.执行<br>docker run -d –name test1 busybox /bin/sh -c “while true;do sleep 3600;done”</p>
+<p>docker run -d –name test2 busybox /bin/sh -c “while true;do sleep 3600;done”</p>
+<p>启动两个容器完成</p>
+<p>3.在本地机 执行 如下 创建两张虚拟网卡，通过 ip a 命令可以看到两张网卡<br>sudo ip link add veth-test1 type veth peer name veth-test2<br>如下</p>
+<p><img src="/通过network nameSpace 连接docker容器网络/屏幕快照 2019-04-28 下午9.15.09.png" alt="fe64379d4561f07150fae2b54498685f"></p>
+<p>3.第三步，我们把新建好的网卡分发给 之前新建的两个 docker 容器 test1 和 test2<br>分发给 两个 容器<br>ip link set veth-test1 netns test1<br>ip link set veth-test2 netns test2</p>
+<p>4.第四步，我们查看 容器test1 和 test2 的网卡，发现都多了一张网卡，但是状态都是DOWN 的， 那么 我们去把 网卡启动 起来<br>sudo ip netns exec test1 ip link set dev veth-test1 up</p>
+<p>sudo ip netns exec test2 ip link set dev veth-test2 up</p>
+<p>5.第五步，查看容器的网卡 发现都是 up状态了，但是我们还没有给网卡分配ip地址<br>sudo ip netns exec test1 ip addr add 192.168.1.1/24 dev veth-test1</p>
+<p>sudo ip netns exec test2 ip addr add 192.168.1.2/24 dev veth-test2</p>
+<p>6.第六步，进入不同容器测试 ping命令即可</p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
     
-      <h3 class="timeline-subtitle">2017</h3>
-    
-    <div class="timeline-item">
-      <time>2017-11-19</time>
-      <a target="_self" href="/ThreadLocal实现/">实现ThreadLocal</a>
-    </div>
+  </div>
+</aside>
   
+    <aside class="passage-copyright">
+      <div>本文作者: purui</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">https://puruis.github.io/通过network nameSpace 连接docker容器网络/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/Linux网络/"><i class="fa fa-tags"></i>Linux网络</a>
     
-    <div class="timeline-item">
-      <time>2017-11-18</time>
-      <a target="_self" href="/对ThreadLocal的思考/">对ThreadLocal的思考</a>
     </div>
   
 </div>
+
     </main>
+    
+      <div class="site-comment-contanier">
+  <p id="site-comment-info">
+    <i class="fa fa-spinner fa-spin"></i> 评论加载中
+  </p>
+  <div id="site-comment">
+  </div>
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -265,16 +323,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/Maven小笔记/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
